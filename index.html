@@ -68,15 +68,44 @@ section{padding-block:clamp(64px,9vw,112px)}
 .mock-bar{display:flex;align-items:center;gap:7px;padding:12px 16px;border-bottom:1px solid var(--line)}
 .mock-bar i{width:10px;height:10px;border-radius:50%;background:var(--line)}
 .mock-url{margin-left:10px;flex:1;min-width:0;font-size:12px;color:var(--muted);background:var(--bg);border-radius:999px;padding:4px 12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.mock-body{padding:22px;display:grid;gap:12px}
-.blk{border-radius:12px;padding:14px 16px;display:flex;justify-content:space-between;gap:12px;align-items:center;font-size:14px}
-.blk b{font-weight:600}
-.blk small{color:var(--muted);font-size:12px;text-align:right}
-.blk-hero{background:var(--soft);padding:22px 16px}
-.blk-hero b{font-family:var(--f-display);font-size:17px}
-.blk-line{border:1px dashed var(--line)}
-.blk-cta{background:var(--sun);color:var(--ink)}
-.blk-cta small{color:inherit;opacity:.8}
+.mock{display:block;text-decoration:none;color:inherit}
+.slides{position:relative;aspect-ratio:4/3;max-width:100%}
+.slide{position:absolute;inset:0;opacity:0;visibility:hidden;transition:opacity .5s,visibility .5s;display:grid;grid-template-rows:auto 1fr auto;gap:12px;padding:18px 20px}
+.slide.on{opacity:1;visibility:visible}
+.s-nav{display:flex;justify-content:space-between;align-items:center;font-size:13px;font-weight:600}
+.s-nav i{display:inline-block;width:64px;height:20px;border-radius:999px}
+.s-main{display:grid;grid-template-columns:1.2fr .8fr;gap:14px;align-items:center}
+.s-eyebrow{font-size:10px;letter-spacing:.12em;text-transform:uppercase;font-weight:600;opacity:.7}
+.s-h{margin-top:6px;font-size:clamp(20px,2.4vw,28px);line-height:1.05}
+.s-btns{display:flex;gap:6px;margin-top:12px}
+.s-btns i{height:22px;border-radius:999px;width:78px}.s-btns i+i{width:58px}
+.s-art{aspect-ratio:1;border-radius:50%;display:grid;place-items:center;text-align:center;font-size:11px;padding:16%;line-height:1.3}
+.s-foot{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.s-foot i{height:30px;border-radius:8px}
+.sl-lipa{background:#FFFFFF;color:#18201B}
+.sl-lipa .s-h{font-family:"Playfair Display",Georgia,serif;font-weight:600}.sl-lipa .s-h span{color:#1F5B3F}
+.sl-lipa .s-nav i,.sl-lipa .s-btns i:first-child{background:#1F5B3F}.sl-lipa .s-btns i+i{border:1.5px solid #E6EAE7}
+.sl-lipa .s-art{background:#DCEBE1;box-shadow:inset 0 0 0 10px #fff,inset 0 0 0 12px #E6EAE7}.sl-lipa .s-art b{font-family:"Playfair Display",Georgia,serif;font-size:13px}
+.sl-lipa .s-foot i{background:#F2F6F3}
+.sl-brica{background:#111111;color:#FFFFFF}
+.sl-brica .s-h{font-family:"Oswald",Impact,sans-serif;font-weight:700;text-transform:uppercase;font-size:clamp(24px,3vw,34px)}.sl-brica .s-h span{color:#FF5B14}
+.sl-brica .s-nav i,.sl-brica .s-btns i:first-child{background:#FF5B14}.sl-brica .s-btns i+i{border:1.5px solid #444}
+.sl-brica .s-art{border-radius:14px;background:#1E1E1E;aspect-ratio:auto;padding:12px;display:grid;gap:6px;grid-template-columns:1fr 1fr}
+.sl-brica .s-art span{background:#2A2A2A;border-radius:6px;padding:6px 0;font-weight:700}.sl-brica .s-art span.hot{background:#FF5B14;color:#111}
+.sl-brica .s-foot i{background:#1E1E1E}
+.sl-kvadrat{background-color:#FFFFFF;background-image:linear-gradient(#EEF2F7 1px,transparent 1px),linear-gradient(90deg,#EEF2F7 1px,transparent 1px);background-size:16px 16px;color:#14202B}
+.sl-kvadrat .s-h{font-family:var(--f-display);font-size:clamp(18px,2vw,23px)}.sl-kvadrat .s-h span{color:#1352D6}
+.sl-kvadrat .s-nav i,.sl-kvadrat .s-btns i:first-child{background:#1352D6}.sl-kvadrat .s-btns i+i{border:1.5px solid #14202B}
+.sl-kvadrat .s-art{border-radius:10px;background:#14202B;color:#fff;aspect-ratio:auto;padding:14px;text-align:left;display:grid;gap:4px}
+.sl-kvadrat .s-art b{font-size:16px;color:#8FB0FF}
+.sl-kvadrat .s-foot i{background:#E8EFFC}
+.mock-cap{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 16px;border-top:1px solid var(--line);font-size:14px}
+.mock-cap b{font-weight:600}
+.mock-cap span{color:var(--muted)}
+.dots{display:flex;gap:8px;justify-content:center;margin-top:22px}
+.dots button{width:10px;height:10px;padding:0;border-radius:50%;border:1.5px solid var(--ink);background:transparent;cursor:pointer}
+.dots button[aria-current="true"]{background:var(--ink)}
+.hero-right{min-width:0}
 
 /* approach */
 .approach{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
@@ -205,15 +234,29 @@ footer a{text-decoration:none}
         </div>
         <p class="hero-note">Отвечаю лично, обычно в тот же день.</p>
       </div>
-      <div class="mock" aria-hidden="true">
-        <div class="mock-bar"><i></i><i></i><i></i><span class="mock-url">vash-biznes.ru</span></div>
-        <div class="mock-body">
-          <div class="blk blk-hero"><b>Кто вы и чем полезны</b><small>первый экран</small></div>
-          <div class="blk blk-line"><span>Что получит клиент</span><small>ценность</small></div>
-          <div class="blk blk-line"><span>Почему именно вы</span><small>доверие</small></div>
-          <div class="blk blk-line"><span>Ответы на вопросы</span><small>сомнения</small></div>
-          <div class="blk blk-cta"><b>Оставить заявку</b><small>следующий шаг</small></div>
-        </div>
+      <div class="hero-right">
+        <a class="mock" id="mock" href="primeri/lipa.html" target="_blank" rel="noopener" aria-label="Открыть пример сайта">
+          <div class="mock-bar"><i></i><i></i><i></i><span class="mock-url" id="mockUrl">lipa-ekb.ru</span></div>
+          <div class="slides">
+            <div class="slide sl-lipa on" aria-hidden="true">
+              <div class="s-nav"><span>Липа</span><i></i></div>
+              <div class="s-main"><div><p class="s-eyebrow">Домашняя кухня</p><p class="s-h">Домашняя кухня, <span>как у бабушки.</span></p><div class="s-btns"><i></i><i></i></div></div><div class="s-art"><div>Блюдо дня<br><b>Пельмени</b><br>490 ₽</div></div></div>
+              <div class="s-foot"><i></i><i></i><i></i></div>
+            </div>
+            <div class="slide sl-brica" aria-hidden="true">
+              <div class="s-nav"><span>БРИТВА.</span><i></i></div>
+              <div class="s-main"><div><p class="s-eyebrow">Барбершоп</p><p class="s-h">Чёткий фейд.<br><span>Без очереди.</span></p><div class="s-btns"><i></i><i></i></div></div><div class="s-art"><span>12:00</span><span class="hot">13:30</span><span>15:00</span><span>16:30</span></div></div>
+              <div class="s-foot"><i></i><i></i><i></i></div>
+            </div>
+            <div class="slide sl-kvadrat" aria-hidden="true">
+              <div class="s-nav"><span>КВАДРАТ</span><i></i></div>
+              <div class="s-main"><div><p class="s-eyebrow">Стройка и ремонт</p><p class="s-h">Строим по <span>фиксированной цене.</span></p><div class="s-btns"><i></i><i></i></div></div><div class="s-art"><span style="font-size:10px;opacity:.7">Расчёт</span><b>5,0–5,8 млн ₽</b><span style="font-size:10px;opacity:.7">120 м² · 7 мес.</span></div></div>
+              <div class="s-foot"><i></i><i></i><i></i></div>
+            </div>
+          </div>
+          <div class="mock-cap"><b id="mockCap">Ресторан: меню с корзиной</b><span>Открыть →</span></div>
+        </a>
+        <div class="dots" role="group" aria-label="Примеры сайтов"><button type="button" aria-label="Ресторан" aria-current="true"></button><button type="button" aria-label="Барбершоп" aria-current="false"></button><button type="button" aria-label="Стройка" aria-current="false"></button></div>
       </div>
     </div>
   </section>
@@ -380,6 +423,17 @@ document.querySelectorAll('.copy').forEach(function(b){b.addEventListener('click
   function fallback(){var r=document.createRange();r.selectNodeContents(document.getElementById(b.dataset.target));var s=getSelection();s.removeAllRanges();s.addRange(r);b.textContent='Выделено'}
   try{navigator.clipboard.writeText(t).then(done,fallback)}catch(e){fallback()}
 })});
+</script>
+<script>
+(function(){
+  var D=[['primeri/lipa.html','lipa-ekb.ru','Ресторан: меню с корзиной'],['primeri/brica.html','britva-kzn.ru','Барбершоп: онлайн-запись'],['primeri/kvadrat.html','kvadrat-stroy.ru','Стройка: калькулятор цены']];
+  var sl=document.querySelectorAll('.slide'),dots=document.querySelectorAll('.dots button'),m=document.getElementById('mock'),i=0,t;
+  function go(n){i=n;sl.forEach(function(e,k){e.classList.toggle('on',k===n)});dots.forEach(function(e,k){e.setAttribute('aria-current',k===n)});m.href=D[n][0];document.getElementById('mockUrl').textContent=D[n][1];document.getElementById('mockCap').textContent=D[n][2]}
+  function auto(){clearInterval(t);if(!matchMedia('(prefers-reduced-motion: reduce)').matches)t=setInterval(function(){go((i+1)%3)},4000)}
+  dots.forEach(function(d,k){d.onclick=function(){go(k);auto()}});
+  m.addEventListener('mouseenter',function(){clearInterval(t)});m.addEventListener('mouseleave',auto);
+  auto();
+})();
 </script>
 </body>
 </html>
