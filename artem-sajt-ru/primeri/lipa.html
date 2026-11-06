@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Липа — домашняя кухня</title>
+<meta name="description" content="Демо-сайт ресторана домашней кухни: меню с корзиной и бронь стола.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Onest:wght@400;500;600&display=swap">
+<style>
+/* Layout: mirna bela osnova, duboka zelena lipe kao jedini akcenat; meni + korpa kao glavni alat */
+:root{
+  --bg:#FFFFFF; --ink:#18201B; --muted:#5E6862; --line:#E6EAE7; --soft:#F2F6F3;
+  --green:#1F5B3F; --green-ink:#FFFFFF; --leaf:#DCEBE1;
+  --f-display:"Playfair Display", Georgia, serif;
+  --f-body:"Onest", system-ui, -apple-system, "Segoe UI", sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.wrap{max-width:1120px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--f-display);font-weight:600;line-height:1.1;margin:0;text-wrap:balance}
+h2{font-size:clamp(30px,4.5vw,46px)}
+p{margin:0}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--green);outline-offset:3px;border-radius:6px}
+button{font-family:inherit;cursor:pointer}
+.label{font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--green)}
+.muted{color:var(--muted)}
+section{padding-block:clamp(56px,8vw,96px)}
+
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;gap:22px;height:64px}
+.logo{font-family:var(--f-display);font-size:24px;text-decoration:none;display:flex;align-items:center;gap:8px}
+.nav nav{display:flex;gap:20px;margin-left:auto}
+.nav nav a{text-decoration:none;color:var(--muted);font-weight:500;font-size:15px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 22px;border-radius:999px;font-weight:600;font-size:16px;text-decoration:none;border:1.5px solid transparent;transition:transform .15s}
+.btn:hover{transform:translateY(-1px)}
+.btn-g{background:var(--green);color:var(--green-ink)}
+.btn-o{border-color:var(--line);background:var(--bg);color:var(--ink)}
+.btn-sm{padding:9px 16px;font-size:14px}
+@media (max-width:720px){.nav nav{display:none}.nav .btn-sm{margin-left:auto}}
+
+.hero{padding-block:clamp(40px,7vw,88px)}
+.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center}
+.hero h1{font-size:clamp(46px,7.5vw,88px);margin-top:14px}
+.hero h1 em{font-style:normal;color:var(--green)}
+.hero p.lead{font-size:clamp(18px,2vw,20px);color:var(--muted);margin-top:20px;max-width:32em}
+.hero-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+.status{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
+.pill{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;background:var(--soft);font-size:14px;font-weight:500}
+.dot{width:8px;height:8px;border-radius:50%;background:#2E9D5B}
+.plate{aspect-ratio:1;max-width:100%;border-radius:50%;background:var(--leaf);display:grid;place-items:center;position:relative}
+.plate::before{content:"";position:absolute;inset:9%;border-radius:50%;background:var(--bg);box-shadow:0 0 0 2px var(--line)}
+.plate-in{position:relative;text-align:center;display:grid;gap:6px;padding:0 22%}
+.plate-in b{font-family:var(--f-display);font-weight:400;font-size:clamp(24px,3vw,34px);line-height:1.15}
+.plate-in span{color:var(--muted);font-size:15px}
+.plate-in strong{color:var(--green);font-size:20px}
+@media (max-width:820px){.hero-grid{grid-template-columns:1fr}.plate{max-width:380px;margin:0 auto}}
+
+/* menu */
+.menu-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:20px;margin-bottom:28px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap}
+.tab{border:1.5px solid var(--line);background:var(--bg);color:var(--ink);padding:9px 16px;border-radius:999px;font-weight:500;font-size:15px}
+.tab[aria-selected="true"]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.menu-grid{display:grid;grid-template-columns:1fr 340px;gap:32px;align-items:start}
+.items{display:grid;gap:0;border-top:1px solid var(--line)}
+.item{display:grid;grid-template-columns:1fr auto auto;gap:18px;align-items:center;padding:20px 0;border-bottom:1px solid var(--line)}
+.item h3{font-size:21px}
+.item p{color:var(--muted);font-size:15px;margin-top:4px}
+.price{font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
+.add{width:44px;height:44px;border-radius:50%;border:1.5px solid var(--green);background:var(--bg);color:var(--green);font-size:22px;line-height:1;display:grid;place-items:center}
+.add.on{background:var(--green);color:var(--green-ink);font-size:15px;font-weight:600}
+.cart{position:sticky;top:calc(env(safe-area-inset-top,0px) + 84px);background:var(--soft);border-radius:20px;padding:24px;display:grid;gap:14px}
+.cart h3{font-size:24px}
+.cart-list{display:grid;gap:10px;list-style:none;margin:0;padding:0}
+.cart-list li{display:grid;grid-template-columns:1fr auto;gap:4px 10px;font-size:15px}
+.qty{display:flex;align-items:center;gap:8px;grid-column:1/-1}
+.qty button{width:30px;height:30px;border-radius:50%;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
+.cart-total{display:flex;justify-content:space-between;border-top:1px solid var(--line);padding-top:14px;font-weight:600;font-size:18px;font-variant-numeric:tabular-nums}
+.note{font-size:14px;color:var(--muted)}
+.ok{background:var(--leaf);color:var(--green);border-radius:12px;padding:12px 14px;font-size:15px;font-weight:500}
+@media (max-width:900px){.menu-grid{grid-template-columns:1fr}.cart{position:static}}
+
+/* reservation */
+.res{background:var(--green);color:var(--green-ink);border-radius:28px;padding:clamp(28px,5vw,56px);display:grid;grid-template-columns:.9fr 1.1fr;gap:40px}
+.res .label{color:var(--leaf)}
+.res h2{margin-top:12px}
+.res-info{display:grid;gap:18px;align-content:start}
+.res-info p{opacity:.85}
+.tables{font-family:var(--f-display);font-size:64px;line-height:1}
+form{background:var(--bg);color:var(--ink);border-radius:20px;padding:24px;display:grid;gap:18px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+label{display:grid;gap:6px;font-size:14px;font-weight:600}
+input{font:inherit;font-weight:400;font-size:16px;padding:12px 14px;border:1.5px solid var(--line);border-radius:12px;background:var(--bg);color:var(--ink);min-width:0;width:100%}
+input:focus{outline:none;border-color:var(--green)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1.5px solid var(--line);background:var(--bg);color:var(--ink);padding:8px 12px;border-radius:10px;font-size:15px;font-variant-numeric:tabular-nums}
+.chip[aria-pressed="true"]{background:var(--green);border-color:var(--green);color:var(--green-ink)}
+.chip:disabled{opacity:.35;text-decoration:line-through;cursor:not-allowed}
+.stepper{display:flex;align-items:center;gap:14px}
+.stepper button{width:44px;height:44px;border-radius:50%;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);font-size:20px}
+.stepper output{font-size:20px;font-weight:600;min-width:2ch;text-align:center}
+.err{color:#B3261E;font-size:14px}
+@media (max-width:820px){.res{grid-template-columns:1fr}}
+@media (max-width:460px){.row{grid-template-columns:1fr}}
+
+.info{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+.info h3{font-size:22px;margin-bottom:8px}
+@media (max-width:720px){.info{grid-template-columns:1fr}}
+
+.bar{position:fixed;left:0;right:0;bottom:0;z-index:8;padding:12px max(16px,env(safe-area-inset-right,0px)) calc(12px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));background:var(--ink);color:var(--bg);display:none;justify-content:space-between;align-items:center;gap:12px}
+.bar a{color:var(--ink);background:var(--bg);text-decoration:none;padding:9px 16px;border-radius:999px;font-weight:600;font-size:14px}
+@media (max-width:900px){.bar.show{display:flex}}
+
+footer{border-top:1px solid var(--line);padding-block:32px;font-size:14px;color:var(--muted)}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap nav">
+    <a class="logo" href="#top"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 21V11"/><path d="M12 11c-5 0-8-3-8-8 5 0 8 3 8 8z" fill="var(--leaf)"/><path d="M12 13c4 0 7-2.5 7-7-4 0-7 2.5-7 7z" fill="var(--leaf)"/></svg>Липа</a>
+    <nav aria-label="Навигация"><a href="#meni">Меню</a><a href="#rezervacija">Бронь</a><a href="#kontakt">Контакты</a></nav>
+    <a class="btn btn-g btn-sm" href="#rezervacija">Забронировать</a>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <p class="label">Домашняя кухня · Екатеринбург</p>
+        <h1>Домашняя кухня, <em>как у бабушки.</em></h1>
+        <p class="lead">Борщ на говяжьем бульоне, пельмени ручной лепки и пироги из нашей печи. Каждый день свежее, из продуктов местных фермеров.</p>
+        <div class="hero-cta"><a class="btn btn-g" href="#rezervacija">Забронировать стол</a><a class="btn btn-o" href="#meni">Смотреть меню</a></div>
+        <div class="status"><span class="pill"><span class="dot"></span><span>Сегодня открыто 11–23</span></span><span class="pill">Доставка в радиусе 5 км</span></div>
+      </div>
+      <div class="plate" aria-hidden="true"><div class="plate-in"><span>Блюдо дня</span><b>Пельмени с бульоном и сметаной</b><strong>490 ₽</strong></div></div>
+    </div>
+  </section>
+
+  <section id="meni" style="padding-top:0">
+    <div class="wrap">
+      <div class="menu-head">
+        <div><p class="label">Меню</p><h2 style="margin-top:10px">Что сегодня готовим</h2></div>
+        <div class="tabs" role="tablist" id="tabs"></div>
+      </div>
+      <div class="menu-grid">
+        <div class="items" id="items"></div>
+        <aside class="cart" aria-live="polite">
+          <h3>Ваш заказ</h3>
+          <ul class="cart-list" id="cartList"></ul>
+          <p class="note" id="cartEmpty">Добавляйте блюда кнопкой «+». Заказ можно забрать в ресторане или заказать доставку.</p>
+          <div class="cart-total"><span>Итого</span><span id="cartTotal">0 ₽</span></div>
+          <p class="note" id="delivery"></p>
+          <button class="btn btn-g" id="orderBtn" type="button">Оформить заказ</button>
+          <div class="ok" id="orderOk" hidden></div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section id="rezervacija" style="padding-top:0">
+    <div class="wrap">
+      <div class="res">
+        <div class="res-info">
+          <p class="label">Бронь</p>
+          <h2>Оставим для вас стол.</h2>
+          <p>Выберите день, время и число гостей. Подтверждение пришлём сообщением в течение 15 минут.</p>
+          <div><div class="tables" id="tablesLeft">7</div><p>свободных столов на вечер</p></div>
+        </div>
+        <form id="resForm" novalidate>
+          <div class="row">
+            <label for="rDate">Дата<input id="rDate" type="date" required></label>
+            <label>Гостей<div class="stepper"><button type="button" id="gMinus" aria-label="Меньше гостей">−</button><output id="guests">2</output><button type="button" id="gPlus" aria-label="Больше гостей">+</button></div></label>
+          </div>
+          <div style="display:grid;gap:8px"><span style="font-size:14px;font-weight:600">Время</span><div class="chips" id="times"></div></div>
+          <div class="row">
+            <label for="rName">Имя<input id="rName" type="text" placeholder="Анна" autocomplete="name"></label>
+            <label for="rPhone">Телефон<input id="rPhone" type="tel" placeholder="+7 900 000-00-00" autocomplete="tel"></label>
+          </div>
+          <p class="err" id="resErr" hidden></p>
+          <button class="btn btn-g" type="submit">Отправить бронь</button>
+          <div class="ok" id="resOk" hidden></div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <section id="kontakt" style="padding-top:0">
+    <div class="wrap info">
+      <div><h3>Адрес</h3><p class="muted">ул. Липовая, 12, Екатеринбург<br>Парковка у входа</p></div>
+      <div><h3>Часы работы</h3><p class="muted">Пн–Чт 11–23<br>Пт–Сб 11–00 · Вс 12–22</p></div>
+      <div><h3>Контакты</h3><p class="muted">+7 900 123-45-67<br>@lipa.ekb</p></div>
+    </div>
+  </section>
+</main>
+
+<div class="bar" id="bar"><span id="barText">0 блюд · 0 ₽</span><a href="#meni">Корзина</a></div>
+
+<footer><div class="wrap"><span>Липа · домашняя кухня</span><span>Демо-проект · дизайн и разработка: <a href="../index.html">Артём</a></span></div></footer>
+
+<script>
+var MENU={
+ "Закуски":[["Сельдь под шубой","Слоями, с домашним майонезом",390],["Солёные грузди со сметаной","Из собственного погреба",420],["Винегрет","Свёкла, огурцы, квашеная капуста",290]],
+ "Горячее":[["Борщ с пампушками","На говяжьем бульоне, сметана",390],["Пельмени ручной лепки","Говядина и свинина, бульон",490],["Котлеты по-домашнему","С картофельным пюре",520],["Жаркое в горшочке","Свинина, картофель, грибы",590]],
+ "Десерты":[["Медовик","По семейному рецепту",320],["Сырники со сметаной","Три штуки, варенье",350],["Пирог с вишней","Из печи, порция",290]],
+ "Напитки":[["Морс клюквенный","0,5 л, домашний",220],["Квас","0,5 л, своего брожения",190],["Чай из самовара","Чайник, с травами",290]]
+};
+var cats=Object.keys(MENU), cur=cats[1], cart={};
+var fmt=function(n){return n.toLocaleString('ru-RU')+' ₽'};
+function plural(n,a,b,c){var m=n%10,h=n%100;return (m===1&&h!==11)?a:(m>=2&&m<=4&&(h<10||h>=20))?b:c}
+function find(name){for(var c in MENU)for(var i=0;i<MENU[c].length;i++)if(MENU[c][i][0]===name)return MENU[c][i]}
+function renderTabs(){var t=document.getElementById('tabs');t.innerHTML='';cats.forEach(function(c){var b=document.createElement('button');b.className='tab';b.type='button';b.setAttribute('role','tab');b.setAttribute('aria-selected',c===cur);b.textContent=c;b.onclick=function(){cur=c;renderTabs();renderItems()};t.appendChild(b)})}
+function renderItems(){var box=document.getElementById('items');box.innerHTML='';MENU[cur].forEach(function(it){var q=cart[it[0]]||0;var d=document.createElement('div');d.className='item';d.innerHTML='<div><h3></h3><p></p></div><span class="price"></span><button type="button" class="add"></button>';d.querySelector('h3').textContent=it[0];d.querySelector('p').textContent=it[1];d.querySelector('.price').textContent=fmt(it[2]);var b=d.querySelector('.add');b.textContent=q?q+'×':'+';if(q)b.classList.add('on');b.setAttribute('aria-label','Добавить: '+it[0]);b.onclick=function(){cart[it[0]]=(cart[it[0]]||0)+1;update()};box.appendChild(d)})}
+function update(){var list=document.getElementById('cartList');list.innerHTML='';var total=0,count=0;Object.keys(cart).forEach(function(n){var q=cart[n];if(!q){delete cart[n];return}var it=find(n);total+=it[2]*q;count+=q;var li=document.createElement('li');li.innerHTML='<span></span><span class="price"></span><div class="qty"><button type="button" aria-label="Меньше">−</button><span></span><button type="button" aria-label="Больше">+</button></div>';li.children[0].textContent=n;li.children[1].textContent=fmt(it[2]*q);var qd=li.querySelector('.qty');qd.children[1].textContent=q+' шт.';qd.children[0].onclick=function(){cart[n]--;update()};qd.children[2].onclick=function(){cart[n]++;update()};list.appendChild(li)});
+ document.getElementById('cartEmpty').hidden=count>0;document.getElementById('cartTotal').textContent=fmt(total);
+ var del=document.getElementById('delivery');del.textContent=count?(total>=2000?'Доставка бесплатная.':'Ещё '+fmt(2000-total)+' до бесплатной доставки.'):'';
+ document.getElementById('bar').classList.toggle('show',count>0);document.getElementById('barText').textContent=count+' '+plural(count,'блюдо','блюда','блюд')+' · '+fmt(total);
+ document.getElementById('orderOk').hidden=true;renderItems()}
+document.getElementById('orderBtn').onclick=function(){var ok=document.getElementById('orderOk');ok.hidden=false;if(!Object.keys(cart).length){ok.textContent='Корзина пуста. Добавьте хотя бы одно блюдо.';return}ok.textContent='Это демо-сайт, заказ никуда не отправлен. На настоящем сайте здесь придёт подтверждение и время доставки.'};
+
+var guests=2,time=null,left=7;
+var d=document.getElementById('rDate');d.value=new Date().toISOString().slice(0,10);d.min=d.value;
+function g(v){guests=Math.max(1,Math.min(12,guests+v));document.getElementById('guests').textContent=guests}
+document.getElementById('gMinus').onclick=function(){g(-1)};document.getElementById('gPlus').onclick=function(){g(1)};
+var TIMES=['12:00','13:30','15:00','17:00','18:30','19:00','20:00','21:00','21:30'],BUSY=['19:00','20:00'];
+function renderTimes(){var c=document.getElementById('times');c.innerHTML='';TIMES.forEach(function(t){var b=document.createElement('button');b.type='button';b.className='chip';b.textContent=t;b.disabled=BUSY.indexOf(t)>-1;b.setAttribute('aria-pressed',t===time);b.onclick=function(){time=t;renderTimes()};c.appendChild(b)})}
+renderTimes();
+document.getElementById('resForm').addEventListener('submit',function(e){e.preventDefault();var err=document.getElementById('resErr'),ok=document.getElementById('resOk');var name=document.getElementById('rName').value.trim(),ph=document.getElementById('rPhone').value.replace(/\D/g,'');
+ var m=!time?'Выберите время.':!name?'Укажите имя.':ph.length<10?'Укажите номер телефона.':'';err.hidden=!m;err.textContent=m;ok.hidden=true;if(m)return;
+ left=Math.max(0,left-1);document.getElementById('tablesLeft').textContent=left;BUSY.push(time);
+ ok.hidden=false;ok.textContent=name+', стол на '+guests+' '+plural(guests,'гостя','гостей','гостей')+' в '+time+' забронирован. (Демо: бронь никуда не отправлена.)';time=null;renderTimes()});
+renderTabs();update();
+</script>
+</body>
+</html>

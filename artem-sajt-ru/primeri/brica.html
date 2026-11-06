@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Бритва — барбершоп</title>
+<meta name="description" content="Демо-сайт барбершопа: онлайн-запись в 3 шага и прайс.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Manrope:wght@400;500;700&display=swap">
+<style>
+/* Layout: bela osnova, crna tipografija, narandžasta kao jedini akcenat; zakazivanje u 3 koraka je srce stranice */
+:root{
+  --bg:#FFFFFF; --ink:#111111; --muted:#5F5F63; --line:#E7E7E9; --soft:#F5F5F6;
+  --orange:#FF5B14; --orange-soft:#FFEDE3; --on-orange:#111111;
+  --f-display:"Oswald", Impact, "Arial Narrow", sans-serif;
+  --f-body:"Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.wrap{max-width:1120px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--f-display);font-weight:700;text-transform:uppercase;line-height:.95;margin:0;letter-spacing:.01em;text-wrap:balance}
+h2{font-size:clamp(40px,6vw,64px)}
+p{margin:0}
+a{color:inherit}
+button{font-family:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--orange);outline-offset:3px;border-radius:6px}
+.label{font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.label b{color:var(--orange)}
+section{padding-block:clamp(56px,8vw,96px)}
+
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;gap:22px;height:64px}
+.logo{font-family:var(--f-display);font-weight:800;font-size:28px;text-decoration:none;letter-spacing:.04em}
+.logo span{color:var(--orange)}
+.nav nav{display:flex;gap:20px;margin-left:auto}
+.nav nav a{text-decoration:none;color:var(--muted);font-weight:500;font-size:15px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 24px;border-radius:12px;font-weight:700;font-size:16px;text-decoration:none;border:2px solid transparent;transition:transform .15s}
+.btn:hover{transform:translateY(-1px)}
+.btn-k{background:var(--ink);color:var(--bg)}
+.btn-or{background:var(--orange);color:var(--on-orange)}
+.btn-o{border-color:var(--ink);color:var(--ink);background:var(--bg)}
+.btn-sm{padding:9px 16px;font-size:14px}
+@media (max-width:720px){.nav nav{display:none}.nav .btn-sm{margin-left:auto}}
+
+.hero{padding-block:clamp(40px,7vw,84px)}
+.hero h1{font-size:clamp(54px,11vw,140px);margin-top:16px}
+.hero h1 span{color:var(--orange)}
+.hero-row{display:grid;grid-template-columns:1fr auto;gap:32px;align-items:end;margin-top:28px}
+.hero-row p{font-size:clamp(18px,2vw,20px);color:var(--muted);max-width:30em}
+.hero-cta{display:flex;flex-wrap:wrap;gap:12px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:16px;overflow:hidden;margin-top:44px}
+.stat{background:var(--bg);padding:20px 22px}
+.stat b{font-family:var(--f-display);font-size:44px;line-height:1;display:block;font-variant-numeric:tabular-nums}
+.stat span{color:var(--muted);font-size:14px}
+.stat.hot b{color:var(--orange)}
+@media (max-width:760px){.hero-row{grid-template-columns:1fr}.stats{grid-template-columns:1fr}}
+
+/* booking */
+.book-grid{display:grid;grid-template-columns:1fr 340px;gap:32px;align-items:start;margin-top:36px}
+.step{display:grid;gap:16px;padding-block:28px;border-top:2px solid var(--ink)}
+.step:first-child{padding-top:0;border-top:0}
+.step-h{display:flex;align-items:baseline;gap:14px}
+.step-h i{font-style:normal;font-family:var(--f-display);font-size:22px;color:var(--orange)}
+.step-h h3{font-size:30px}
+.svc{display:grid;gap:8px}
+.svc-btn{display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;width:100%;text-align:left;padding:14px 16px;border-radius:12px;border:2px solid var(--line);background:var(--bg);color:var(--ink);font-size:16px}
+.svc-btn[aria-pressed="true"]{border-color:var(--ink);background:var(--soft)}
+.box{width:24px;height:24px;border-radius:6px;border:2px solid var(--ink);display:grid;place-items:center;color:var(--bg)}
+.svc-btn[aria-pressed="true"] .box{background:var(--orange);border-color:var(--orange);color:var(--ink)}
+.svc-btn small{display:block;color:var(--muted);font-size:14px}
+.svc-btn .p{font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+.barbers{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.barber{display:grid;gap:8px;justify-items:center;text-align:center;padding:16px 10px;border-radius:14px;border:2px solid var(--line);background:var(--bg);color:var(--ink)}
+.barber[aria-pressed="true"]{border-color:var(--ink);background:var(--soft)}
+.ava{width:56px;height:56px;border-radius:50%;display:grid;place-items:center;font-family:var(--f-display);font-size:24px;background:var(--ink);color:var(--bg)}
+.barber[aria-pressed="true"] .ava{background:var(--orange);color:var(--ink)}
+.barber b{font-size:16px}
+.barber small{color:var(--muted);font-size:13px;line-height:1.3}
+@media (max-width:620px){.barbers{grid-template-columns:repeat(2,1fr)}}
+.days{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px}
+.day{flex:0 0 auto;min-width:64px;display:grid;justify-items:center;padding:10px 8px;border-radius:12px;border:2px solid var(--line);background:var(--bg);color:var(--ink)}
+.day small{font-size:12px;color:var(--muted);text-transform:uppercase;font-weight:700;letter-spacing:.06em}
+.day b{font-family:var(--f-display);font-size:26px;line-height:1.1}
+.day[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.day[aria-pressed="true"] small{color:var(--orange)}
+.slots{display:grid;grid-template-columns:repeat(auto-fill,minmax(78px,1fr));gap:8px}
+.slot{padding:10px 0;border-radius:10px;border:2px solid var(--line);background:var(--bg);color:var(--ink);font-weight:700;font-variant-numeric:tabular-nums}
+.slot[aria-pressed="true"]{background:var(--orange);border-color:var(--orange);color:var(--on-orange)}
+.slot:disabled{color:#B5B5BA;text-decoration:line-through;cursor:not-allowed;background:var(--soft)}
+.summary{position:sticky;top:calc(env(safe-area-inset-top,0px) + 84px);background:var(--ink);color:var(--bg);border-radius:20px;padding:24px;display:grid;gap:14px}
+.summary h3{font-size:30px}
+.sum-row{display:flex;justify-content:space-between;gap:12px;font-size:15px;border-bottom:1px solid #333;padding-bottom:10px}
+.sum-row span:first-child{color:#A9A9AE}
+.sum-row span:last-child{text-align:right}
+.sum-total{display:flex;justify-content:space-between;align-items:baseline;font-variant-numeric:tabular-nums}
+.sum-total b{font-family:var(--f-display);font-size:44px;color:var(--orange)}
+.summary input{font:inherit;font-size:16px;padding:12px 14px;border-radius:10px;border:0;background:#222;color:#fff;width:100%;min-width:0}
+.summary input::placeholder{color:#8a8a90}
+.err{color:#FF9B73;font-size:14px}
+.ok{background:var(--orange);color:var(--on-orange);border-radius:12px;padding:12px 14px;font-weight:700;font-size:15px}
+@media (max-width:900px){.book-grid{grid-template-columns:1fr}.summary{position:static}}
+
+/* price list */
+.prices{display:grid;grid-template-columns:repeat(2,1fr);gap:0 48px;margin-top:32px}
+.pr{display:flex;align-items:baseline;gap:10px;padding:14px 0;border-bottom:1px solid var(--line)}
+.pr span:nth-child(2){flex:1;border-bottom:2px dotted var(--line);transform:translateY(-5px)}
+.pr b{font-variant-numeric:tabular-nums}
+@media (max-width:720px){.prices{grid-template-columns:1fr}}
+
+.contact{background:var(--orange-soft);border-radius:24px;padding:clamp(28px,5vw,52px);display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+.contact h3{font-size:28px;margin-bottom:8px}
+.contact p{color:var(--muted)}
+@media (max-width:720px){.contact{grid-template-columns:1fr}}
+footer{padding-block:32px;font-size:14px;color:var(--muted)}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap nav">
+    <a class="logo" href="#top">БРИТВА<span>.</span></a>
+    <nav aria-label="Навигация"><a href="#zakazi">Запись</a><a href="#cene">Цены</a><a href="#kontakt">Контакты</a></nav>
+    <a class="btn btn-k btn-sm" href="#zakazi">Записаться</a>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap">
+      <p class="label"><b>●</b> Барбершоп · Казань</p>
+      <h1>Чёткий фейд.<br><span>Без очереди.</span></h1>
+      <div class="hero-row">
+        <p>Выберите услугу, мастера и время за 30 секунд. Приходите к назначенному часу и сразу садитесь в кресло.</p>
+        <div class="hero-cta"><a class="btn btn-or" href="#zakazi">Записаться онлайн</a><a class="btn btn-o" href="#cene">Прайс</a></div>
+      </div>
+      <div class="stats">
+        <div class="stat hot"><b id="freeToday">0</b><span>свободных окон сегодня</span></div>
+        <div class="stat"><b>4</b><span>мастера в смене</span></div>
+        <div class="stat"><b>10–20</b><span>часы работы, пн–сб</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="zakazi" style="padding-top:0">
+    <div class="wrap">
+      <p class="label">Онлайн-запись</p>
+      <h2 style="margin-top:10px">Запись в 3 шага</h2>
+      <div class="book-grid">
+        <div>
+          <div class="step"><div class="step-h"><i>01</i><h3>Услуга</h3></div><div class="svc" id="svc"></div></div>
+          <div class="step"><div class="step-h"><i>02</i><h3>Мастер</h3></div><div class="barbers" id="barbers"></div></div>
+          <div class="step"><div class="step-h"><i>03</i><h3>День и время</h3></div><div class="days" id="days"></div><div class="slots" id="slots"></div></div>
+        </div>
+        <aside class="summary" aria-live="polite">
+          <h3>Ваша запись</h3>
+          <div class="sum-row"><span>Услуга</span><span id="sSvc">—</span></div>
+          <div class="sum-row"><span>Мастер</span><span id="sBar">—</span></div>
+          <div class="sum-row"><span>Время</span><span id="sTime">—</span></div>
+          <div class="sum-row"><span>Длительность</span><span id="sDur">—</span></div>
+          <div class="sum-total"><span>Итого</span><b id="sTotal">0 ₽</b></div>
+          <label for="bName" class="label" style="color:#A9A9AE">Имя и телефон</label>
+          <input id="bName" type="text" placeholder="Имя" autocomplete="name">
+          <input id="bPhone" type="tel" placeholder="+7 900 000-00-00" autocomplete="tel">
+          <p class="err" id="bErr" hidden></p>
+          <button class="btn btn-or" type="button" id="bookBtn">Подтвердить запись</button>
+          <div class="ok" id="bOk" hidden></div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section id="cene" style="padding-top:0">
+    <div class="wrap">
+      <p class="label">Прайс</p>
+      <h2 style="margin-top:10px">Цены без сюрпризов</h2>
+      <div class="prices" id="prices"></div>
+    </div>
+  </section>
+
+  <section id="kontakt" style="padding-top:0">
+    <div class="wrap">
+      <div class="contact">
+        <div><h3>Адрес</h3><p>ул. Баумана, 45, Казань<br>Вход со двора</p></div>
+        <div><h3>Часы работы</h3><p>Пн–Пт 10–20<br>Сб 9–17 · Вс выходной</p></div>
+        <div><h3>Контакты</h3><p>+7 900 555-01-01<br>@britva.kzn</p></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer><div class="wrap"><span>БРИТВА Barbershop</span><span>Демо-проект · дизайн и разработка: <a href="../index.html">Артём</a></span></div></footer>
+
+<script>
+var SVC=[["Мужская стрижка","Ножницы и машинка, мытьё",1500,40],["Фейд","Skin или low fade, укладка",1800,45],["Борода","Моделирование, контур опасной бритвой",900,25],["Горячее полотенце","Бритьё с горячим полотенцем",700,20],["Детская стрижка","До 12 лет",1000,30],["Укладка","Мытьё, сушка, средство",500,15]];
+var BAR=[["Любой","Первый свободный","★"],["Марат","Фейды и короткие","М"],["Никита","Борода и классика","Н"],["Тимур","Длинные волосы","Т"]];
+var DN=['Вс','Пн','Вт','Ср','Чт','Пт','Сб'];
+var sel={svc:[1],bar:0,day:0,slot:null},booked={};
+var fmt=function(n){return n.toLocaleString('ru-RU')+' ₽'};
+function days(){var out=[],d=new Date();d.setHours(0,0,0,0);while(out.length<7){if(d.getDay()!==0)out.push(new Date(d));d.setDate(d.getDate()+1)}return out}
+var DAYS=days();
+function slotsFor(di,bi){var dt=DAYS[di],sat=dt.getDay()===6,start=sat?9:10,end=sat?17:20,out=[];for(var h=start;h<end;h++)for(var m=0;m<60;m+=30){var t=(h<10?'0':'')+h+':'+(m?'30':'00');var seed=(dt.getDate()*31+h*7+m+bi*13)%9;var taken=seed<3||booked[di+'|'+bi+'|'+t];if(dt.toDateString()===new Date().toDateString()){var now=new Date();if(h<now.getHours()||(h===now.getHours()&&m<=now.getMinutes()))taken=true}out.push([t,!!taken])}return out}
+function freeToday(){var n=0;slotsFor(0,1).concat(slotsFor(0,2),slotsFor(0,3)).forEach(function(s){if(!s[1])n++});document.getElementById('freeToday').textContent=n}
+function btn(cls,pressed){var b=document.createElement('button');b.type='button';b.className=cls;b.setAttribute('aria-pressed',pressed);return b}
+function dayLabel(i){var d=DAYS[i];return d.toDateString()===new Date().toDateString()?'Сегодня':DN[d.getDay()]}
+function render(){
+ var s=document.getElementById('svc');s.innerHTML='';SVC.forEach(function(v,i){var on=sel.svc.indexOf(i)>-1;var b=btn('svc-btn',on);b.innerHTML='<span class="box">'+(on?'✓':'')+'</span><span><span class="n"></span><small></small></span><span class="p"></span>';b.querySelector('.n').textContent=v[0];b.querySelector('small').textContent=v[1]+' · '+v[3]+' мин';b.querySelector('.p').textContent=fmt(v[2]);b.onclick=function(){var k=sel.svc.indexOf(i);k>-1?sel.svc.splice(k,1):sel.svc.push(i);render()};s.appendChild(b)});
+ var br=document.getElementById('barbers');br.innerHTML='';BAR.forEach(function(v,i){var b=btn('barber',sel.bar===i);b.innerHTML='<span class="ava"></span><b></b><small></small>';b.querySelector('.ava').textContent=v[2];b.querySelector('b').textContent=v[0];b.querySelector('small').textContent=v[1];b.onclick=function(){sel.bar=i;sel.slot=null;render()};br.appendChild(b)});
+ var dy=document.getElementById('days');dy.innerHTML='';DAYS.forEach(function(d,i){var b=btn('day',sel.day===i);b.innerHTML='<small></small><b></b>';b.querySelector('small').textContent=dayLabel(i);b.querySelector('b').textContent=d.getDate();b.onclick=function(){sel.day=i;sel.slot=null;render()};dy.appendChild(b)});
+ var bi=sel.bar||1,sl=document.getElementById('slots');sl.innerHTML='';var any=false;slotsFor(sel.day,bi).forEach(function(v){var b=btn('slot',sel.slot===v[0]);b.textContent=v[0];b.disabled=v[1];if(!v[1])any=true;b.onclick=function(){sel.slot=v[0];render()};sl.appendChild(b)});
+ if(!any){var p=document.createElement('p');p.style.gridColumn='1/-1';p.style.color='var(--muted)';p.textContent='На этот день свободных окон нет. Выберите другой день.';sl.appendChild(p)}
+ var tot=0,dur=0,names=[];sel.svc.forEach(function(i){tot+=SVC[i][2];dur+=SVC[i][3];names.push(SVC[i][0])});
+ document.getElementById('sSvc').textContent=names.length?names.join(' + '):'—';
+ document.getElementById('sBar').textContent=BAR[sel.bar][0];
+ var d=DAYS[sel.day];document.getElementById('sTime').textContent=sel.slot?(dayLabel(sel.day)==='Сегодня'?'Сегодня':DN[d.getDay()]+' '+d.getDate()+'.'+String(d.getMonth()+1).padStart(2,'0'))+' в '+sel.slot:'—';
+ document.getElementById('sDur').textContent=dur?dur+' мин':'—';
+ document.getElementById('sTotal').textContent=fmt(tot);freeToday()}
+document.getElementById('bookBtn').onclick=function(){var err=document.getElementById('bErr'),ok=document.getElementById('bOk');var n=document.getElementById('bName').value.trim(),ph=document.getElementById('bPhone').value.replace(/\D/g,'');
+ var m=!sel.svc.length?'Выберите хотя бы одну услугу.':!sel.slot?'Выберите время.':!n?'Укажите имя.':ph.length<10?'Укажите номер телефона.':'';err.hidden=!m;err.textContent=m;ok.hidden=true;if(m)return;
+ var bi=sel.bar||1;booked[sel.day+'|'+bi+'|'+sel.slot]=true;ok.hidden=false;ok.textContent=n+', ждём вас в '+sel.slot+'! (Демо: запись никуда не отправлена.)';sel.slot=null;render()};
+var pr=document.getElementById('prices');SVC.forEach(function(v){var d=document.createElement('div');d.className='pr';d.innerHTML='<span></span><span></span><b></b>';d.children[0].textContent=v[0];d.children[2].textContent=fmt(v[2]);pr.appendChild(d)});
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,385 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Артём — лендинги для бизнеса</title>
+<meta name="description" content="Разработка лендингов под ключ от 12 000 ₽: структура, тексты, дизайн, адаптивная вёрстка и запуск.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&family=Playfair+Display:wght@600&family=Oswald:wght@700&family=Onest:wght@400;500;600&display=swap">
+<style>
+/* Layout: svetla, prozračna kolona 1120px; jedan kobalt akcenat + žuti marker samo na ključnim rečima */
+:root{
+  --bg:#FFFFFF; --surface:#FFFFFF; --ink:#0B0B0C; --muted:#55565C; --line:#E8E8EA;
+  --accent:#0B0B0C; --accent-ink:#FFFFFF; --sun:#FFD21F; --soft:#FFF7D1;
+  --f-display:"Unbounded", "Arial Black", system-ui, sans-serif;
+  --f-body:"Onest", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --r:18px; color-scheme:light;
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:6px}
+.wrap{max-width:1120px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--f-display);font-weight:700;line-height:1.1;text-wrap:balance;margin:0;letter-spacing:-.01em}
+h2{font-size:clamp(28px,4.4vw,46px)}
+h3{font-size:18px;font-weight:500;line-height:1.3}
+p{margin:0}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--ink)}
+.eyebrow::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--sun);box-shadow:0 0 0 1.5px var(--ink)}
+.lead{font-size:clamp(18px,2vw,21px);color:var(--muted);max-width:36em}
+
+/* header */
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;gap:24px;height:64px}
+.logo{font-family:var(--f-display);font-weight:700;font-size:18px;text-decoration:none}
+.logo span{color:var(--sun);-webkit-text-stroke:1px var(--ink)}
+.nav nav{display:flex;gap:22px;margin-left:auto}
+.nav nav a{text-decoration:none;color:var(--muted);font-weight:500;font-size:15px}
+.nav nav a:hover{color:var(--ink)}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 22px;border-radius:999px;font-weight:600;font-size:16px;text-decoration:none;border:1.5px solid transparent;cursor:pointer;font-family:inherit;transition:transform .15s,background .15s}
+.btn-primary{background:var(--accent);color:var(--accent-ink)}
+.btn-primary:hover{transform:translateY(-1px)}
+.btn-ghost{border-color:var(--line);background:var(--surface);color:var(--ink)}
+.btn-ghost:hover{border-color:var(--ink)}
+.btn-sm{padding:9px 16px;font-size:14px}
+@media (max-width:720px){.nav nav{display:none}.nav .btn-sm{margin-left:auto}}
+
+section{padding-block:clamp(64px,9vw,112px)}
+.sec-head{display:grid;gap:16px;margin-bottom:44px;max-width:760px}
+
+/* hero */
+.hero{padding-block:clamp(48px,8vw,96px) clamp(56px,8vw,96px)}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center}
+.hero h1{font-size:clamp(44px,8vw,96px);letter-spacing:-.03em}
+.hero h1 span{color:var(--sun);-webkit-text-stroke:2px var(--ink)}
+.hero .lead{margin-top:22px}
+.hero-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px}
+.hero-note{margin-top:18px;font-size:14px;color:var(--muted)}
+@media (max-width:880px){.hero-grid{grid-template-columns:1fr;gap:44px}}
+
+/* browser mock */
+.mock{background:var(--surface);border:1px solid var(--line);border-radius:22px;box-shadow:12px 12px 0 var(--sun);overflow:hidden;min-width:0}
+.mock-bar{display:flex;align-items:center;gap:7px;padding:12px 16px;border-bottom:1px solid var(--line)}
+.mock-bar i{width:10px;height:10px;border-radius:50%;background:var(--line)}
+.mock-url{margin-left:10px;flex:1;min-width:0;font-size:12px;color:var(--muted);background:var(--bg);border-radius:999px;padding:4px 12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mock-body{padding:22px;display:grid;gap:12px}
+.blk{border-radius:12px;padding:14px 16px;display:flex;justify-content:space-between;gap:12px;align-items:center;font-size:14px}
+.blk b{font-weight:600}
+.blk small{color:var(--muted);font-size:12px;text-align:right}
+.blk-hero{background:var(--soft);padding:22px 16px}
+.blk-hero b{font-family:var(--f-display);font-size:17px}
+.blk-line{border:1px dashed var(--line)}
+.blk-cta{background:var(--sun);color:var(--ink)}
+.blk-cta small{color:inherit;opacity:.8}
+
+/* approach */
+.approach{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+.approach .big{font-family:var(--f-display);font-weight:500;font-size:clamp(22px,2.8vw,30px);line-height:1.3;text-wrap:balance}
+.approach .txt{display:grid;gap:18px;color:var(--muted)}
+.approach .txt strong{color:var(--ink);font-weight:600}
+.offer{margin-top:44px;display:grid;grid-template-columns:auto 1fr;gap:28px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:28px 32px}
+.offer .price{font-family:var(--f-display);font-size:22px;white-space:nowrap}
+.offer .price small{display:block;font-family:var(--f-body);font-size:14px;color:var(--muted);font-weight:500;margin-bottom:4px}
+.offer p{color:var(--muted)}
+@media (max-width:820px){.approach{grid-template-columns:1fr;gap:24px}.offer{grid-template-columns:1fr;gap:12px;padding:24px}}
+
+/* features */
+.features{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.feat{background:var(--surface);padding:32px;display:grid;gap:12px;align-content:start}
+.feat .ic{width:40px;height:40px;border-radius:12px;background:var(--sun);display:grid;place-items:center;color:var(--ink)}
+.feat p{color:var(--muted)}
+@media (max-width:720px){.features{grid-template-columns:1fr}.feat{padding:26px}}
+
+/* one author */
+.author{background:#FAFAF7;border-block:1px solid var(--line)}
+.roles{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.role{display:grid;gap:10px;padding-top:18px;border-top:4px solid var(--sun)}
+.role p{color:var(--muted);font-size:16px}
+@media (max-width:900px){.roles{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:520px){.roles{grid-template-columns:1fr}}
+
+/* process */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;list-style:none;padding:0;margin:0;counter-reset:s}
+.steps li{counter-increment:s;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:28px;display:grid;gap:12px;align-content:start}
+.steps li::before{content:counter(s);font-family:var(--f-display);font-weight:700;font-size:15px;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:var(--sun);color:var(--ink)}
+.steps p{color:var(--muted)}
+.inline-cta{margin-top:36px;display:flex;flex-wrap:wrap;gap:16px 24px;align-items:center;justify-content:space-between;padding:24px 28px;border-radius:var(--r);background:var(--soft)}
+.inline-cta p{font-family:var(--f-display);font-weight:500;font-size:19px}
+@media (max-width:820px){.steps{grid-template-columns:1fr}}
+
+/* portfolio */
+.works{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.work{display:grid;gap:16px;align-content:start;text-decoration:none;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px 12px 22px;transition:transform .2s,border-color .2s}
+.work:hover{transform:translateY(-3px);border-color:var(--ink)}
+.thumb{aspect-ratio:4/3;max-width:100%;border-radius:12px;padding:14px;display:grid;grid-template-rows:auto 1fr auto;gap:8px;overflow:hidden}
+.thumb .tb{display:flex;justify-content:space-between;align-items:center;font-size:12px;font-weight:600}
+.thumb .tb i{width:46px;height:14px;border-radius:7px}
+.thumb .th{align-self:center;line-height:1.05}
+.thumb .tf{display:flex;gap:6px}
+.thumb .tf i{height:22px;border-radius:6px;flex:1}
+.t-lipa{background:#F2F6F3;color:#18201B}
+.t-lipa .th{font-family:"Playfair Display",Georgia,serif;font-size:clamp(22px,2.4vw,28px)}
+.t-lipa .th span{color:#1F5B3F}
+.t-lipa .tb i,.t-lipa .tf i:first-child{background:#1F5B3F}.t-lipa .tf i{background:#DCEBE1}
+.t-brica{background:#111111;color:#FFFFFF}
+.t-brica .th{font-family:"Oswald",Impact,sans-serif;text-transform:uppercase;font-size:clamp(26px,3vw,34px);letter-spacing:.02em}
+.t-brica .th span{color:#FF5B14}
+.t-brica .tb i,.t-brica .tf i:first-child{background:#FF5B14}.t-brica .tf i{background:#2A2A2A}
+.t-kvadrat{background-color:#FFFFFF;background-image:linear-gradient(#EEF2F7 1px,transparent 1px),linear-gradient(90deg,#EEF2F7 1px,transparent 1px);background-size:14px 14px;color:#14202B;border:1px solid var(--line)}
+.t-kvadrat .th{font-family:var(--f-display);font-size:clamp(18px,2vw,22px)}
+.t-kvadrat .th span{color:#1352D6}
+.t-kvadrat .tb i,.t-kvadrat .tf i:first-child{background:#1352D6}.t-kvadrat .tf i{background:#14202B}
+.work-meta{display:grid;gap:8px;padding:0 8px}
+.work-top{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.work-meta h3{font-size:19px}
+.work-meta p{color:var(--muted);font-size:15px}
+.feats{display:flex;flex-wrap:wrap;gap:6px;list-style:none;margin:4px 0 0;padding:0}
+.feats li{font-size:13px;padding:4px 10px;border-radius:999px;background:var(--soft)}
+.open{font-weight:600;font-size:15px;margin-top:4px}
+.tag{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);background:var(--sun);border-radius:999px;padding:3px 10px;white-space:nowrap}
+.media-note{margin-top:24px;display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:center;padding:24px 28px;border-radius:var(--r);border:2px dashed var(--ink);background:var(--soft)}
+.media-note .ic{width:52px;height:52px;border-radius:14px;background:var(--sun);display:grid;place-items:center}
+.media-note h3{font-size:18px;margin-bottom:6px}
+.media-note p{color:var(--muted)}
+@media (max-width:960px){.works{grid-template-columns:1fr 1fr}}
+@media (max-width:620px){.works{grid-template-columns:1fr}.media-note{grid-template-columns:1fr;padding:22px}}
+
+/* faq */
+.faq{display:grid;gap:10px;max-width:820px}
+details{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:0 24px}
+summary{cursor:pointer;list-style:none;padding:20px 0;font-weight:600;font-size:18px;display:flex;justify-content:space-between;gap:16px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-family:var(--f-display);color:var(--ink);font-size:22px;line-height:1;transition:transform .2s}
+details[open] summary::after{transform:rotate(45deg)}
+details p{color:var(--muted);padding-bottom:22px;max-width:62ch}
+
+/* contact */
+.contact{background:var(--sun);color:var(--ink);border-radius:28px;padding:clamp(36px,6vw,72px);display:grid;grid-template-columns:1.3fr 1fr;gap:40px;align-items:center}
+.contact h2{color:inherit}
+.contact .lead{color:inherit;opacity:.85;margin-top:16px}
+.contact-box{background:var(--surface);color:var(--ink);border-radius:20px;padding:26px;display:grid;gap:14px}
+.handle{display:flex;align-items:center;justify-content:space-between;gap:10px;font-family:var(--f-display);font-size:clamp(14px,3.8vw,18px);user-select:all;min-width:0;overflow-wrap:anywhere}
+.copy{font-family:var(--f-body);font-size:13px;font-weight:600;background:var(--soft);color:var(--ink);border:0;border-radius:999px;padding:7px 12px;cursor:pointer}
+.contact-box .btn{justify-content:center}
+.ch{display:grid;gap:10px}
+.ch+.ch{border-top:1px solid var(--line);padding-top:14px}
+.ch-label{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.contact-box small{color:var(--muted);font-size:14px;text-align:center}
+@media (max-width:820px){.contact{grid-template-columns:1fr}}
+
+footer{padding-block:40px;color:var(--muted);font-size:14px}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
+footer a{text-decoration:none}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap nav">
+    <a class="logo" href="#top">artem<span>*</span></a>
+    <nav aria-label="Главная навигация">
+      <a href="#pristup">Подход</a>
+      <a href="#proces">Процесс</a>
+      <a href="#radovi">Примеры</a>
+      <a href="#kontakt">Контакт</a>
+    </nav>
+    <a class="btn btn-primary btn-sm" href="https://t.me/artem_idea" target="_blank" rel="noopener">Написать мне</a>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <p class="eyebrow">Лендинги для бизнеса</p>
+        <h1 style="margin-top:16px">Артём<span>.</span></h1>
+        <p class="lead">Делаю лендинги, в которых дизайн работает на вашу идею, от первого впечатления до первой заявки.</p>
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="https://t.me/artem_idea" target="_blank" rel="noopener">Обсудить проект →</a>
+          <a class="btn btn-ghost" href="#radovi">Посмотреть примеры</a>
+        </div>
+        <p class="hero-note">Отвечаю лично, обычно в тот же день.</p>
+      </div>
+      <div class="mock" aria-hidden="true">
+        <div class="mock-bar"><i></i><i></i><i></i><span class="mock-url">vash-biznes.ru</span></div>
+        <div class="mock-body">
+          <div class="blk blk-hero"><b>Кто вы и чем полезны</b><small>первый экран</small></div>
+          <div class="blk blk-line"><span>Что получит клиент</span><small>ценность</small></div>
+          <div class="blk blk-line"><span>Почему именно вы</span><small>доверие</small></div>
+          <div class="blk blk-line"><span>Ответы на вопросы</span><small>сомнения</small></div>
+          <div class="blk blk-cta"><b>Оставить заявку</b><small>следующий шаг</small></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="pristup" style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Подход</p>
+        <h2>Лендинги, которые убеждают.</h2>
+      </div>
+      <div class="approach">
+        <p class="big">У вашего бизнеса есть ценность. Моя задача — сделать её очевидной.</p>
+        <div class="txt">
+          <p>Я Артём. Делаю <strong>лендинги с характером</strong> и понятным путём до заявки.</p>
+          <p>Страница становится понятной точкой входа в ваш бизнес: знакомит с вами, объясняет предложение и помогает заинтересованному человеку <strong>сделать следующий шаг</strong>.</p>
+        </div>
+      </div>
+      <div class="offer">
+        <p class="price"><small>Разработка лендинга</small>от 12 000 ₽</p>
+        <p>От структуры и текстов до дизайна, адаптивной вёрстки и запуска. В центре каждого решения ваш продукт, ваш клиент и цель страницы. Точную стоимость называю после короткого обсуждения задачи.</p>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Результат</p>
+        <h2>Чтобы выбирали вас.</h2>
+        <p class="lead">Яркий визуал привлекает внимание. Продуманная структура помогает его удержать.</p>
+      </div>
+      <div class="features">
+        <div class="feat">
+          <div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/></svg></div>
+          <h3>Внимание к вашему бренду</h3>
+          <p>Первый экран сразу объясняет, кто вы и чем полезны. Индивидуальный дизайн помогает запомнить вас среди похожих предложений.</p>
+        </div>
+        <div class="feat">
+          <div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12h14M13 6l6 6-6 6"/></svg></div>
+          <h3>Понятный путь к заявке</h3>
+          <p>Каждый блок отвечает на вопрос клиента и ведёт к следующему шагу. Контакт всегда под рукой, а действие понятно без лишних объяснений.</p>
+        </div>
+        <div class="feat">
+          <div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M11 18h2"/></svg></div>
+          <h3>Удобно на любом экране</h3>
+          <p>Мобильную версию продумываю отдельно: читаемый текст, удобные кнопки, аккуратная анимация. Ваше предложение остаётся убедительным и на телефоне.</p>
+        </div>
+        <div class="feat">
+          <div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 18l6-6 4 4 6-8"/><path d="M15 8h5v5"/></svg></div>
+          <h3>Основа для продвижения</h3>
+          <p>Готовлю заголовки, метаданные и структуру страницы. Готовый лендинг можно использовать в рекламе, соцсетях и рекомендациях.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="author">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Что вы получаете</p>
+        <h2>Один автор. Весь проект.</h2>
+        <p class="lead">Не нужно собирать сайт из работы разных исполнителей. Я веду проект от знакомства до готовой страницы.</p>
+      </div>
+      <div class="roles">
+        <div class="role"><h3>Содержание</h3><p>Структура и тексты, которые раскрывают ценность вашего предложения.</p></div>
+        <div class="role"><h3>Характер</h3><p>Индивидуальный дизайн в стиле вашего бренда, с вашими фото и видео.</p></div>
+        <div class="role"><h3>Разработка</h3><p>Адаптивная страница с удобной навигацией, контактами и аккуратной анимацией.</p></div>
+        <div class="role"><h3>Запуск</h3><p>Проверка экранов и ссылок, базовая SEO-разметка и помощь с публикацией.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="proces">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Процесс</p>
+        <h2>Простой путь к вашему сайту.</h2>
+        <p class="lead">Без потерянных сообщений между подрядчиками. Обсуждаем решения напрямую и всегда знаем, что дальше.</p>
+      </div>
+      <ol class="steps">
+        <li><h3>Разбираемся в задаче</h3><p>Расскажите о продукте, аудитории и цели. Определим, какое действие должен совершить посетитель.</p></li>
+        <li><h3>Находим форму</h3><p>Собираю историю страницы, продумываю тексты и дизайн. Показываю направление и согласовываю его с вами.</p></li>
+        <li><h3>Собираем и запускаем</h3><p>Делаю лендинг, проверяю его на разных экранах и готовлю к публикации.</p></li>
+      </ol>
+      <div class="inline-cta">
+        <p>Уже знаете, что хотите запустить?</p>
+        <a class="btn btn-primary" href="https://t.me/artem_idea" target="_blank" rel="noopener">Обсудить проект</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="radovi" style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Примеры</p>
+        <h2>Каким может быть ваш сайт.</h2>
+        <p class="lead">Три демо-сайта для разных видов бизнеса. В каждом есть инструмент, который экономит клиенту время: корзина, онлайн-запись или калькулятор стоимости. Откройте и попробуйте.</p>
+      </div>
+      <div class="works">
+        <a class="work" href="primeri/lipa.html" target="_blank" rel="noopener">
+          <div class="thumb t-lipa" aria-hidden="true"><div class="tb"><span>Липа</span><i></i></div><div class="th">Домашняя кухня, <span>как у бабушки.</span></div><div class="tf"><i></i><i></i><i></i></div></div>
+          <div class="work-meta"><div class="work-top"><h3>Липа</h3><span class="tag">Пример</span></div><p>Ресторан домашней кухни</p><ul class="feats"><li>Меню с корзиной</li><li>Бронь стола</li><li>Доставка</li></ul><span class="open">Открыть сайт →</span></div>
+        </a>
+        <a class="work" href="primeri/brica.html" target="_blank" rel="noopener">
+          <div class="thumb t-brica" aria-hidden="true"><div class="tb"><span>БРИТВА.</span><i></i></div><div class="th">Чёткий фейд.<br><span>Без очереди.</span></div><div class="tf"><i></i><i></i><i></i></div></div>
+          <div class="work-meta"><div class="work-top"><h3>Бритва</h3><span class="tag">Пример</span></div><p>Барбершоп</p><ul class="feats"><li>Запись в 3 шага</li><li>Выбор мастера</li><li>Прайс</li></ul><span class="open">Открыть сайт →</span></div>
+        </a>
+        <a class="work" href="primeri/kvadrat.html" target="_blank" rel="noopener">
+          <div class="thumb t-kvadrat" aria-hidden="true"><div class="tb"><span>КВАДРАТ</span><i></i></div><div class="th">Строим по <span>фиксированной цене.</span></div><div class="tf"><i></i><i></i><i></i></div></div>
+          <div class="work-meta"><div class="work-top"><h3>Квадрат</h3><span class="tag">Пример</span></div><p>Строительная компания</p><ul class="feats"><li>Калькулятор цены за м²</li><li>Этапы работ</li><li>Заявка</li></ul><span class="open">Открыть сайт →</span></div>
+        </a>
+      </div>
+      <div class="media-note">
+        <div class="ic" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0B0B0C" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M10 9.5v5l4-2.5z" fill="#0B0B0C"/></svg></div>
+        <div><h3>Ваши фото и видео на сайте</h3><p>В примерах стоят иллюстрации, а на вашем сайте будет ваш контент: фото интерьера, блюд, работ и команды, видео на фоне первого экрана или галерея «до и после». Пришлите материалы, и я подготовлю их так, чтобы они быстро грузились и красиво смотрелись на телефоне.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Вопросы</p>
+        <h2>До начала работы.</h2>
+      </div>
+      <div class="faq">
+        <details open><summary>Сколько стоит лендинг?</summary><p>Разработка стоит от 12 000 ₽. Итоговая цена зависит от объёма страницы, сложности дизайна, анимации и нужных функций. Напишите мне: обсудим задачу, и я предложу состав работ и стоимость.</p></details>
+        <details><summary>Можно обратиться без готового задания?</summary><p>Да. Достаточно рассказать о бизнесе, продукте и цели сайта. Я помогу со структурой и содержанием, и мы начнём с понятной задачей.</p></details>
+        <details><summary>Что входит в разработку?</summary><p>Обсуждение задачи, структура страницы, тексты, индивидуальный дизайн, адаптивная вёрстка и проверка перед запуском. Дополнительные интеграции и их стоимость обсуждаем заранее.</p></details>
+        <details><summary>Сколько времени занимает работа?</summary><p>Срок зависит от объёма и готовности материалов. После обсуждения согласуем этапы и дату запуска. Конкретные даты называю до начала работы.</p></details>
+        <details><summary>Будут ли заявки сразу после запуска?</summary><p>Лендинг понятно представляет предложение и упрощает обращение. Количество заявок зависит также от спроса, качества трафика и самого продукта. Обещать продажи без этих условий было бы нечестно.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section id="kontakt" style="padding-top:0">
+    <div class="wrap">
+      <div class="contact">
+        <div>
+          <h2>Начнём с вашей идеи.</h2>
+          <p class="lead">Напишите, чем занимается ваш бизнес и какой сайт нужен. Обсудим задачу, формат работы и следующий шаг.</p>
+        </div>
+        <div class="contact-box">
+          <div class="ch"><span class="ch-label">Telegram</span><div class="handle"><span id="h-tg">@artem_idea</span><button class="copy" type="button" data-copy="@artem_idea" data-target="h-tg">Копировать</button></div><a class="btn btn-primary" href="https://t.me/artem_idea" target="_blank" rel="noopener">Написать в Telegram</a></div>
+          <div class="ch"><span class="ch-label">Instagram</span><div class="handle"><span id="h-ig">@artem_programmer_info</span><button class="copy" type="button" data-copy="@artem_programmer_info" data-target="h-ig">Копировать</button></div><a class="btn btn-ghost" href="https://www.instagram.com/artem_programmer_info/" target="_blank" rel="noopener">Написать в Instagram</a></div>
+          <small>Отвечаю лично там, где вам удобнее.</small>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span><b style="font-family:var(--f-display)">artem*</b> · Дизайн и разработка лендингов</span>
+    <a href="#top">Наверх ↑</a>
+  </div>
+</footer>
+
+<script>
+document.querySelectorAll('.copy').forEach(function(b){b.addEventListener('click',function(){
+  var t=b.dataset.copy;
+  function done(){b.textContent='Скопировано';setTimeout(function(){b.textContent='Копировать'},1600)}
+  function fallback(){var r=document.createRange();r.selectNodeContents(document.getElementById(b.dataset.target));var s=getSelection();s.removeAllRanges();s.addRange(r);b.textContent='Выделено'}
+  try{navigator.clipboard.writeText(t).then(done,fallback)}catch(e){fallback()}
+})});
+</script>
+</body>
+</html>
