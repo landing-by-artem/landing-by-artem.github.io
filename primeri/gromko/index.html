@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ГРОМКО — одежда, которую слышно</title>
+<meta name="description" content="Демо-сайт: интернет-магазин уличной одежды ГРОМКО. Каталог, подбор размера, корзина.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik+Mono+One&family=Rubik:wght@400;500;700;800;900&display=swap">
+<link rel="stylesheet" href="gromko.css">
+</head>
+<body>
+<div class="topbar">Бесплатная доставка от 7 000 ₽ · Примерка перед оплатой</div>
+<header>
+  <div class="wrap nav">
+    <a class="logo" href="index.html">ГРОМКО</a>
+    <nav class="menu" aria-label="Разделы">
+      <a href="index.html" aria-current="page">Главная</a>
+      <a href="katalog.html">Весь каталог</a>
+      <a href="katalog.html?cat=top">Верх</a>
+      <a href="katalog.html?cat=bottom">Низ</a>
+      <a href="katalog.html?cat=acc">Аксессуары</a>
+    </nav>
+    <a class="cart-link" href="korzina.html">Корзина <b data-cart-count>0</b></a>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="sticker">Дроп №7 · осень</span>
+        <h1 style="margin-top:20px">Одежда, <span class="bl">которую</span> <span class="hl">слышно</span></h1>
+        <p class="lead">Яркий стритвир из Москвы. Шьём небольшими партиями, поэтому каждую вещь не встретишь на каждом втором.</p>
+        <div class="cta-row">
+          <a class="btn" href="katalog.html">Смотреть дроп</a>
+          <a class="btn btn-white" href="tovar.html?id=hoodie">Хит: худи «ГРОМЧЕ»</a>
+        </div>
+      </div>
+      <div class="collage" id="collage"></div>
+    </div>
+  </section>
+
+  <div class="marquee lime" aria-hidden="true"><div class="track"><span>Доставка по России от 3 дней</span><span>Примерка перед оплатой</span><span>Возврат 14 дней</span><span>Подбор размера по росту</span><span>Доставка по России от 3 дней</span><span>Примерка перед оплатой</span><span>Возврат 14 дней</span><span>Подбор размера по росту</span></div></div>
+
+  <section>
+    <div class="wrap">
+      <div class="sec-head"><div><span class="sticker">Новый дроп</span><h2 style="margin-top:14px">Разбирают первыми</h2></div><a class="btn btn-white" href="katalog.html">Весь каталог →</a></div>
+      <div class="grid" id="drop"></div>
+    </div>
+  </section>
+
+  <div class="checker" aria-hidden="true"></div>
+
+  <section>
+    <div class="wrap">
+      <div class="sec-head"><div><span class="sticker">Категории</span><h2 style="margin-top:14px">Собери образ</h2></div></div>
+      <div class="cats" id="cats"></div>
+    </div>
+  </section>
+
+  <section style="padding-top:0">
+    <div class="wrap">
+      <div class="band">
+        <div><h2>Не знаешь <span class="hl">свой размер?</span></h2><p>Укажи рост и вес на странице товара, и мы подскажем размер с учётом кроя. Не подошло? Обменяем бесплатно.</p></div>
+        <div><a class="btn" href="tovar.html?id=tee">Подобрать размер</a></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div class="marquee" aria-hidden="true"><div class="track"><span>ГРОМКО</span><span>ГРОМЧЕ</span><span>ГРОМКО</span><span>ГРОМЧЕ</span><span>ГРОМКО</span><span>ГРОМЧЕ</span><span>ГРОМКО</span><span>ГРОМЧЕ</span><span>ГРОМКО</span><span>ГРОМЧЕ</span></div></div>
+<footer style="margin-top:0"><div class="wrap"><span>ГРОМКО · уличная одежда</span><span>Демо-проект · дизайн и разработка: <a href="../../index.html">Артём</a></span></div></footer>
+<script src="gromko.js"></script>
+<script>
+(function(){
+  var col=document.getElementById('collage');
+  [['hoodie',0],['tee',1],['cap',0]].forEach(function(x){var p=G.find(x[0]);var d=document.createElement('div');d.className='pc';d.innerHTML=G.svg(p,p.colors[x[1]][1]);col.appendChild(d)});
+  var star=document.createElement('div');star.className='badge-star';star.innerHTML='Сшито<br>в Москве';col.appendChild(star);
+  var drop=document.getElementById('drop');G.P.slice().sort(function(a,b){return b.pop-a.pop}).slice(0,4).forEach(function(p){drop.appendChild(G.card(p))});
+  var cats=document.getElementById('cats');[['top','hoodie'],['bottom','cargo'],['acc','cap']].forEach(function(c){var p=G.find(c[1]);var n=G.P.filter(function(x){return x.cat===c[0]}).length;var a=document.createElement('a');a.className='cat';a.href='katalog.html?cat='+c[0];a.innerHTML='<h3>'+G.CATS[c[0]]+'</h3><span class="go">'+n+' '+(n===1?'вещь':n<5?'вещи':'вещей')+' →</span>'+G.svg(p,p.colors[c[0]==='top'?2:c[0]==='acc'?2:1][1]);cats.appendChild(a)});
+})();
+</script>
+</body>
+</html>

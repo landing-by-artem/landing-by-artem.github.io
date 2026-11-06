@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Товар — ГРОМКО</title>
+<meta name="description" content="Демо-сайт: карточка товара с выбором цвета, размера и подбором по росту и весу.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik+Mono+One&family=Rubik:wght@400;500;700;800;900&display=swap">
+<link rel="stylesheet" href="gromko.css">
+</head>
+<body>
+<div class="topbar">Бесплатная доставка от 7 000 ₽ · Примерка перед оплатой</div>
+<header>
+  <div class="wrap nav">
+    <a class="logo" href="index.html">ГРОМКО</a>
+    <nav class="menu" aria-label="Разделы">
+      <a href="index.html">Главная</a>
+      <a href="katalog.html">Весь каталог</a>
+      <a href="katalog.html?cat=top">Верх</a>
+      <a href="katalog.html?cat=bottom">Низ</a>
+      <a href="katalog.html?cat=acc">Аксессуары</a>
+    </nav>
+    <a class="cart-link" href="korzina.html">Корзина <b data-cart-count>0</b></a>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <p class="crumbs"><a href="katalog.html">Каталог</a> / <a id="crCat" href="katalog.html">Категория</a> / <span id="crName">Товар</span></p>
+    <div class="product">
+      <div class="gallery">
+        <div class="main-pic" id="mainPic"></div>
+        <div class="thumbs" id="thumbs" role="group" aria-label="Цвета"></div>
+      </div>
+      <div class="info">
+        <h1 id="name">Товар</h1>
+        <div style="display:flex;align-items:baseline;gap:14px;flex-wrap:wrap"><span class="price" id="price"></span><s id="old" class="count"></s></div>
+        <p id="desc" style="font-weight:500"></p>
+        <div class="opt"><span>Цвет: <b id="colorName" style="text-transform:none;letter-spacing:0"></b></span><div class="swatches" id="swatches"></div></div>
+        <div class="opt"><span>Размер</span><div class="chips" id="sizes" role="group" aria-label="Размер"></div></div>
+        <details class="helper" id="helper">
+          <summary>Подобрать размер по росту и весу</summary>
+          <div class="helper-body">
+            <div class="hrow">
+              <label class="f" for="hH">Рост, см<input id="hH" type="number" min="140" max="210" value="178" inputmode="numeric"></label>
+              <label class="f" for="hW">Вес, кг<input id="hW" type="number" min="40" max="150" value="72" inputmode="numeric"></label>
+            </div>
+            <label class="f" for="hFit">Как любишь носить<select id="hFit"><option value="0">По размеру</option><option value="1">Свободно</option><option value="-1">Плотнее</option></select></label>
+            <div class="rec" id="rec" aria-live="polite"></div>
+          </div>
+        </details>
+        <div class="stock"><span id="stockTxt"></span><div class="stock-bar" aria-hidden="true"><i id="stockBar"></i></div></div>
+        <p class="err" id="err" hidden></p>
+        <div class="cta-row" style="margin-top:0"><button class="btn btn-pink" type="button" id="add">В корзину</button><a class="btn btn-white" href="korzina.html">Перейти в корзину</a></div>
+      </div>
+    </div>
+  </div>
+
+  <section>
+    <div class="wrap">
+      <div class="sec-head"><div><span class="sticker">С этим носят</span><h2 style="margin-top:14px">Собери образ</h2></div></div>
+      <div class="grid" id="more"></div>
+    </div>
+  </section>
+</main>
+
+<div class="toast" id="toast" role="status"><span id="toastTxt">Добавлено</span><a href="korzina.html">В корзину →</a></div>
+<footer><div class="wrap"><span>ГРОМКО · уличная одежда</span><span>Демо-проект · дизайн и разработка: <a href="../../index.html">Артём</a></span></div></footer>
+<script src="gromko.js"></script>
+<script>
+(function(){
+  var p=G.find(new URLSearchParams(location.search).get('id'))||G.P[0];
+  var SIZES=p.cat==='acc'?['ONE SIZE']:['XS','S','M','L','XL','XXL'];
+  var st={ci:0,size:SIZES.length===1?SIZES[0]:null};
+  document.title=p.name+' — ГРОМКО';
+  document.getElementById('name').textContent=p.name;
+  document.getElementById('crName').textContent=p.name;
+  var cr=document.getElementById('crCat');cr.textContent=G.CATS[p.cat];cr.href='katalog.html?cat='+p.cat;
+  document.getElementById('price').textContent=G.rub(p.price);
+  document.getElementById('old').textContent=p.old?G.rub(p.old):'';
+  document.getElementById('desc').textContent=p.desc;
+  if(p.cat==='acc')document.getElementById('helper').hidden=true;
+  var stockLeft=p.stock;
+  function stockFor(ci){return Math.max(1,stockLeft-ci*2)}
+  function render(){
+    var col=p.colors[st.ci];
+    var mp=document.getElementById('mainPic');mp.style.background=G.bg(p,st.ci);mp.innerHTML=(p.tag?'<span class="tag'+(p.tag==='Мало'?' pink':'')+'">'+p.tag+'</span>':'')+G.svg(p,col[1]);
+    document.getElementById('colorName').textContent=col[0];
+    var th=document.getElementById('thumbs');th.innerHTML='';
+    p.colors.forEach(function(c,i){var b=document.createElement('button');b.type='button';b.style.background=G.bg(p,i);b.setAttribute('aria-pressed',i===st.ci);b.setAttribute('aria-label',c[0]);b.innerHTML=G.svg(p,c[1]);b.onclick=function(){st.ci=i;render()};th.appendChild(b)});
+    var sw=document.getElementById('swatches');sw.innerHTML='';
+    p.colors.forEach(function(c,i){var b=document.createElement('button');b.type='button';b.className='swatch';b.style.background=c[1];b.setAttribute('aria-pressed',i===st.ci);b.setAttribute('aria-label',c[0]);b.onclick=function(){st.ci=i;render()};sw.appendChild(b)});
+    var sz=document.getElementById('sizes');sz.innerHTML='';
+    SIZES.forEach(function(s,i){var b=document.createElement('button');b.type='button';b.className='chip';b.textContent=s;var out=isOut(i);b.disabled=out;b.setAttribute('aria-pressed',s===st.size);b.onclick=function(){st.size=s;document.getElementById('err').hidden=true;render()};sz.appendChild(b)});
+    var n=stockFor(st.ci);document.getElementById('stockTxt').textContent=n<=5?'Осталось '+n+' шт. в этом цвете':'В наличии '+n+' шт.';
+    document.getElementById('stockBar').style.width=Math.min(100,n/30*100)+'%';
+  }
+  function isOut(i){return p.stock<8&&SIZES.length>1&&(i===0||i===SIZES.length-1)}
+  function rec(){
+    var h=+document.getElementById('hH').value,w=+document.getElementById('hW').value,fit=+document.getElementById('hFit').value;
+    var i=w<55?0:w<65?1:w<76?2:w<88?3:w<100?4:5;if(h>188)i++;if(h<160)i--;if(p.type==='tee'||p.type==='hoodie')i-=0;i+=fit;
+    i=Math.max(0,Math.min(5,i));var s=SIZES[i];
+    var el=document.getElementById('rec');
+    if(!h||!w){el.textContent='Укажи рост и вес.';return}
+    if(isOut(i)){el.textContent='Тебе подойдёт '+s+', но этот размер закончился. Оставь заявку в директ, и мы сообщим о поставке.';return}
+    el.innerHTML='';var t=document.createElement('span');t.textContent='Тебе подойдёт '+s+'. ';var b=document.createElement('button');b.type='button';b.className='chip';b.textContent='Выбрать '+s;b.onclick=function(){st.size=s;render()};el.appendChild(t);el.appendChild(b);
+  }
+  ['hH','hW','hFit'].forEach(function(id){document.getElementById(id).addEventListener('input',rec)});rec();
+  var tt;
+  document.getElementById('add').onclick=function(){
+    var err=document.getElementById('err');
+    if(!st.size){err.hidden=false;err.textContent='Выбери размер, чтобы добавить в корзину.';return}
+    G.add(p.id,st.ci,st.size);
+    document.getElementById('toastTxt').textContent=p.name+', '+p.colors[st.ci][0].toLowerCase()+', '+st.size+' в корзине';
+    var t=document.getElementById('toast');t.classList.add('show');clearTimeout(tt);tt=setTimeout(function(){t.classList.remove('show')},3200);
+  };
+  var more=document.getElementById('more');G.P.filter(function(x){return x.id!==p.id}).sort(function(a,b){return (a.cat===p.cat)-(b.cat===p.cat)||b.pop-a.pop}).slice(0,4).forEach(function(x){more.appendChild(G.card(x))});
+  render();
+})();
+</script>
+</body>
+</html>

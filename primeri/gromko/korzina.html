@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Корзина — ГРОМКО</title>
+<meta name="description" content="Демо-сайт: корзина интернет-магазина с промокодом и выбором доставки.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik+Mono+One&family=Rubik:wght@400;500;700;800;900&display=swap">
+<link rel="stylesheet" href="gromko.css">
+</head>
+<body>
+<div class="topbar">Бесплатная доставка от 7 000 ₽ · Примерка перед оплатой</div>
+<header>
+  <div class="wrap nav">
+    <a class="logo" href="index.html">ГРОМКО</a>
+    <nav class="menu" aria-label="Разделы">
+      <a href="index.html">Главная</a>
+      <a href="katalog.html">Весь каталог</a>
+      <a href="katalog.html?cat=top">Верх</a>
+      <a href="katalog.html?cat=bottom">Низ</a>
+      <a href="katalog.html?cat=acc">Аксессуары</a>
+    </nav>
+    <a class="cart-link" href="korzina.html" aria-current="page">Корзина <b data-cart-count>0</b></a>
+  </div>
+</header>
+
+<main>
+  <div class="page-head" style="background:var(--pink)"><div class="wrap"><span class="sticker">Почти твоё</span><h1 style="margin-top:16px">Корзина</h1></div></div>
+  <section>
+    <div class="wrap" id="root"></div>
+  </section>
+</main>
+
+<footer><div class="wrap"><span>ГРОМКО · уличная одежда</span><span>Демо-проект · дизайн и разработка: <a href="../../index.html">Артём</a></span></div></footer>
+<script src="gromko.js"></script>
+<script>
+(function(){
+  var root=document.getElementById('root'),promo=null,ship='cdek',done=null;
+  var SHIP={cdek:['Пункт выдачи СДЭК, 3–5 дней',390],courier:['Курьер до двери, 2–4 дня',590],pickup:['Самовывоз из шоурума, Москва',0]};
+  function el(h){var d=document.createElement('div');d.innerHTML=h.trim();return d.firstChild}
+  function render(){
+    var cart=G.load();root.innerHTML='';
+    if(done){root.appendChild(el('<div class="empty"><h2>Заказ оформлен!</h2><p style="font-weight:600;max-width:30em"></p><a class="btn" href="katalog.html">Вернуться в каталог</a></div>'));root.querySelector('p').textContent=done;return}
+    if(!cart.length){
+      var e=el('<div class="empty"><h2>Здесь пока тихо</h2><p style="font-weight:600">Добавь что-нибудь громкое, а мы сохраним корзину, даже если закроешь вкладку.</p><a class="btn" href="katalog.html">В каталог</a><div class="grid" style="width:100%;margin-top:20px;text-align:left" id="sug"></div></div>');
+      root.appendChild(e);G.P.slice(0,4).forEach(function(p){e.querySelector('#sug').appendChild(G.card(p))});return}
+    var wrap=el('<div class="cart"><div class="items"></div><aside class="summary" aria-live="polite"></aside></div>');root.appendChild(wrap);
+    var items=wrap.querySelector('.items'),sum=0,count=0;
+    cart.forEach(function(it,idx){var p=G.find(it.id);if(!p)return;var col=p.colors[it.ci]||p.colors[0];sum+=p.price*it.qty;count+=it.qty;
+      var row=el('<div class="item"><a class="thumb" href="tovar.html?id='+p.id+'" style="background:'+G.bg(p,it.ci)+'">'+G.svg(p,col[1])+'</a><div><h3></h3><p></p><div class="qty"><button type="button" aria-label="Меньше">−</button><output>'+it.qty+'</output><button type="button" aria-label="Больше">+</button><button type="button" class="rm">Удалить</button></div></div><span class="price">'+G.rub(p.price*it.qty)+'</span></div>');
+      row.querySelector('h3').textContent=p.name;row.querySelector('p').textContent=col[0]+' · размер '+it.size;
+      var b=row.querySelectorAll('.qty button');
+      b[0].onclick=function(){var c=G.load();c[idx].qty--;if(c[idx].qty<1)c.splice(idx,1);G.save(c);render()};
+      b[1].onclick=function(){var c=G.load();c[idx].qty=Math.min(9,c[idx].qty+1);G.save(c);render()};
+      b[2].onclick=function(){var c=G.load();c.splice(idx,1);G.save(c);render()};
+      items.appendChild(row)});
+    var disc=promo?Math.round(sum*.1):0,shipCost=(sum-disc)>=7000&&ship!=='pickup'?0:SHIP[ship][1],total=sum-disc+shipCost;
+    var s=wrap.querySelector('.summary');
+    s.innerHTML='<h2>Итого</h2><div class="srow"><span>Товары, '+count+' шт.</span><span>'+G.rub(sum)+'</span></div>'+(disc?'<div class="srow"><span>Промокод ГРОМКО10</span><span>−'+G.rub(disc)+'</span></div>':'')+'<div class="srow"><span>Доставка</span><span>'+(shipCost?G.rub(shipCost):'бесплатно')+'</span></div>'+
+      (sum-disc<7000&&ship!=='pickup'?'<p class="note">Ещё '+G.rub(7000-(sum-disc))+' до бесплатной доставки</p>':'')+
+      '<div class="radios" role="radiogroup" aria-label="Доставка"></div><div class="promo"><input id="promo" placeholder="Промокод" aria-label="Промокод" value="'+(promo?'ГРОМКО10':'')+'"><button type="button" id="applyPromo">Применить</button></div><p class="note" id="promoMsg">'+(promo?'Скидка 10% применена':'Подсказка для демо: ГРОМКО10')+'</p>'+
+      '<div class="stotal"><span>К оплате</span><span>'+G.rub(total)+'</span></div>'+
+      '<label class="f" for="oName">Имя<input id="oName" autocomplete="name" placeholder="Даша"></label><label class="f" for="oPhone">Телефон<input id="oPhone" type="tel" autocomplete="tel" placeholder="+7 900 000-00-00"></label>'+
+      '<p class="err" id="oErr" hidden></p><button class="btn btn-ink" type="button" id="order">Оформить заказ</button>';
+    var rg=s.querySelector('.radios');Object.keys(SHIP).forEach(function(k){var l=el('<label class="radio"><input type="radio" name="ship"><span></span><b></b></label>');l.querySelector('input').checked=k===ship;l.querySelector('input').onchange=function(){ship=k;render()};l.querySelector('span').textContent=SHIP[k][0];l.querySelector('b').textContent=SHIP[k][1]?G.rub(SHIP[k][1]):'0 ₽';rg.appendChild(l)});
+    s.querySelector('#applyPromo').onclick=function(){var v=s.querySelector('#promo').value.trim().toUpperCase();if(v==='ГРОМКО10'||v==='GROMKO10'){promo=true;render()}else{s.querySelector('#promoMsg').textContent='Такого промокода нет. Попробуй ГРОМКО10.'}};
+    s.querySelector('#order').onclick=function(){var n=s.querySelector('#oName').value.trim(),ph=s.querySelector('#oPhone').value.replace(/\D/g,''),err=s.querySelector('#oErr');var m=!n?'Укажи имя.':ph.length<10?'Укажи номер телефона.':'';err.hidden=!m;err.textContent=m;if(m)return;
+      done=n+', заказ на '+G.rub(total)+' принят. Это демо-сайт: оплата не списана, заказ никуда не отправлен.';G.save([]);render()};
+  }
+  render();
+})();
+</script>
+</body>
+</html>

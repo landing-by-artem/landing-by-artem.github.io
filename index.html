@@ -7,7 +7,7 @@
 <meta name="description" content="Разработка лендингов под ключ от 12 000 ₽: структура, тексты, дизайн, адаптивная вёрстка и запуск.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&family=Playfair+Display:wght@600&family=Oswald:wght@700&family=Onest:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&family=Playfair+Display:wght@600&family=Oswald:wght@700&family=Dela+Gothic+One&family=Rubik+Mono+One&family=Onest:wght@400;500;600&display=swap">
 <style>
 /* Layout: svetla, prozračna kolona 1120px; jedan kobalt akcenat + žuti marker samo na ključnim rečima */
 :root{
@@ -176,8 +176,33 @@ section{padding-block:clamp(64px,9vw,112px)}
 .media-note .ic{width:52px;height:52px;border-radius:14px;background:var(--sun);display:grid;place-items:center}
 .media-note h3{font-size:18px;margin-bottom:6px}
 .media-note p{color:var(--muted)}
+.group-h{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px 20px;margin:0 0 18px;padding-top:18px;border-top:2px solid var(--ink)}
+.group-h h3{font-size:20px}
+.group-h p{color:var(--muted);font-size:15px}
+.group+.group{margin-top:44px}
+.works.two{grid-template-columns:repeat(2,1fr)}
+.works.two .thumb{aspect-ratio:16/9}
+.t-nebo{background:#0D0A2B;color:#FFF4E2;position:relative;background-image:radial-gradient(circle at 70% 20%,rgba(255,61,139,.45),transparent 45%),radial-gradient(1.4px 1.4px at 12% 18%,#fff 50%,transparent),radial-gradient(1.2px 1.2px at 32% 9%,#fff 50%,transparent),radial-gradient(1.6px 1.6px at 58% 30%,#fff 50%,transparent),radial-gradient(1.2px 1.2px at 84% 12%,#fff 50%,transparent),radial-gradient(1.4px 1.4px at 44% 22%,#fff 50%,transparent),radial-gradient(1px 1px at 22% 34%,#fff 50%,transparent),radial-gradient(1.3px 1.3px at 92% 36%,#fff 50%,transparent)}
+.t-nebo .th{font-family:"Dela Gothic One",Impact,sans-serif;font-size:clamp(24px,3vw,36px)}
+.t-nebo .th span{color:#FFC531}
+.t-nebo .tb i,.t-nebo .tf i:first-child{background:#FFC531}.t-nebo .tf i{background:#6C2BFF}
+.t-gromko{background:#FF2E88;color:#0A0A0A;border:3px solid #0A0A0A}
+.t-gromko .th{font-family:"Rubik Mono One","Arial Black",sans-serif;text-transform:uppercase;font-size:clamp(20px,2.6vw,32px)}
+.t-gromko .th span{background:#C6FF00;border:3px solid #0A0A0A;padding:0 .15em;display:inline-block;transform:rotate(-2deg);box-shadow:4px 4px 0 #0A0A0A}
+.t-gromko .tb i,.t-gromko .tf i:first-child{background:#C6FF00;border:2px solid #0A0A0A}.t-gromko .tf i{background:#2B3BFF;border:2px solid #0A0A0A}
+.pages-tag{background:var(--ink);color:#fff}
+.sl-nebo{background:#0D0A2B;color:#FFF4E2;background-image:radial-gradient(circle at 75% 15%,rgba(255,61,139,.4),transparent 40%),radial-gradient(1.4px 1.4px at 10% 12%,#fff 50%,transparent),radial-gradient(1.2px 1.2px at 40% 8%,#fff 50%,transparent),radial-gradient(1.6px 1.6px at 62% 26%,#fff 50%,transparent),radial-gradient(1.2px 1.2px at 88% 40%,#fff 50%,transparent),radial-gradient(1.3px 1.3px at 28% 30%,#fff 50%,transparent)}
+.sl-nebo .s-h{font-family:"Dela Gothic One",Impact,sans-serif;font-size:clamp(20px,2.4vw,28px)}.sl-nebo .s-h span{color:#FFC531}
+.sl-nebo .s-nav i,.sl-nebo .s-btns i:first-child{background:#FFC531}.sl-nebo .s-btns i+i{border:1.5px solid #FFF4E2}
+.sl-nebo .s-art{background:#6C2BFF;color:#FFF4E2;font-weight:700}
+.sl-nebo .s-foot i{background:#171245}
+.sl-gromko{background:#FF2E88;color:#0A0A0A}
+.sl-gromko .s-h{font-family:"Rubik Mono One","Arial Black",sans-serif;text-transform:uppercase;font-size:clamp(17px,2vw,24px)}.sl-gromko .s-h span{background:#C6FF00;border:2px solid #0A0A0A;padding:0 .12em}
+.sl-gromko .s-nav i,.sl-gromko .s-btns i:first-child{background:#C6FF00;border:2px solid #0A0A0A}.sl-gromko .s-btns i+i{background:#fff;border:2px solid #0A0A0A}
+.sl-gromko .s-art{background:#C6FF00;border:3px solid #0A0A0A;border-radius:18px;box-shadow:4px 4px 0 #0A0A0A;font-weight:800}
+.sl-gromko .s-foot i{background:#fff;border:2px solid #0A0A0A}
 @media (max-width:960px){.works{grid-template-columns:1fr 1fr}}
-@media (max-width:620px){.works{grid-template-columns:1fr}.media-note{grid-template-columns:1fr;padding:22px}}
+@media (max-width:620px){.works,.works.two{grid-template-columns:1fr}.media-note{grid-template-columns:1fr;padding:22px}}
 
 /* faq */
 .faq{display:grid;gap:10px;max-width:820px}
@@ -253,10 +278,20 @@ footer a{text-decoration:none}
               <div class="s-main"><div><p class="s-eyebrow">Стройка и ремонт</p><p class="s-h">Строим по <span>фиксированной цене.</span></p><div class="s-btns"><i></i><i></i></div></div><div class="s-art"><span style="font-size:10px;opacity:.7">Расчёт</span><b>5,0–5,8 млн ₽</b><span style="font-size:10px;opacity:.7">120 м² · 7 мес.</span></div></div>
               <div class="s-foot"><i></i><i></i><i></i></div>
             </div>
+            <div class="slide sl-nebo" aria-hidden="true">
+              <div class="s-nav"><span>НЕБО ✦</span><i></i></div>
+              <div class="s-main"><div><p class="s-eyebrow">Натяжные потолки</p><p class="s-h">Потолок, на который <span>хочется смотреть.</span></p><div class="s-btns"><i></i><i></i></div></div><div class="s-art"><div>Звёздное<br>небо<br>2 900 ₽/м²</div></div></div>
+              <div class="s-foot"><i></i><i></i><i></i></div>
+            </div>
+            <div class="slide sl-gromko" aria-hidden="true">
+              <div class="s-nav"><span>ГРОМКО</span><i></i></div>
+              <div class="s-main"><div><p class="s-eyebrow">Магазин одежды</p><p class="s-h">Одежда, которую <span>слышно</span></p><div class="s-btns"><i></i><i></i></div></div><div class="s-art"><div>Худи<br>5 490 ₽<br>в корзину</div></div></div>
+              <div class="s-foot"><i></i><i></i><i></i></div>
+            </div>
           </div>
           <div class="mock-cap"><b id="mockCap">Ресторан: меню с корзиной</b><span>Открыть →</span></div>
         </a>
-        <div class="dots" role="group" aria-label="Примеры сайтов"><button type="button" aria-label="Ресторан" aria-current="true"></button><button type="button" aria-label="Барбершоп" aria-current="false"></button><button type="button" aria-label="Стройка" aria-current="false"></button></div>
+        <div class="dots" role="group" aria-label="Примеры сайтов"><button type="button" aria-label="Ресторан" aria-current="true"></button><button type="button" aria-label="Барбершоп" aria-current="false"></button><button type="button" aria-label="Стройка" aria-current="false"></button><button type="button" aria-label="Натяжные потолки" aria-current="false"></button><button type="button" aria-label="Магазин одежды" aria-current="false"></button></div>
       </div>
     </div>
   </section>
@@ -353,8 +388,10 @@ footer a{text-decoration:none}
       <div class="sec-head">
         <p class="eyebrow">Примеры</p>
         <h2>Каким может быть ваш сайт.</h2>
-        <p class="lead">Три демо-сайта для разных видов бизнеса. В каждом есть инструмент, который экономит клиенту время: корзина, онлайн-запись или калькулятор стоимости. Откройте и попробуйте.</p>
+        <p class="lead">Пять демо-сайтов для разных видов бизнеса: спокойные одностраничные и яркие многостраничные. В каждом есть инструмент, который экономит клиенту время. Откройте и попробуйте.</p>
       </div>
+      <div class="group">
+      <div class="group-h"><h3>Минимализм</h3><p>Одна страница: всё главное на одном экране прокрутки</p></div>
       <div class="works">
         <a class="work" href="primeri/lipa.html" target="_blank" rel="noopener">
           <div class="thumb t-lipa" aria-hidden="true"><div class="tb"><span>Липа</span><i></i></div><div class="th">Домашняя кухня, <span>как у бабушки.</span></div><div class="tf"><i></i><i></i><i></i></div></div>
@@ -368,6 +405,20 @@ footer a{text-decoration:none}
           <div class="thumb t-kvadrat" aria-hidden="true"><div class="tb"><span>КВАДРАТ</span><i></i></div><div class="th">Строим по <span>фиксированной цене.</span></div><div class="tf"><i></i><i></i><i></i></div></div>
           <div class="work-meta"><div class="work-top"><h3>Квадрат</h3><span class="tag">Пример</span></div><p>Строительная компания</p><ul class="feats"><li>Калькулятор цены за м²</li><li>Этапы работ</li><li>Заявка</li></ul><span class="open">Открыть сайт →</span></div>
         </a>
+      </div>
+      </div>
+      <div class="group">
+      <div class="group-h"><h3>Максимализм</h3><p>Яркий характер и несколько страниц, как у настоящего бренда</p></div>
+      <div class="works two">
+        <a class="work" href="primeri/nebo/index.html" target="_blank" rel="noopener">
+          <div class="thumb t-nebo" aria-hidden="true"><div class="tb"><span>НЕБО ✦</span><i></i></div><div class="th">Потолок, на который <span>хочется смотреть.</span></div><div class="tf"><i></i><i></i><i></i></div></div>
+          <div class="work-meta"><div class="work-top"><h3>Небо</h3><span class="tag pages-tag">4 страницы</span></div><p>Натяжные потолки</p><ul class="feats"><li>Галерея интерьеров</li><li>Было / стало</li><li>Калькулятор с превью</li><li>Вызов замерщика</li></ul><span class="open">Открыть сайт →</span></div>
+        </a>
+        <a class="work" href="primeri/gromko/index.html" target="_blank" rel="noopener">
+          <div class="thumb t-gromko" aria-hidden="true"><div class="tb"><span>ГРОМКО</span><i></i></div><div class="th">Одежда, которую <span>слышно</span></div><div class="tf"><i></i><i></i><i></i></div></div>
+          <div class="work-meta"><div class="work-top"><h3>Громко</h3><span class="tag pages-tag">4 страницы</span></div><p>Интернет-магазин одежды</p><ul class="feats"><li>Каталог с фильтрами</li><li>Подбор размера</li><li>Корзина и промокод</li><li>Оформление заказа</li></ul><span class="open">Открыть сайт →</span></div>
+        </a>
+      </div>
       </div>
       <div class="media-note">
         <div class="ic" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0B0B0C" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M10 9.5v5l4-2.5z" fill="#0B0B0C"/></svg></div>
@@ -426,10 +477,10 @@ document.querySelectorAll('.copy').forEach(function(b){b.addEventListener('click
 </script>
 <script>
 (function(){
-  var D=[['primeri/lipa.html','lipa-ekb.ru','Ресторан: меню с корзиной'],['primeri/brica.html','britva-kzn.ru','Барбершоп: онлайн-запись'],['primeri/kvadrat.html','kvadrat-stroy.ru','Стройка: калькулятор цены']];
+  var D=[['primeri/lipa.html','lipa-ekb.ru','Ресторан: меню с корзиной'],['primeri/brica.html','britva-kzn.ru','Барбершоп: онлайн-запись'],['primeri/kvadrat.html','kvadrat-stroy.ru','Стройка: калькулятор цены'],['primeri/nebo/index.html','nebo-samara.ru','Потолки: 4 страницы, калькулятор с превью'],['primeri/gromko/index.html','gromko.shop','Магазин: каталог, размер, корзина']];
   var sl=document.querySelectorAll('.slide'),dots=document.querySelectorAll('.dots button'),m=document.getElementById('mock'),i=0,t;
   function go(n){i=n;sl.forEach(function(e,k){e.classList.toggle('on',k===n)});dots.forEach(function(e,k){e.setAttribute('aria-current',k===n)});m.href=D[n][0];document.getElementById('mockUrl').textContent=D[n][1];document.getElementById('mockCap').textContent=D[n][2]}
-  function auto(){clearInterval(t);if(!matchMedia('(prefers-reduced-motion: reduce)').matches)t=setInterval(function(){go((i+1)%3)},4000)}
+  function auto(){clearInterval(t);if(!matchMedia('(prefers-reduced-motion: reduce)').matches)t=setInterval(function(){go((i+1)%D.length)},4000)}
   dots.forEach(function(d,k){d.onclick=function(){go(k);auto()}});
   m.addEventListener('mouseenter',function(){clearInterval(t)});m.addEventListener('mouseleave',auto);
   auto();

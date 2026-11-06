@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Калькулятор — НЕБО</title>
+<meta name="description" content="Демо-сайт: калькулятор стоимости натяжного потолка с предпросмотром.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Manrope:wght@400;600;700;800&display=swap">
+<link rel="stylesheet" href="nebo.css">
+</head>
+<body>
+<header>
+  <div class="wrap nav">
+    <a class="logo" href="index.html">НЕБО<b>✦</b></a>
+    <nav class="menu" aria-label="Разделы">
+      <a href="index.html">Главная</a>
+      <a href="vidy.html">Виды и цены</a>
+      <a href="kalkulator.html" aria-current="page">Калькулятор</a>
+      <a href="kontakty.html">Контакты</a>
+    </nav>
+    <a class="tel" href="kontakty.html">+7 900 777-00-11</a>
+    <a class="btn btn-gold btn-sm" href="kontakty.html#zamer">Вызвать замерщика</a>
+  </div>
+</header>
+
+<main>
+  <section class="page-hero">
+    <div class="wrap">
+      <p class="kicker">Калькулятор</p>
+      <h1 style="margin-top:16px">Сколько <span class="gold">стоит</span> <span class="outline">ваше</span> небо?</h1>
+      <p>Выберите полотно и площадь, добавьте свет. Картинка справа сразу покажет, как будет выглядеть комната.</p>
+    </div>
+  </section>
+
+  <section style="padding-top:0">
+    <div class="wrap calc">
+      <div class="panel">
+        <div class="field"><span>Вид полотна</span><div class="chips" id="types"></div></div>
+        <div class="field"><label for="area">Площадь комнаты</label>
+          <div class="slider-row"><input id="area" type="range" min="3" max="80" step="1" value="18"><span class="num" id="areaOut">18 м²</span></div>
+        </div>
+        <div class="field"><span>Цвет стен на картинке</span><div class="chips" id="walls"></div></div>
+        <div class="field"><span>Свет и детали</span>
+          <div class="steppers">
+            <div class="stepper"><span>Точечные светильники<small>450 ₽ за шт.</small></span><div class="ctl"><button type="button" data-k="spots" data-d="-1" aria-label="Меньше светильников">−</button><output id="spots">4</output><button type="button" data-k="spots" data-d="1" aria-label="Больше светильников">+</button></div></div>
+            <div class="stepper"><span>Люстра<small>700 ₽ за подвес</small></span><div class="ctl"><button type="button" data-k="lamps" data-d="-1" aria-label="Меньше люстр">−</button><output id="lamps">1</output><button type="button" data-k="lamps" data-d="1" aria-label="Больше люстр">+</button></div></div>
+            <div class="stepper"><span>Световые линии<small>1 500 ₽ за пог. м</small></span><div class="ctl"><button type="button" data-k="lines" data-d="-1" aria-label="Меньше метров">−</button><output id="lines">0</output><button type="button" data-k="lines" data-d="1" aria-label="Больше метров">+</button></div></div>
+            <div class="stepper"><span>Трубы и обходы<small>250 ₽ за шт.</small></span><div class="ctl"><button type="button" data-k="pipes" data-d="-1" aria-label="Меньше обходов">−</button><output id="pipes">1</output><button type="button" data-k="pipes" data-d="1" aria-label="Больше обходов">+</button></div></div>
+          </div>
+        </div>
+      </div>
+      <aside class="result">
+        <div class="frame"><div class="ceil"><canvas id="preview" data-ceil="gloss" data-wall="#E8DCCB" data-seed="3" role="img" aria-label="Предпросмотр комнаты"></canvas></div></div>
+        <div class="result-box" aria-live="polite">
+          <span style="font-weight:800;letter-spacing:.08em;text-transform:uppercase;font-size:13px">Итого с монтажом</span>
+          <div class="big" id="total">0 ₽</div>
+          <div class="lines">
+            <div><span id="lType">Полотно</span><span id="lCanvas">0 ₽</span></div>
+            <div><span>Свет и детали</span><span id="lExtra">0 ₽</span></div>
+            <div><span>Монтаж</span><span id="lTime">1 день</span></div>
+          </div>
+          <a class="btn" style="background:var(--night);color:var(--cream)" href="kontakty.html#zamer" id="toForm">Закрепить цену на замере</a>
+        </div>
+        <small>Точная цена фиксируется в договоре после бесплатного замера. Минимальный заказ 6 000 ₽.</small>
+      </aside>
+    </div>
+  </section>
+</main>
+
+<footer><div class="wrap"><span>НЕБО · натяжные потолки</span><span>Демо-проект · дизайн и разработка: <a href="../../index.html">Артём</a></span></div></footer>
+<script src="nebo.js"></script>
+<script>
+(function(){
+  var T=window.NEBO_TYPES,keys=['matte','satin','gloss','color','stars','twolevel','lines','soaring','clouds'];
+  var WALLS=[['Бежевые','#E8DCCB'],['Лавандовые','#C9B8E8'],['Мятные','#BFD8C5'],['Серые','#B8BCC8'],['Персик','#FFD3B4']];
+  var q=new URLSearchParams(location.search).get('type');
+  var st={type:keys.indexOf(q)>-1?q:'gloss',area:18,wall:0,spots:4,lamps:1,lines:0,pipes:1};
+  var cv=document.getElementById('preview');
+  var rub=function(n){return Math.round(n).toLocaleString('ru-RU')+' ₽'};
+  function chips(id,items,cur,cb){var box=document.getElementById(id);box.innerHTML='';items.forEach(function(it){var b=document.createElement('button');b.type='button';b.className='chip';b.textContent=it[1];b.setAttribute('aria-pressed',it[0]===cur);b.onclick=function(){cb(it[0])};box.appendChild(b)})}
+  function render(){
+    chips('types',keys.map(function(k){return[k,T[k].name]}),st.type,function(k){st.type=k;render()});
+    chips('walls',WALLS.map(function(w,i){return[i,w[0]]}),st.wall,function(i){st.wall=i;render()});
+    ['spots','lamps','lines','pipes'].forEach(function(k){document.getElementById(k).textContent=st[k]});
+    var canvas=T[st.type].price*st.area,extra=st.spots*450+st.lamps*700+st.lines*1500+st.pipes*250,total=Math.max(6000,canvas+extra);
+    document.getElementById('areaOut').textContent=st.area+' м²';
+    document.getElementById('lType').textContent=T[st.type].name+', '+st.area+' м²';
+    document.getElementById('lCanvas').textContent=rub(canvas);
+    document.getElementById('lExtra').textContent=rub(extra);
+    document.getElementById('lTime').textContent=st.area>40||st.type==='twolevel'?'2 дня':'1 день';
+    document.getElementById('total').textContent=rub(total);
+    cv.dataset.ceil=st.type;cv.dataset.wall=WALLS[st.wall][1];cv.dataset.color=st.type==='twolevel'?'#6C2BFF':'#FF3D8B';
+    window.NEBO_DRAW(cv);
+    try{sessionStorage.setItem('nebo_calc',T[st.type].name+', '+st.area+' м², ~'+rub(total))}catch(e){}
+  }
+  document.getElementById('area').addEventListener('input',function(e){st.area=+e.target.value;render()});
+  [].forEach.call(document.querySelectorAll('.stepper button'),function(b){b.onclick=function(){var k=b.dataset.k;st[k]=Math.max(0,Math.min(40,st[k]+(+b.dataset.d)));render()}});
+  render();
+})();
+</script>
+</body>
+</html>

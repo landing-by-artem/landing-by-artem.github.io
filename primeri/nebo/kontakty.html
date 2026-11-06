@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Контакты — НЕБО</title>
+<meta name="description" content="Демо-сайт: вызов замерщика натяжных потолков, адрес и часы работы.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Manrope:wght@400;600;700;800&display=swap">
+<link rel="stylesheet" href="nebo.css">
+</head>
+<body>
+<header>
+  <div class="wrap nav">
+    <a class="logo" href="index.html">НЕБО<b>✦</b></a>
+    <nav class="menu" aria-label="Разделы">
+      <a href="index.html">Главная</a>
+      <a href="vidy.html">Виды и цены</a>
+      <a href="kalkulator.html">Калькулятор</a>
+      <a href="kontakty.html" aria-current="page">Контакты</a>
+    </nav>
+    <a class="tel" href="kontakty.html">+7 900 777-00-11</a>
+    <a class="btn btn-gold btn-sm" href="#zamer">Вызвать замерщика</a>
+  </div>
+</header>
+
+<main>
+  <section class="page-hero">
+    <div class="wrap">
+      <p class="kicker">Контакты</p>
+      <h1 style="margin-top:16px">Приедем <span class="pink">сегодня</span><span class="gold">.</span></h1>
+      <p>Замерщик привезёт образцы полотен, измерит комнату лазером и сразу назовёт точную цену. Это бесплатно и ни к чему не обязывает.</p>
+    </div>
+  </section>
+
+  <section style="padding-top:0" id="zamer">
+    <div class="wrap contact-grid">
+      <form class="card" data-demo novalidate>
+        <h2 style="font-size:clamp(28px,4vw,42px)">Вызвать замерщика</h2>
+        <p id="calcNote" style="font-weight:700" hidden></p>
+        <div class="two">
+          <label class="f" for="cName">Имя<input id="cName" name="name" type="text" autocomplete="name" placeholder="Ольга"></label>
+          <label class="f" for="cPhone">Телефон<input id="cPhone" name="phone" type="tel" autocomplete="tel" placeholder="+7 900 000-00-00"></label>
+        </div>
+        <label class="f" for="cAddr">Адрес<input id="cAddr" name="addr" type="text" autocomplete="street-address" placeholder="ул. Ленинградская, 10, кв. 5"></label>
+        <div class="two">
+          <label class="f" for="cDay">Когда удобно<select id="cDay"><option>Сегодня</option><option>Завтра</option><option>На выходных</option></select></label>
+          <label class="f" for="cTime">Время<select id="cTime"><option>10:00–13:00</option><option>13:00–16:00</option><option>16:00–20:00</option></select></label>
+        </div>
+        <p class="err" hidden></p>
+        <button class="btn btn-pink" type="submit">Жду замерщика</button>
+        <div class="ok" hidden></div>
+      </form>
+      <div class="info">
+        <div class="info-card"><span class="kicker">Телефон</span><span class="big">+7 900 777-00-11</span><span class="muted">Ежедневно с 8 до 22</span></div>
+        <div class="info-card"><span class="kicker" style="color:var(--pink)">Шоурум</span><span class="big">Самара, ул. Мичурина, 52</span><span class="muted">Потолки в натуральную величину, можно потрогать</span></div>
+        <div class="info-card"><span class="kicker">Соцсети</span><span class="big">@nebo.samara</span><span class="muted">Telegram и ВКонтакте: фото объектов каждый день</span></div>
+        <div class="frame"><div class="ceil" style="aspect-ratio:16/9"><canvas data-ceil="soaring" data-wall="#C9B8E8" data-seed="44" role="img" aria-label="Шоурум с парящим потолком"></canvas></div></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer><div class="wrap"><span>НЕБО · натяжные потолки</span><span>Демо-проект · дизайн и разработка: <a href="../../index.html">Артём</a></span></div></footer>
+<script src="nebo.js"></script>
+<script>
+try{var n=sessionStorage.getItem('nebo_calc');if(n){var el=document.getElementById('calcNote');el.textContent='Ваш расчёт: '+n;el.hidden=false}}catch(e){}
+</script>
+</body>
+</html>

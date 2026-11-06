@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Каталог — ГРОМКО</title>
+<meta name="description" content="Демо-сайт: каталог уличной одежды ГРОМКО с фильтрами и сортировкой.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik+Mono+One&family=Rubik:wght@400;500;700;800;900&display=swap">
+<link rel="stylesheet" href="gromko.css">
+</head>
+<body>
+<div class="topbar">Бесплатная доставка от 7 000 ₽ · Примерка перед оплатой</div>
+<header>
+  <div class="wrap nav">
+    <a class="logo" href="index.html">ГРОМКО</a>
+    <nav class="menu" aria-label="Разделы" id="menu">
+      <a href="index.html">Главная</a>
+      <a href="katalog.html" data-cat="">Весь каталог</a>
+      <a href="katalog.html?cat=top" data-cat="top">Верх</a>
+      <a href="katalog.html?cat=bottom" data-cat="bottom">Низ</a>
+      <a href="katalog.html?cat=acc" data-cat="acc">Аксессуары</a>
+    </nav>
+    <a class="cart-link" href="korzina.html">Корзина <b data-cart-count>0</b></a>
+  </div>
+</header>
+
+<main>
+  <div class="page-head"><div class="wrap"><span class="sticker">Дроп №7</span><h1 style="margin-top:16px" id="title">Каталог</h1></div></div>
+  <div class="marquee" aria-hidden="true"><div class="track"><span>Шьём малыми партиями</span><span>Примерка перед оплатой</span><span>Возврат 14 дней</span><span>Шьём малыми партиями</span><span>Примерка перед оплатой</span><span>Возврат 14 дней</span></div></div>
+  <section>
+    <div class="wrap">
+      <div class="filters">
+        <div class="chips" id="chips" role="group" aria-label="Категория"></div>
+        <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap"><span class="count" id="count"></span>
+          <label for="sort" class="count">Сортировка</label>
+          <select class="sel" id="sort"><option value="pop">Популярные</option><option value="cheap">Сначала дешевле</option><option value="exp">Сначала дороже</option></select>
+        </div>
+      </div>
+      <div class="grid" id="grid"></div>
+    </div>
+  </section>
+</main>
+
+<footer><div class="wrap"><span>ГРОМКО · уличная одежда</span><span>Демо-проект · дизайн и разработка: <a href="../../index.html">Артём</a></span></div></footer>
+<script src="gromko.js"></script>
+<script>
+(function(){
+  var q=new URLSearchParams(location.search),cat=q.get('cat')||'',sort='pop';
+  if(!G.CATS[cat])cat='';
+  function render(){
+    var list=G.P.filter(function(p){return !cat||p.cat===cat}).sort(function(a,b){return sort==='cheap'?a.price-b.price:sort==='exp'?b.price-a.price:b.pop-a.pop});
+    var g=document.getElementById('grid');g.innerHTML='';list.forEach(function(p){g.appendChild(G.card(p))});
+    var n=list.length;document.getElementById('count').textContent=n+' '+(n===1?'товар':n<5?'товара':'товаров');
+    document.getElementById('title').textContent=cat?G.CATS[cat]:'Весь каталог';
+    var ch=document.getElementById('chips');ch.innerHTML='';[['','Всё']].concat(Object.keys(G.CATS).map(function(k){return[k,G.CATS[k]]})).forEach(function(c){var b=document.createElement('button');b.type='button';b.className='chip';b.textContent=c[1];b.setAttribute('aria-pressed',c[0]===cat);b.onclick=function(){cat=c[0];history.replaceState(null,'',cat?'?cat='+cat:location.pathname);render()};ch.appendChild(b)});
+    [].forEach.call(document.querySelectorAll('#menu [data-cat]'),function(a){if(a.dataset.cat===cat)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')});
+  }
+  document.getElementById('sort').onchange=function(e){sort=e.target.value;render()};
+  render();
+})();
+</script>
+</body>
+</html>
