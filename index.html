@@ -180,7 +180,15 @@ section{padding-block:clamp(64px,9vw,112px)}
 .group-h h3{font-size:20px}
 .group-h p{color:var(--muted);font-size:15px}
 .group+.group{margin-top:44px}
-.works.two{grid-template-columns:repeat(2,1fr)}
+.works.two{grid-template-columns:repeat(3,1fr)}
+.t-zaryad{background:#05060F;color:#EEF0FF;background-image:radial-gradient(circle at 50% 120%,rgba(92,242,255,.55),rgba(139,92,255,.35) 30%,transparent 60%),radial-gradient(1.4px 1.4px at 14% 22%,#fff 50%,transparent),radial-gradient(1.2px 1.2px at 74% 14%,#fff 50%,transparent),radial-gradient(1.4px 1.4px at 88% 44%,#fff 50%,transparent),radial-gradient(1px 1px at 34% 40%,#fff 50%,transparent)}
+.t-zaryad .th{font-family:"Unbounded",sans-serif;font-weight:800;font-size:clamp(30px,3.6vw,44px);letter-spacing:-.04em;background:linear-gradient(180deg,#fff,#A9B4FF);-webkit-background-clip:text;background-clip:text;color:transparent}
+.t-zaryad .tb i,.t-zaryad .tf i:first-child{background:#5CF2FF}.t-zaryad .tf i{background:#1B1F45}
+.sl-zaryad{background:#05060F;color:#EEF0FF;background-image:radial-gradient(circle at 70% 110%,rgba(92,242,255,.5),rgba(139,92,255,.3) 30%,transparent 60%),radial-gradient(1.4px 1.4px at 12% 18%,#fff 50%,transparent),radial-gradient(1.2px 1.2px at 52% 10%,#fff 50%,transparent),radial-gradient(1.4px 1.4px at 86% 30%,#fff 50%,transparent)}
+.sl-zaryad .s-h{font-family:"Unbounded",sans-serif;font-weight:800;font-size:clamp(20px,2.4vw,28px)}.sl-zaryad .s-h span{color:#5CF2FF}
+.sl-zaryad .s-nav i,.sl-zaryad .s-btns i:first-child{background:#5CF2FF}.sl-zaryad .s-btns i+i{border:1.5px solid rgba(160,170,255,.4)}
+.sl-zaryad .s-art{background:radial-gradient(circle at 35% 30%,#C9F9FF,#5CF2FF 14%,#4B3BD6 50%,#140F45);color:#fff;font-weight:700;box-shadow:0 0 40px rgba(92,242,255,.4)}
+.sl-zaryad .s-foot i{background:rgba(255,255,255,.06)}
 .works.two .thumb{aspect-ratio:16/9}
 .t-nebo{background:#0D0A2B;color:#FFF4E2;position:relative;background-image:radial-gradient(circle at 70% 20%,rgba(255,61,139,.45),transparent 45%),radial-gradient(1.4px 1.4px at 12% 18%,#fff 50%,transparent),radial-gradient(1.2px 1.2px at 32% 9%,#fff 50%,transparent),radial-gradient(1.6px 1.6px at 58% 30%,#fff 50%,transparent),radial-gradient(1.2px 1.2px at 84% 12%,#fff 50%,transparent),radial-gradient(1.4px 1.4px at 44% 22%,#fff 50%,transparent),radial-gradient(1px 1px at 22% 34%,#fff 50%,transparent),radial-gradient(1.3px 1.3px at 92% 36%,#fff 50%,transparent)}
 .t-nebo .th{font-family:"Dela Gothic One",Impact,sans-serif;font-size:clamp(24px,3vw,36px)}
@@ -201,7 +209,7 @@ section{padding-block:clamp(64px,9vw,112px)}
 .sl-gromko .s-nav i,.sl-gromko .s-btns i:first-child{background:#C6FF00;border:2px solid #0A0A0A}.sl-gromko .s-btns i+i{background:#fff;border:2px solid #0A0A0A}
 .sl-gromko .s-art{background:#C6FF00;border:3px solid #0A0A0A;border-radius:18px;box-shadow:4px 4px 0 #0A0A0A;font-weight:800}
 .sl-gromko .s-foot i{background:#fff;border:2px solid #0A0A0A}
-@media (max-width:960px){.works{grid-template-columns:1fr 1fr}}
+@media (max-width:960px){.works,.works.two{grid-template-columns:1fr 1fr}}
 @media (max-width:620px){.works,.works.two{grid-template-columns:1fr}.media-note{grid-template-columns:1fr;padding:22px}}
 
 /* faq */
@@ -288,10 +296,15 @@ footer a{text-decoration:none}
               <div class="s-main"><div><p class="s-eyebrow">Магазин одежды</p><p class="s-h">Одежда, которую <span>слышно</span></p><div class="s-btns"><i></i><i></i></div></div><div class="s-art"><div>Худи<br>5 490 ₽<br>в корзину</div></div></div>
               <div class="s-foot"><i></i><i></i><i></i></div>
             </div>
+            <div class="slide sl-zaryad" aria-hidden="true">
+              <div class="s-nav"><span>⚡ ЗАРЯД</span><i></i></div>
+              <div class="s-main"><div><p class="s-eyebrow">Сообщество</p><p class="s-h">Доводи цели <span>до конца.</span></p><div class="s-btns"><i></i><i></i></div></div><div class="s-art"><div>Заряд<br>72%</div></div></div>
+              <div class="s-foot"><i></i><i></i><i></i></div>
+            </div>
           </div>
           <div class="mock-cap"><b id="mockCap">Ресторан: меню с корзиной</b><span>Открыть →</span></div>
         </a>
-        <div class="dots" role="group" aria-label="Примеры сайтов"><button type="button" aria-label="Ресторан" aria-current="true"></button><button type="button" aria-label="Барбершоп" aria-current="false"></button><button type="button" aria-label="Стройка" aria-current="false"></button><button type="button" aria-label="Натяжные потолки" aria-current="false"></button><button type="button" aria-label="Магазин одежды" aria-current="false"></button></div>
+        <div class="dots" role="group" aria-label="Примеры сайтов"><button type="button" aria-label="Ресторан" aria-current="true"></button><button type="button" aria-label="Барбершоп" aria-current="false"></button><button type="button" aria-label="Стройка" aria-current="false"></button><button type="button" aria-label="Натяжные потолки" aria-current="false"></button><button type="button" aria-label="Магазин одежды" aria-current="false"></button><button type="button" aria-label="Онлайн-сообщество" aria-current="false"></button></div>
       </div>
     </div>
   </section>
@@ -388,7 +401,7 @@ footer a{text-decoration:none}
       <div class="sec-head">
         <p class="eyebrow">Примеры</p>
         <h2>Каким может быть ваш сайт.</h2>
-        <p class="lead">Пять демо-сайтов для разных видов бизнеса: спокойные одностраничные и яркие многостраничные. В каждом есть инструмент, который экономит клиенту время. Откройте и попробуйте.</p>
+        <p class="lead">Шесть демо-сайтов для разных видов бизнеса: спокойные одностраничные и яркие многостраничные. В каждом есть инструмент, который экономит клиенту время. Откройте и попробуйте.</p>
       </div>
       <div class="group">
       <div class="group-h"><h3>Минимализм</h3><p>Одна страница: всё главное на одном экране прокрутки</p></div>
@@ -408,7 +421,7 @@ footer a{text-decoration:none}
       </div>
       </div>
       <div class="group">
-      <div class="group-h"><h3>Максимализм</h3><p>Яркий характер и несколько страниц, как у настоящего бренда</p></div>
+      <div class="group-h"><h3>Максимализм</h3><p>Яркий характер, эффекты и анимация, как у настоящего бренда</p></div>
       <div class="works two">
         <a class="work" href="primeri/nebo/index.html" target="_blank" rel="noopener">
           <div class="thumb t-nebo" aria-hidden="true"><div class="tb"><span>НЕБО ✦</span><i></i></div><div class="th">Потолок, на который <span>хочется смотреть.</span></div><div class="tf"><i></i><i></i><i></i></div></div>
@@ -417,6 +430,10 @@ footer a{text-decoration:none}
         <a class="work" href="primeri/gromko/index.html" target="_blank" rel="noopener">
           <div class="thumb t-gromko" aria-hidden="true"><div class="tb"><span>ГРОМКО</span><i></i></div><div class="th">Одежда, которую <span>слышно</span></div><div class="tf"><i></i><i></i><i></i></div></div>
           <div class="work-meta"><div class="work-top"><h3>Громко</h3><span class="tag pages-tag">4 страницы</span></div><p>Интернет-магазин одежды</p><ul class="feats"><li>Каталог с фильтрами</li><li>Подбор размера</li><li>Корзина и промокод</li><li>Оформление заказа</li></ul><span class="open">Открыть сайт →</span></div>
+        </a>
+        <a class="work" href="primeri/zaryad/index.html" target="_blank" rel="noopener">
+          <div class="thumb t-zaryad" aria-hidden="true"><div class="tb"><span>⚡ ЗАРЯД</span><i></i></div><div class="th">ЗАРЯД</div><div class="tf"><i></i><i></i><i></i></div></div>
+          <div class="work-meta"><div class="work-top"><h3>Заряд</h3><span class="tag pages-tag">Анимация</span></div><p>Онлайн-сообщество, инфобизнес</p><ul class="feats"><li>Звёздное небо</li><li>Таймер до старта</li><li>Тарифы</li><li>Заявка</li></ul><span class="open">Открыть сайт →</span></div>
         </a>
       </div>
       </div>
@@ -477,7 +494,7 @@ document.querySelectorAll('.copy').forEach(function(b){b.addEventListener('click
 </script>
 <script>
 (function(){
-  var D=[['primeri/lipa.html','lipa-ekb.ru','Ресторан: меню с корзиной'],['primeri/brica.html','britva-kzn.ru','Барбершоп: онлайн-запись'],['primeri/kvadrat.html','kvadrat-stroy.ru','Стройка: калькулятор цены'],['primeri/nebo/index.html','nebo-samara.ru','Потолки: 4 страницы, калькулятор с превью'],['primeri/gromko/index.html','gromko.shop','Магазин: каталог, размер, корзина']];
+  var D=[['primeri/lipa.html','lipa-ekb.ru','Ресторан: меню с корзиной'],['primeri/brica.html','britva-kzn.ru','Барбершоп: онлайн-запись'],['primeri/kvadrat.html','kvadrat-stroy.ru','Стройка: калькулятор цены'],['primeri/nebo/index.html','nebo-samara.ru','Потолки: 4 страницы, калькулятор с превью'],['primeri/gromko/index.html','gromko.shop','Магазин: каталог, размер, корзина'],['primeri/zaryad/index.html','zaryad.club','Сообщество: анимация, тарифы, заявка']];
   var sl=document.querySelectorAll('.slide'),dots=document.querySelectorAll('.dots button'),m=document.getElementById('mock'),i=0,t;
   function go(n){i=n;sl.forEach(function(e,k){e.classList.toggle('on',k===n)});dots.forEach(function(e,k){e.setAttribute('aria-current',k===n)});m.href=D[n][0];document.getElementById('mockUrl').textContent=D[n][1];document.getElementById('mockCap').textContent=D[n][2]}
   function auto(){clearInterval(t);if(!matchMedia('(prefers-reduced-motion: reduce)').matches)t=setInterval(function(){go((i+1)%D.length)},4000)}
