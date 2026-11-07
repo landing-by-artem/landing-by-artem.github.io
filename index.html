@@ -7,7 +7,7 @@
 <meta name="description" content="Разработка лендингов под ключ от 12 000 ₽: структура, тексты, дизайн, адаптивная вёрстка и запуск.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&family=Playfair+Display:wght@600&family=Oswald:wght@700&family=Dela+Gothic+One&family=Rubik+Mono+One&family=Onest:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&family=Playfair+Display:wght@600&family=Oswald:wght@700&family=Dela+Gothic+One&family=Rubik+Mono+One&family=Montserrat+Alternates:wght@800&family=Onest:wght@400;500;600&display=swap">
 <style>
 /* Layout: svetla, prozračna kolona 1120px; jedan kobalt akcenat + žuti marker samo na ključnim rečima */
 :root{
@@ -180,7 +180,20 @@ section{padding-block:clamp(64px,9vw,112px)}
 .group-h h3{font-size:20px}
 .group-h p{color:var(--muted);font-size:15px}
 .group+.group{margin-top:44px}
-.works.two{grid-template-columns:repeat(3,1fr)}
+.works.two{grid-template-columns:repeat(2,1fr)}
+.t-tropa{background:linear-gradient(180deg,#FFF1DC,#FFB98A);color:#173430;position:relative;overflow:hidden}
+.t-tropa::after{content:"";position:absolute;inset:auto 0 0 0;height:34%;background:linear-gradient(transparent,transparent),#2E5A73;clip-path:polygon(0 40%,14% 10%,28% 34%,44% 0,60% 30%,76% 6%,90% 28%,100% 14%,100% 100%,0 100%)}
+.t-tropa>*{position:relative;z-index:1}
+.t-tropa .th{font-family:"Montserrat Alternates","Unbounded",sans-serif;font-weight:800;font-size:clamp(24px,3vw,34px);line-height:1.05}
+.t-tropa .th span{color:#FF6B2C}
+.t-tropa .tb i{background:#173430}.t-tropa .tf i{background:rgba(255,255,255,.25)}.t-tropa .tf i:first-child{background:#FF6B2C}
+.sl-tropa{background:linear-gradient(180deg,#FFF1DC,#FFB98A);color:#173430;position:relative;overflow:hidden}
+.sl-tropa::after{content:"";position:absolute;inset:auto 0 0 0;height:38%;background:#2E5A73;clip-path:polygon(0 40%,14% 10%,28% 34%,44% 0,60% 30%,76% 6%,90% 28%,100% 14%,100% 100%,0 100%)}
+.sl-tropa>*{position:relative;z-index:1}
+.sl-tropa .s-h{font-family:"Montserrat Alternates",sans-serif;font-weight:800;font-size:clamp(20px,2.4vw,28px)}.sl-tropa .s-h span{color:#FF6B2C}
+.sl-tropa .s-nav i,.sl-tropa .s-btns i:first-child{background:#FF6B2C}.sl-tropa .s-btns i+i{background:rgba(255,255,255,.5)}
+.sl-tropa .s-art{background:#FF8A4C;color:#fff;font-weight:700}
+.sl-tropa .s-foot i{background:rgba(255,255,255,.2)}
 .t-zaryad{background:#05060F;color:#EEF0FF;background-image:radial-gradient(circle at 50% 120%,rgba(92,242,255,.55),rgba(139,92,255,.35) 30%,transparent 60%),radial-gradient(1.4px 1.4px at 14% 22%,#fff 50%,transparent),radial-gradient(1.2px 1.2px at 74% 14%,#fff 50%,transparent),radial-gradient(1.4px 1.4px at 88% 44%,#fff 50%,transparent),radial-gradient(1px 1px at 34% 40%,#fff 50%,transparent)}
 .t-zaryad .th{font-family:"Unbounded",sans-serif;font-weight:800;font-size:clamp(30px,3.6vw,44px);letter-spacing:-.04em;background:linear-gradient(180deg,#fff,#A9B4FF);-webkit-background-clip:text;background-clip:text;color:transparent}
 .t-zaryad .tb i,.t-zaryad .tf i:first-child{background:#5CF2FF}.t-zaryad .tf i{background:#1B1F45}
@@ -301,10 +314,15 @@ footer a{text-decoration:none}
               <div class="s-main"><div><p class="s-eyebrow">Сообщество</p><p class="s-h">Доводи цели <span>до конца.</span></p><div class="s-btns"><i></i><i></i></div></div><div class="s-art"><div>Заряд<br>72%</div></div></div>
               <div class="s-foot"><i></i><i></i><i></i></div>
             </div>
+            <div class="slide sl-tropa" aria-hidden="true">
+              <div class="s-nav"><span>ТРОПА</span><i></i></div>
+              <div class="s-main"><div><p class="s-eyebrow">Туры по Алтаю</p><p class="s-h">Алтай, который <span>запомнится</span></p><div class="s-btns"><i></i><i></i></div></div><div class="s-art"><div>6 дней<br>54 900 ₽</div></div></div>
+              <div class="s-foot"><i></i><i></i><i></i></div>
+            </div>
           </div>
           <div class="mock-cap"><b id="mockCap">Ресторан: меню с корзиной</b><span>Открыть →</span></div>
         </a>
-        <div class="dots" role="group" aria-label="Примеры сайтов"><button type="button" aria-label="Ресторан" aria-current="true"></button><button type="button" aria-label="Барбершоп" aria-current="false"></button><button type="button" aria-label="Стройка" aria-current="false"></button><button type="button" aria-label="Натяжные потолки" aria-current="false"></button><button type="button" aria-label="Магазин одежды" aria-current="false"></button><button type="button" aria-label="Онлайн-сообщество" aria-current="false"></button></div>
+        <div class="dots" role="group" aria-label="Примеры сайтов"><button type="button" aria-label="Ресторан" aria-current="true"></button><button type="button" aria-label="Барбершоп" aria-current="false"></button><button type="button" aria-label="Стройка" aria-current="false"></button><button type="button" aria-label="Натяжные потолки" aria-current="false"></button><button type="button" aria-label="Магазин одежды" aria-current="false"></button><button type="button" aria-label="Онлайн-сообщество" aria-current="false"></button><button type="button" aria-label="Туристическая компания" aria-current="false"></button></div>
       </div>
     </div>
   </section>
@@ -401,7 +419,7 @@ footer a{text-decoration:none}
       <div class="sec-head">
         <p class="eyebrow">Примеры</p>
         <h2>Каким может быть ваш сайт.</h2>
-        <p class="lead">Шесть демо-сайтов для разных видов бизнеса: спокойные одностраничные и яркие многостраничные. В каждом есть инструмент, который экономит клиенту время. Откройте и попробуйте.</p>
+        <p class="lead">Семь демо-сайтов для разных видов бизнеса: спокойные одностраничные и яркие многостраничные. В каждом есть инструмент, который экономит клиенту время. Откройте и попробуйте.</p>
       </div>
       <div class="group">
       <div class="group-h"><h3>Минимализм</h3><p>Одна страница: всё главное на одном экране прокрутки</p></div>
@@ -421,7 +439,7 @@ footer a{text-decoration:none}
       </div>
       </div>
       <div class="group">
-      <div class="group-h"><h3>Максимализм</h3><p>Яркий характер, эффекты и анимация, как у настоящего бренда</p></div>
+      <div class="group-h"><h3>Ярко и с характером</h3><p>Иллюстрации, эффекты и анимация, как у настоящего бренда</p></div>
       <div class="works two">
         <a class="work" href="primeri/nebo/index.html" target="_blank" rel="noopener">
           <div class="thumb t-nebo" aria-hidden="true"><div class="tb"><span>НЕБО ✦</span><i></i></div><div class="th">Потолок, на который <span>хочется смотреть.</span></div><div class="tf"><i></i><i></i><i></i></div></div>
@@ -434,6 +452,10 @@ footer a{text-decoration:none}
         <a class="work" href="primeri/zaryad/index.html" target="_blank" rel="noopener">
           <div class="thumb t-zaryad" aria-hidden="true"><div class="tb"><span>⚡ ЗАРЯД</span><i></i></div><div class="th">ЗАРЯД</div><div class="tf"><i></i><i></i><i></i></div></div>
           <div class="work-meta"><div class="work-top"><h3>Заряд</h3><span class="tag pages-tag">Анимация</span></div><p>Онлайн-сообщество, инфобизнес</p><ul class="feats"><li>Звёздное небо</li><li>Таймер до старта</li><li>Тарифы</li><li>Заявка</li></ul><span class="open">Открыть сайт →</span></div>
+        </a>
+        <a class="work" href="primeri/tropa/index.html" target="_blank" rel="noopener">
+          <div class="thumb t-tropa" aria-hidden="true"><div class="tb"><span>ТРОПА</span><i></i></div><div class="th">Алтай, который <span>запомнится</span></div><div class="tf"><i></i><i></i><i></i></div></div>
+          <div class="work-meta"><div class="work-top"><h3>Тропа</h3><span class="tag pages-tag">Иллюстрации</span></div><p>Туристическая компания</p><ul class="feats"><li>Горы с параллаксом</li><li>Карта маршрута</li><li>Цены туров</li><li>Бронирование</li></ul><span class="open">Открыть сайт →</span></div>
         </a>
       </div>
       </div>
@@ -494,7 +516,7 @@ document.querySelectorAll('.copy').forEach(function(b){b.addEventListener('click
 </script>
 <script>
 (function(){
-  var D=[['primeri/lipa.html','lipa-ekb.ru','Ресторан: меню с корзиной'],['primeri/brica.html','britva-kzn.ru','Барбершоп: онлайн-запись'],['primeri/kvadrat.html','kvadrat-stroy.ru','Стройка: калькулятор цены'],['primeri/nebo/index.html','nebo-samara.ru','Потолки: 4 страницы, калькулятор с превью'],['primeri/gromko/index.html','gromko.shop','Магазин: каталог, размер, корзина'],['primeri/zaryad/index.html','zaryad.club','Сообщество: анимация, тарифы, заявка']];
+  var D=[['primeri/lipa.html','lipa-ekb.ru','Ресторан: меню с корзиной'],['primeri/brica.html','britva-kzn.ru','Барбершоп: онлайн-запись'],['primeri/kvadrat.html','kvadrat-stroy.ru','Стройка: калькулятор цены'],['primeri/nebo/index.html','nebo-samara.ru','Потолки: 4 страницы, калькулятор с превью'],['primeri/gromko/index.html','gromko.shop','Магазин: каталог, размер, корзина'],['primeri/zaryad/index.html','zaryad.club','Сообщество: анимация, тарифы, заявка'],['primeri/tropa/index.html','tropa-altai.ru','Туры: иллюстрации, маршрут, бронь']];
   var sl=document.querySelectorAll('.slide'),dots=document.querySelectorAll('.dots button'),m=document.getElementById('mock'),i=0,t;
   function go(n){i=n;sl.forEach(function(e,k){e.classList.toggle('on',k===n)});dots.forEach(function(e,k){e.setAttribute('aria-current',k===n)});m.href=D[n][0];document.getElementById('mockUrl').textContent=D[n][1];document.getElementById('mockCap').textContent=D[n][2]}
   function auto(){clearInterval(t);if(!matchMedia('(prefers-reduced-motion: reduce)').matches)t=setInterval(function(){go((i+1)%D.length)},4000)}
