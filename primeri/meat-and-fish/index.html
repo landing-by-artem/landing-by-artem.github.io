@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="author" content="Artem · tg: artem_idea">
+<title>Концепт страницы брони — Мясо&amp;Рыба · by tg: artem_idea</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Manrope:wght@400;500;600;700&display=swap">
+<style>
+:root{--bg:#161412;--card:#1A1715;--card2:#1E1B18;--line:#2C2723;--line2:#3A342E;--text:#F3EDE4;--muted:#BDB3A7;--acc:#E0673F;--ok:#9FD8C3;--okbg:#23362F}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--text);font-family:'Manrope',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:var(--text)}a:hover{color:var(--acc)}
+button{font-family:inherit;cursor:pointer}
+.h{font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.01em;margin:0}
+.wrap{max-width:1240px;margin:0 auto;padding:0 24px}
+
+/* watermark */
+.wm{position:fixed;inset:0;z-index:9999;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='340' height='220'%3E%3Ctext x='20' y='130' transform='rotate(-24 170 110)' font-family='Arial,sans-serif' font-size='22' font-weight='700' fill='%23ffffff' fill-opacity='0.07'%3Etg: artem_idea%3C/text%3E%3C/svg%3E");
+  background-repeat:repeat}
+.ribbon{background:var(--acc);color:var(--bg);font-size:13px;font-weight:700;text-align:center;padding:8px 16px}
+.ribbon a{color:var(--bg)}
+
+header{border-bottom:1px solid var(--line)}
+.hdr{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;padding-top:18px;padding-bottom:18px}
+.logo{font-size:26px;font-weight:700;text-decoration:none}
+.logo span{color:var(--acc)}
+nav{display:flex;flex-wrap:wrap;align-items:center;gap:28px;font-size:15px;font-weight:600}
+nav a{text-decoration:none}
+.ghost{min-height:48px;padding:0 22px;border-radius:12px;border:1px solid var(--acc);background:transparent;color:var(--text);font-size:15px;font-weight:600;display:inline-flex;align-items:center;justify-content:center;text-decoration:none}
+.burger{display:none;width:44px;height:44px;border-radius:12px;border:1px solid var(--line2);background:transparent;color:var(--text);align-items:center;justify-content:center}
+
+.hero{display:flex;flex-wrap:wrap;gap:32px;align-items:flex-end;justify-content:space-between;padding-top:64px;padding-bottom:40px}
+.kicker{margin:0 0 14px;color:var(--acc);font-weight:700;font-size:14px;letter-spacing:.12em;text-transform:uppercase}
+h1.h{font-size:72px;line-height:1;font-weight:700}
+.lead{margin:20px 0 0;font-size:18px;line-height:1.55;color:var(--muted);max-width:560px}
+.stats{flex:0 1 360px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.stat{border:1px solid var(--line);border-radius:14px;padding:16px}
+.stat .h{font-size:34px;color:var(--acc)}
+.stat div:last-child{font-size:13px;color:var(--muted)}
+
+.book{display:flex;flex-wrap:wrap;gap:24px;align-items:flex-start;padding-bottom:64px}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:28px;display:flex;flex-direction:column;gap:20px;min-width:0}
+.p1{flex:1 1 520px}.p2{flex:1 1 400px}
+.ptitle{display:flex;align-items:baseline;gap:12px}
+.ptitle .n{font-size:15px;color:var(--acc)}
+.ptitle h2{font-size:26px}
+.tabs{display:flex;flex-wrap:wrap;gap:10px}
+.tab{min-height:44px;padding:0 18px;border-radius:999px;border:1px solid var(--line2);background:transparent;color:var(--text);font-size:15px;font-weight:600;display:flex;align-items:center;gap:8px}
+.tab:hover{border-color:var(--acc)}
+.tab.on{background:var(--acc);border-color:var(--acc);color:var(--bg)}
+.tab small{font-size:12px;opacity:.75}
+.search{display:flex;align-items:center;gap:10px;min-height:48px;padding:0 14px;border-radius:12px;border:1px solid var(--line2);background:var(--card2)}
+.search input{flex:1;border:0;background:transparent;color:var(--text);font-size:15px;font-family:inherit;outline:none;min-width:0}
+.list{max-height:470px;overflow-y:auto;display:flex;flex-direction:column;gap:10px;padding-right:4px}
+.rcard{width:100%;text-align:left;padding:16px 18px;border-radius:14px;border:1px solid var(--line);background:var(--card2);color:var(--text);display:flex;justify-content:space-between;align-items:center;gap:12px}
+.rcard:hover{border-color:#5A5048}
+.rcard.on{border-color:var(--acc);background:#2A201B}
+.rcard b{font-size:16px;display:block}
+.rcard span.a{font-size:14px;color:var(--muted)}
+.badge{font-size:12px;font-weight:600;padding:4px 10px;border-radius:999px;background:var(--okbg);color:var(--ok);white-space:nowrap}
+.badge.off{background:var(--line);color:var(--muted)}
+.empty{color:var(--muted);font-size:14px;padding:8px 2px}
+.lbl{font-size:13px;color:var(--muted);font-weight:600}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{min-height:44px;min-width:64px;padding:0 14px;border-radius:12px;border:1px solid var(--line2);background:var(--card2);color:var(--text);font-size:14px;font-weight:600}
+.chip:hover{border-color:var(--acc)}
+.chip.on{background:var(--text);color:var(--bg);border-color:var(--text)}
+.times{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
+.times .chip{min-width:0;padding:0 4px}
+.row{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.stepper{display:flex;align-items:center;gap:14px}
+.step{width:44px;height:44px;border-radius:12px;border:1px solid var(--line2);background:var(--card2);color:var(--text);font-size:22px}
+.guests{font-size:26px;min-width:36px;text-align:center}
+.fields{display:flex;flex-wrap:wrap;gap:10px}
+.fields label{flex:1 1 160px;display:flex;flex-direction:column;gap:6px}
+.inp{min-height:48px;border-radius:12px;border:1px solid var(--line2);background:var(--bg);color:var(--text);padding:0 14px;font-size:15px;font-family:inherit}
+.sum{border-top:1px solid var(--line);padding-top:18px;display:flex;flex-direction:column;gap:14px}
+.cta{min-height:56px;width:100%;border:0;border-radius:14px;background:var(--acc);color:var(--bg);font-size:17px;font-weight:700;display:flex;align-items:center;justify-content:center;text-decoration:none}
+.cta:hover{background:#EB7A52;color:var(--bg)}
+.okmsg{background:var(--okbg);color:#CFEFE2;border-radius:14px;padding:16px;font-weight:600}
+.why{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;padding-bottom:64px}
+.dish{border-radius:20px;overflow:hidden;background:var(--card2);border:1px solid var(--line)}
+.ph{height:200px;display:flex;align-items:center;justify-content:center;color:#8C8278;font-size:13px}
+.dish .t{padding:20px}
+.dish h3{font-size:20px}
+.dish p{margin:8px 0 0;color:var(--muted);font-size:14px;line-height:1.5}
+footer{border-top:1px solid var(--line)}
+.ftr{display:flex;flex-wrap:wrap;gap:20px;justify-content:space-between;align-items:center;padding-top:28px;padding-bottom:28px;font-size:14px;color:var(--muted)}
+.ftr div{display:flex;flex-wrap:wrap;gap:20px}
+.credit{color:var(--acc);font-weight:700;text-decoration:none}
+.mbar{display:none}
+
+@media (max-width:760px){
+  nav{display:none}
+  .burger{display:inline-flex}
+  .hero{padding-top:32px;padding-bottom:24px;gap:20px}
+  h1.h{font-size:40px;line-height:1.02}
+  .lead{font-size:16px}
+  .stats{flex:1 1 100%}
+  .stat .h{font-size:26px}
+  .panel{padding:20px;border-radius:16px}
+  .list{max-height:none}
+  .times{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .tabs{flex-wrap:nowrap;overflow-x:auto;padding-bottom:4px}
+  .tab{white-space:nowrap}
+  body{padding-bottom:120px}
+  .mbar{display:flex;flex-direction:column;gap:10px;position:fixed;left:0;right:0;bottom:0;z-index:50;padding:12px 16px 18px;background:var(--card2);border-top:1px solid var(--line2)}
+  .mbar .s{font-size:13px;color:var(--muted)}
+  .mbar .cta{min-height:52px;font-size:16px}
+}
+</style>
+</head>
+<body>
+<div class="wm" aria-hidden="true"></div>
+
+<div class="ribbon">Концепт редизайна · не официальный сайт · автор <a href="https://t.me/artem_idea" target="_blank" rel="noopener">tg: artem_idea</a></div>
+
+<header>
+  <div class="wrap hdr">
+    <a href="#" class="h logo">Мясо<span>&amp;</span>Рыба</a>
+    <nav aria-label="Главное меню">
+      <a href="#">Меню</a><a href="#">Рестораны</a><a href="#">Акции</a><a href="#">Доставка</a><a href="#">Ещё</a>
+      <a href="#book" class="ghost">Забронировать</a>
+    </nav>
+    <button class="burger" aria-label="Открыть меню"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h14M3 10h14M3 14h14"/></svg></button>
+  </div>
+</header>
+
+<section class="wrap hero">
+  <div style="flex:1 1 560px;min-width:0">
+    <p class="kicker">Стейки · дикая рыба · 200 вин</p>
+    <h1 class="h">Стол на вечер —<br>за 30 секунд</h1>
+    <p class="lead">14 ресторанов в Москве, Краснодаре, Волгограде и Ставрополе. Выберите город, ресторан и время — без звонков и бесконечной прокрутки.</p>
+  </div>
+  <div class="stats">
+    <div class="stat"><div class="h">100+</div><div>авторских блюд</div></div>
+    <div class="stat"><div class="h">200</div><div>вин в карте</div></div>
+    <div class="stat"><div class="h">14</div><div>ресторанов</div></div>
+  </div>
+</section>
+
+<section id="book" class="wrap book">
+  <div class="panel p1">
+    <div class="ptitle"><span class="h n">01</span><h2 class="h">Где</h2></div>
+    <div class="tabs" id="tabs" role="tablist" aria-label="Город"></div>
+    <label class="search">
+      <svg aria-hidden="true" width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="#BDB3A7" stroke-width="2" stroke-linecap="round"><circle cx="9" cy="9" r="6"/><path d="M14 14l4 4"/></svg>
+      <input id="q" type="text" placeholder="ТЦ или улица" aria-label="Поиск ресторана">
+    </label>
+    <div class="list" id="list"></div>
+  </div>
+
+  <div class="panel p2" id="when">
+    <div class="ptitle"><span class="h n">02</span><h2 class="h">Когда и сколько</h2></div>
+    <div id="online" style="display:flex;flex-direction:column;gap:22px">
+      <div style="display:flex;flex-direction:column;gap:10px"><span class="lbl">Дата</span><div class="chips" id="dates"></div></div>
+      <div class="row"><span class="lbl">Гостей</span>
+        <div class="stepper"><button class="step" id="minus" aria-label="Меньше гостей">−</button><span class="h guests" id="g">2</span><button class="step" id="plus" aria-label="Больше гостей">+</button></div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px"><span class="lbl">Время</span><div class="times" id="times"></div></div>
+      <div class="fields">
+        <label><span class="lbl">Имя</span><input class="inp" type="text" placeholder="Как к вам обращаться"></label>
+        <label><span class="lbl">Телефон</span><input class="inp" type="tel" placeholder="+7 (___) ___-__-__"></label>
+      </div>
+      <div class="sum">
+        <div style="font-size:15px;line-height:1.5"><span style="color:var(--muted)">Ваша бронь: </span><b id="summary"></b></div>
+        <div class="okmsg" id="ok" role="status" hidden>Готово! Подтверждение придёт в SMS. (демо — заявка никуда не отправляется)</div>
+        <button class="cta" id="confirm">Забронировать стол</button>
+      </div>
+    </div>
+    <div id="phone" style="display:none;flex-direction:column;gap:16px">
+      <p id="reason" style="margin:0;font-size:16px;line-height:1.55;color:var(--muted)"></p>
+      <a href="#" class="cta">Позвонить в ресторан</a>
+      <button class="ghost" id="back" style="display:none">Вернуться к брони до 7 гостей</button>
+    </div>
+  </div>
+</section>
+
+<section class="wrap why">
+  <div class="dish"><div class="ph" style="background:#2A221D">[фото: Стейк Мироноff]</div><div class="t"><h3 class="h">Стейк Мироноff</h3><p>Фирменное блюдо, ради которого бронируют заранее.</p></div></div>
+  <div class="dish"><div class="ph" style="background:#1D2A2B">[фото: стейк из дикого лосося]</div><div class="t"><h3 class="h">Дикая рыба</h3><p>Лосось, морепродукты, паста с морепродуктами.</p></div></div>
+  <div class="dish"><div class="ph" style="background:#2B1F24">[фото: зал ресторана]</div><div class="t"><h3 class="h">Компания от 8 человек?</h3><p>Банкеты и дни рождения — оставьте номер, менеджер перезвонит.</p></div></div>
+</section>
+
+<footer>
+  <div class="wrap ftr">
+    <span>Концепт · дизайн и разработка — <a class="credit" href="https://t.me/artem_idea" target="_blank" rel="noopener">tg: artem_idea</a></span>
+    <div><a href="#">Программа лояльности</a><a href="#">Франчайзинг</a><a href="#">Telegram</a><a href="#">VK</a></div>
+  </div>
+</footer>
+
+<div class="mbar"><div class="s" id="msum"></div><a href="#when" class="cta">Выбрать время и забронировать</a></div>
+
+<script>
+(function(){
+  var R=[
+    {id:'tver',city:'msk',name:'Тверская',addr:'ул. Тверская, 23с1',online:true},
+    {id:'pirog',city:'msk',name:'Малая Пироговская',addr:'ул. Малая Пироговская, 8',online:true},
+    {id:'afi',city:'msk',name:'Афимолл Сити',addr:'ТРЦ «Афимолл Сити»',online:true},
+    {id:'vegas',city:'msk',name:'VEGAS Кунцево',addr:'ТРК VEGAS Кунцево',online:true},
+    {id:'kplaza',city:'msk',name:'Кунцево Плаза',addr:'ТЦ «Кунцево Плаза»',online:true},
+    {id:'mega',city:'msk',name:'МЕГА Тёплый Стан',addr:'ТРЦ МЕГА Тёплый Стан',online:true},
+    {id:'riv',city:'msk',name:'Ривьера',addr:'ТРЦ «Ривьера»',online:true},
+    {id:'rum',city:'msk',name:'Румянцево',addr:'БП «Румянцево»',online:true},
+    {id:'kash',city:'msk',name:'Каширская Плаза',addr:'ТРЦ «Каширская Плаза»',online:true},
+    {id:'okean',city:'msk',name:'Океания',addr:'ТРЦ «Океания»',online:true},
+    {id:'evro',city:'msk',name:'Европолис',addr:'ТРК «Европолис»',online:false},
+    {id:'krd',city:'krd',name:'Краснодар',addr:'ул. Красная, 120',online:false},
+    {id:'vlg',city:'vlg',name:'Волгоград',addr:'ул. Ленина, 9',online:true},
+    {id:'stv',city:'stv',name:'Ставрополь',addr:'ул. Маршала Жукова, 2',online:false}
+  ];
+  var C=[{id:'msk',l:'Москва'},{id:'krd',l:'Краснодар'},{id:'vlg',l:'Волгоград'},{id:'stv',l:'Ставрополь'}];
+  var T=['12:00','13:00','14:00','17:00','18:00','18:30','19:00','19:30','20:00','21:00'];
+  function dayLabels(){
+    var wd=['Вс','Пн','Вт','Ср','Чт','Пт','Сб'],mo=['янв','фев','мар','апр','мая','июн','июл','авг','сен','окт','ноя','дек'];
+    var out=['Сегодня','Завтра'],d=new Date();
+    for(var i=2;i<5;i++){var x=new Date(d.getFullYear(),d.getMonth(),d.getDate()+i);out.push(wd[x.getDay()]+', '+x.getDate()+' '+mo[x.getMonth()]);}
+    out.push('Другая дата');return out;
+  }
+  var D=dayLabels();
+  var s={city:'msk',rest:'tver',date:0,guests:2,time:'19:30',q:''};
+  var $=function(id){return document.getElementById(id)};
+  function esc(t){return t.replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+  function cur(){return R.filter(function(r){return r.id===s.rest})[0]||R[0]}
+  function word(n){return n===1?'гость':(n<5?'гостя':'гостей')}
+  function render(){
+    $('tabs').innerHTML=C.map(function(c){var n=R.filter(function(r){return r.city===c.id}).length;
+      return '<button role="tab" aria-selected="'+(c.id===s.city)+'" class="tab'+(c.id===s.city?' on':'')+'" data-c="'+c.id+'">'+c.l+' <small>'+n+'</small></button>'}).join('');
+    var q=s.q.trim().toLowerCase();
+    var items=R.filter(function(r){return r.city===s.city&&(!q||(r.name+' '+r.addr).toLowerCase().indexOf(q)>-1)});
+    $('list').innerHTML=items.length?items.map(function(r){
+      return '<button class="rcard'+(r.id===s.rest?' on':'')+'" data-r="'+r.id+'"><span><b>'+esc(r.name)+'</b><span class="a">'+esc(r.addr)+'</span></span><span class="badge'+(r.online?'':' off')+'">'+(r.online?'Онлайн-бронь':'По телефону')+'</span></button>'}).join(''):'<div class="empty">Ничего не нашли — попробуйте другой запрос.</div>';
+    $('dates').innerHTML=D.map(function(l,i){return '<button class="chip'+(i===s.date?' on':'')+'" data-d="'+i+'">'+l+'</button>'}).join('');
+    $('times').innerHTML=T.map(function(t){return '<button class="chip'+(t===s.time?' on':'')+'" data-t="'+t+'">'+t+'</button>'}).join('');
+    var c=cur(),big=s.guests>=8,on=c.online&&!big;
+    $('g').textContent=big?'8+':s.guests;
+    $('online').style.display=on?'flex':'none';
+    $('phone').style.display=on?'none':'flex';
+    $('back').style.display=big?'inline-flex':'none';
+    $('reason').textContent=big?'Для компании от 8 человек бронь оформляет менеджер: подберёт зал и предложит банкетное меню.':'В ресторане «'+c.name+'» пока принимают бронь только по телефону. Звонок займёт минуту.';
+    var sum=c.name+' · '+D[s.date]+' · '+s.time+' · '+(big?'8+ гостей':s.guests+' '+word(s.guests));
+    $('summary').textContent=sum;$('msum').textContent=sum;
+  }
+  function reset(){$('ok').hidden=true;$('confirm').hidden=false}
+  document.addEventListener('click',function(e){
+    var b=e.target.closest('button');if(!b)return;
+    if(b.dataset.c){s.city=b.dataset.c;s.q='';$('q').value='';s.rest=R.filter(function(r){return r.city===s.city})[0].id;reset();render();}
+    else if(b.dataset.r){s.rest=b.dataset.r;reset();render();}
+    else if(b.dataset.d){s.date=+b.dataset.d;reset();render();}
+    else if(b.dataset.t){s.time=b.dataset.t;reset();render();}
+    else if(b.id==='minus'||b.id==='back'){s.guests=Math.max(1,Math.min(s.guests,8)-1);reset();render();}
+    else if(b.id==='plus'){s.guests=Math.min(8,s.guests+1);reset();render();}
+    else if(b.id==='confirm'){$('ok').hidden=false;b.hidden=true;}
+  });
+  $('q').addEventListener('input',function(e){s.q=e.target.value;render();});
+  render();
+})();
+</script>
+</body>
+</html>
