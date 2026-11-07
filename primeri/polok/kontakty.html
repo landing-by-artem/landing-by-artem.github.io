@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Контакты — ПОЛОК</title>
+<meta name="description" content="Демо-сайт: адрес, часы работы и правила банного двора, заявка на банкет.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ruslan+Display&family=Rubik:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="polok.css">
+</head>
+<body>
+<header>
+  <div class="wrap nav">
+    <a class="logo" href="index.html">Полок</a>
+    <nav class="menu" aria-label="Разделы">
+      <a href="index.html">Главная</a>
+      <a href="pary.html">Пары и массажи</a>
+      <a href="restoran.html">Ресторан</a>
+      <a href="kontakty.html" aria-current="page">Контакты</a>
+    </nav>
+    <a class="btn btn-h btn-sm" href="pary.html#book">Записаться на пар</a>
+  </div>
+</header>
+
+<main>
+  <section class="page-hero">
+    <div class="wrap ph">
+      <div><p class="label" style="color:var(--honey)">Контакты</p><h1 style="margin-top:14px">Как нас найти</h1><p>Двор за деревянными воротами, парковка на 30 машин. Работаем каждый день, а в выходные до последнего ночного пара.</p></div>
+      <div class="art" data-ill="banya"></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap c-grid">
+      <div style="display:grid;gap:14px">
+        <div class="c-card"><span class="label">Адрес</span><span class="big">ул. Банная, 7, Нижний Новгород</span><span class="muted">10 минут пешком от метро «Горьковская»</span></div>
+        <div class="c-card"><span class="label">Часы работы</span><span class="big">Пн–Чт 10:00–22:00<br>Пт–Вс 10:00–01:00</span><span class="muted">Ресторан работает с 12:00</span></div>
+        <div class="c-card"><span class="label">Телефон</span><span class="big">+7 900 222-33-44</span><span class="muted">Telegram и ВКонтакте: @polok.banya</span></div>
+      </div>
+      <div style="display:grid;gap:14px">
+        <div class="c-card"><span class="label">Что взять с собой</span>
+          <ul class="rules" style="margin-top:8px">
+            <li>Купальник или плавки: пары общие для мужчин и женщин</li>
+            <li>Простыни, полотенца, тапочки и шапки выдаём бесплатно</li>
+            <li>Веники можно купить на месте или принести свои</li>
+            <li>Детям до 14 лет вход с родителями на дневные пары</li>
+          </ul>
+        </div>
+        <form class="c-card form light" id="form" novalidate>
+          <span class="label">Заявка на банкет или вопрос</span>
+          <p id="calcNote" style="font-weight:600" hidden></p>
+          <label for="fName">Имя<input id="fName" autocomplete="name" placeholder="Сергей"></label>
+          <label for="fPhone">Телефон<input id="fPhone" type="tel" autocomplete="tel" placeholder="+7 900 000-00-00"></label>
+          <label for="fType">Повод<select id="fType"><option>Банкет</option><option>День рождения</option><option>Корпоратив</option><option>Подарочный сертификат</option><option>Другой вопрос</option></select></label>
+          <p class="err" id="fErr" hidden></p>
+          <button class="btn btn-e" type="submit">Отправить</button>
+          <div class="ok" id="fOk" hidden></div>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer><div class="wrap"><span>ПОЛОК · банный двор и ресторан · +7 900 222-33-44</span><span>Демо-проект · компания вымышлена · дизайн и разработка: <a href="../../index.html">Артём</a></span></div></footer>
+<script src="polok.js"></script>
+<script>
+(function(){var P=window.POLOK;
+  try{var n=sessionStorage.getItem('polok_banket');if(n){var el=document.getElementById('calcNote');el.textContent=n;el.hidden=false}}catch(e){}
+  document.getElementById('form').addEventListener('submit',function(e){e.preventDefault();var n=P.check('fName','fPhone','fErr'),ok=document.getElementById('fOk');ok.hidden=!n;if(n)ok.textContent=n+', спасибо! Администратор перезвонит в течение 30 минут. (Демо: заявка никуда не отправлена.)'});
+})();
+</script>
+</body>
+</html>

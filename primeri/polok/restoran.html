@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ресторан — ПОЛОК</title>
+<meta name="description" content="Демо-сайт: меню ресторана русской кухни при банях и расчёт стоимости банкета.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ruslan+Display&family=Rubik:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="polok.css">
+</head>
+<body>
+<header>
+  <div class="wrap nav">
+    <a class="logo" href="index.html">Полок</a>
+    <nav class="menu" aria-label="Разделы">
+      <a href="index.html">Главная</a>
+      <a href="pary.html">Пары и массажи</a>
+      <a href="restoran.html" aria-current="page">Ресторан</a>
+      <a href="kontakty.html">Контакты</a>
+    </nav>
+    <a class="btn btn-h btn-sm" href="#banket">Рассчитать банкет</a>
+  </div>
+</header>
+
+<main>
+  <section class="page-hero">
+    <div class="wrap ph">
+      <div><p class="label" style="color:var(--honey)">Ресторан</p><h1 style="margin-top:14px">Щи из печи и чай из самовара</h1><p>Русская кухня без пафоса: всё готовим в дровяной печи. Заходите после пара прямо в простыне или приходите отдельно.</p></div>
+      <div class="art" data-ill="samovar"></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="week">
+        <div class="art" data-ill="food"></div>
+        <div style="display:grid;gap:16px">
+          <p class="label">Блюдо недели</p>
+          <h2>Уха по-царски с расстегаем</h2>
+          <p class="muted">Судак, сёмга и щука, томлённые в печи, плюс горячий расстегай. Только до воскресенья.</p>
+          <p class="price-big">690 ₽<s>880 ₽</s></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head"><p class="label">Меню</p><h2>Что в печи</h2></div>
+      <div class="tabs" role="tablist" id="tabs"></div>
+      <div class="menu-list" id="list"></div>
+    </div>
+  </section>
+
+  <section class="dark" id="banket">
+    <div class="wrap">
+      <div class="sec-head"><p class="label">Банкеты</p><h2>Расчёт банкета</h2><p class="muted">Дни рождения, корпоративы и мальчишники. Посчитайте примерную стоимость, точную назовёт администратор.</p></div>
+      <div class="calc">
+        <div class="panel" style="color:var(--bark)">
+          <div class="field"><span>Гостей: <b id="gOut" style="color:var(--ember);font-size:16px">20</b></span><input type="range" id="guests" min="6" max="60" value="20" aria-label="Количество гостей"></div>
+          <div class="field"><span>Меню</span><div class="chips" id="cMenu"></div></div>
+          <div class="field"><span>Зал</span><div class="chips" id="cHall"></div></div>
+          <div class="field"><span>Дополнительно</span><div class="chips" id="cExtra"></div></div>
+        </div>
+        <aside class="sum" aria-live="polite">
+          <h3>Ваш банкет</h3>
+          <div class="line"><span id="lMenu">Меню</span><span id="vMenu">—</span></div>
+          <div class="line"><span>Зал</span><span id="vHall">—</span></div>
+          <div class="line"><span>Дополнительно</span><span id="vExtra">—</span></div>
+          <div class="line"><span>Обслуживание 10 %</span><span id="vServ">—</span></div>
+          <div class="total"><span>Итого</span><b id="vTotal">0 ₽</b></div>
+          <p style="color:var(--muted-d);font-size:15px" id="vPer"></p>
+          <a class="btn btn-h" href="kontakty.html#form" id="toForm">Забронировать банкет</a>
+        </aside>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer><div class="wrap"><span>ПОЛОК · банный двор и ресторан · +7 900 222-33-44</span><span>Демо-проект · компания вымышлена · дизайн и разработка: <a href="../../index.html">Артём</a></span></div></footer>
+<script src="polok.js"></script>
+<script>
+(function(){
+  var P=window.POLOK;P.tabs('tabs','list',P.MENU,'Горячее');
+  var MENUS=[['Простой','закуски, горячее, морс',1800],['Банный пир','+ пироги, шашлык, десерт',2600],['Царский стол','+ уха, икра, поросёнок',3800]];
+  var HALLS=[['Малый зал','до 20 гостей',0,20],['Большой зал','до 60 гостей',10000,60],['Терраса у купели','до 30 гостей',6000,30]];
+  var EXTRA=[['Пармейстер для группы',8000],['Частная парная, 3 часа',15000],['Торт на заказ',3500],['Ведущий и музыка',12000]];
+  var st={g:20,m:1,h:0,e:[]};
+  function render(){
+    if(st.g>HALLS[st.h][3])st.h=HALLS.findIndex(function(h){return h[3]>=st.g});
+    P.chips('cMenu',MENUS.map(function(m,i){return{t:m[0],s:m[1]+' · '+P.rub(m[2])+'/чел.',v:i,on:i===st.m}}),function(v){st.m=v;render()});
+    P.chips('cHall',HALLS.map(function(h,i){return{t:h[0],s:h[1]+(h[2]?' · '+P.rub(h[2]):' · бесплатно'),v:i,on:i===st.h,off:st.g>h[3]}}),function(v){st.h=v;render()});
+    P.chips('cExtra',EXTRA.map(function(x,i){return{t:x[0],s:P.rub(x[1]),v:i,on:st.e.indexOf(i)>-1}}),function(v){var k=st.e.indexOf(v);k>-1?st.e.splice(k,1):st.e.push(v);render()});
+    var food=MENUS[st.m][2]*st.g,hall=HALLS[st.h][2],ex=st.e.reduce(function(a,i){return a+EXTRA[i][1]},0),serv=food*.1,total=food+hall+ex+serv;
+    document.getElementById('gOut').textContent=st.g;
+    document.getElementById('lMenu').textContent=MENUS[st.m][0]+' × '+st.g;
+    document.getElementById('vMenu').textContent=P.rub(food);
+    document.getElementById('vHall').textContent=HALLS[st.h][0]+(hall?' · '+P.rub(hall):'');
+    document.getElementById('vExtra').textContent=ex?P.rub(ex):'нет';
+    document.getElementById('vServ').textContent=P.rub(serv);
+    document.getElementById('vTotal').textContent=P.rub(total);
+    document.getElementById('vPer').textContent='≈ '+P.rub(total/st.g)+' на гостя';
+    try{sessionStorage.setItem('polok_banket','Банкет: '+st.g+' гостей, «'+MENUS[st.m][0]+'», '+HALLS[st.h][0]+', ≈ '+P.rub(total))}catch(e){}
+  }
+  document.getElementById('guests').addEventListener('input',function(e){st.g=+e.target.value;render()});
+  render();
+})();
+</script>
+</body>
+</html>

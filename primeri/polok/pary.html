@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Пары и массажи — ПОЛОК</title>
+<meta name="description" content="Демо-сайт: расписание общих паров, меню массажей и онлайн-запись.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ruslan+Display&family=Rubik:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="polok.css">
+</head>
+<body>
+<header>
+  <div class="wrap nav">
+    <a class="logo" href="index.html">Полок</a>
+    <nav class="menu" aria-label="Разделы">
+      <a href="index.html">Главная</a>
+      <a href="pary.html" aria-current="page">Пары и массажи</a>
+      <a href="restoran.html">Ресторан</a>
+      <a href="kontakty.html">Контакты</a>
+    </nav>
+    <a class="btn btn-h btn-sm" href="#book">Записаться на пар</a>
+  </div>
+</header>
+
+<main>
+  <section class="page-hero">
+    <div class="wrap ph">
+      <div><p class="label" style="color:var(--honey)">Пары и массажи</p><h1 style="margin-top:14px">Жар, веник и купель</h1><p>Общий пар идёт 3 часа: несколько заходов в парную с пармейстером, купель с ледяной водой, чай с травами. Простыни и тапочки выдаём.</p></div>
+      <div class="art" data-ill="pary"></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="sec-head"><p class="label">Будни</p><h2>Понедельник — четверг</h2></div>
+      <div class="rituals" id="wd"></div>
+      <div class="sec-head" style="margin-top:60px"><p class="label">Выходные</p><h2>Пятница — воскресенье</h2></div>
+      <div class="rituals" id="we" style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr))"></div>
+    </div>
+  </section>
+
+  <section class="dark" id="massage">
+    <div class="wrap">
+      <div class="sec-head"><p class="label">Меню массажей</p><h2>Массажи и парения</h2><p class="muted">Можно добавить к любому пару: мастер заберёт вас между заходами.</p></div>
+      <div class="menu-list" id="mlist"></div>
+    </div>
+  </section>
+
+  <section id="book">
+    <div class="wrap">
+      <div class="sec-head"><p class="label">Онлайн-запись</p><h2>Записаться на пар</h2><p class="muted">Оплата на месте. Отменить запись можно бесплатно за 3 часа.</p></div>
+      <div class="calc">
+        <div class="panel">
+          <div class="field"><span>День</span><div class="chips" id="bDay"></div></div>
+          <div class="field"><span>Пар</span><div class="chips" id="bSess"></div></div>
+          <div class="field"><span>Гостей</span><div class="stepper"><button type="button" id="gMinus" aria-label="Меньше гостей">−</button><output id="guests">2</output><button type="button" id="gPlus" aria-label="Больше гостей">+</button></div></div>
+          <div class="field"><span>Добавить массаж</span><div class="chips" id="bMass"></div></div>
+        </div>
+        <aside class="sum" aria-live="polite">
+          <h3>Ваш пар</h3>
+          <div class="line"><span>Когда</span><span id="sWhen">—</span></div>
+          <div class="line"><span id="sGuestsL">Гости</span><span id="sBase">—</span></div>
+          <div class="line"><span>Массажи</span><span id="sMass">нет</span></div>
+          <div class="total"><span>Итого</span><b id="sTotal">0 ₽</b></div>
+          <input id="bName" placeholder="Имя" autocomplete="name" aria-label="Имя">
+          <input id="bPhone" type="tel" placeholder="+7 900 000-00-00" autocomplete="tel" aria-label="Телефон">
+          <p class="err" id="bErr" hidden></p>
+          <button class="btn btn-h" type="button" id="bBtn">Записаться</button>
+          <div class="ok" id="bOk" hidden></div>
+        </aside>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer><div class="wrap"><span>ПОЛОК · банный двор и ресторан · +7 900 222-33-44</span><span>Демо-проект · компания вымышлена · дизайн и разработка: <a href="../../index.html">Артём</a></span></div></footer>
+<script src="polok.js"></script>
+<script>
+(function(){
+  var P=window.POLOK;
+  function cards(id,list){var box=document.getElementById(id);list.forEach(function(s){var el=document.createElement('div');el.className='ritual';el.innerHTML='<span class="time"></span><h3></h3><p class="muted"></p><div class="tags"><span>3 часа</span><span>купель</span><span>чай</span></div><span class="pr"></span>';el.querySelector('.time').textContent=s[0];el.querySelector('h3').textContent=s[1];el.querySelector('p').textContent=s[3];el.querySelector('.pr').textContent=P.rub(s[2])+' / чел.';box.appendChild(el)})}
+  cards('wd',P.SESS.wd);cards('we',P.SESS.we);
+  P.menuList(document.getElementById('mlist'),P.MASS.map(function(m){return[m[0],m[1]+' минут',m[2]]}));
+
+  var days=P.days(7),st={day:0,sess:null,guests:2,mass:[]};
+  function firstFree(){var d=days[st.day],l=P.sessFor(d);for(var i=0;i<l.length;i++)if(!P.isPast(d,l[i][0])&&P.seats(d,l[i][0])>0)return i;return null}
+  function render(){
+    var d=days[st.day],list=P.sessFor(d);
+    if(st.sess===null||st.sess>=list.length||P.isPast(d,list[st.sess][0])||!P.seats(d,list[st.sess][0]))st.sess=firstFree();
+    P.chips('bDay',days.map(function(x,i){return{t:i===0?'Сегодня':i===1?'Завтра':P.fd(x).split(',')[0],s:x.getDate()+' '+P.fd(x).split(' ')[2],v:i,on:i===st.day}}),function(v){st.day=v;st.sess=null;render()});
+    P.chips('bSess',list.map(function(s,i){var past=P.isPast(d,s[0]),left=P.seats(d,s[0]);return{t:s[0]+' · '+s[1],s:past?'уже начался':left?P.rub(s[2])+' · мест: '+left:'мест нет',v:i,on:i===st.sess,off:past||!left}}),function(v){st.sess=v;render()});
+    P.chips('bMass',P.MASS.map(function(m,i){return{t:m[0],s:m[1]+' мин · '+P.rub(m[2]),v:i,on:st.mass.indexOf(i)>-1}}),function(v){var k=st.mass.indexOf(v);k>-1?st.mass.splice(k,1):st.mass.push(v);render()});
+    var max=st.sess===null?1:Math.max(1,P.seats(d,list[st.sess][0]));if(st.guests>max)st.guests=max;
+    document.getElementById('guests').textContent=st.guests;
+    var s=st.sess===null?null:list[st.sess],base=s?s[2]*st.guests:0,mass=st.mass.reduce(function(a,i){return a+P.MASS[i][2]},0);
+    document.getElementById('sWhen').textContent=s?P.fd(d)+', '+s[0]:'нет свободных паров';
+    document.getElementById('sGuestsL').textContent=s?s[1]+' × '+st.guests:'Гости';
+    document.getElementById('sBase').textContent=P.rub(base);
+    document.getElementById('sMass').textContent=st.mass.length?st.mass.length+' шт. · '+P.rub(mass):'нет';
+    document.getElementById('sTotal').textContent=P.rub(base+mass);
+    document.getElementById('bBtn').disabled=!s;
+  }
+  document.getElementById('gMinus').onclick=function(){st.guests=Math.max(1,st.guests-1);render()};
+  document.getElementById('gPlus').onclick=function(){st.guests=Math.min(10,st.guests+1);render()};
+  document.getElementById('bBtn').onclick=function(){var n=P.check('bName','bPhone','bErr'),ok=document.getElementById('bOk');ok.hidden=!n;if(n)ok.textContent=n+', ждём вас: '+document.getElementById('sWhen').textContent+'. Возьмите только купальник, остальное выдадим. (Демо: запись никуда не отправлена.)'};
+  render();
+})();
+</script>
+</body>
+</html>
