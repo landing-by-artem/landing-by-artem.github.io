@@ -86,10 +86,14 @@ header{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;background:va
 
 /* try-on */
 .try{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(30px,5vw,80px);align-items:center}
-.stage{position:relative;aspect-ratio:1;max-width:560px;width:100%;background:var(--mist);border-radius:50%;overflow:hidden}
-.stage::before{content:"";position:absolute;inset:8%;border-radius:50%;border:2px dashed #CFCFCF}
-.stage svg{position:relative;width:100%;height:100%}
-.stage .hairp{transition:d .45s ease,opacity .3s}
+.stage{position:relative;aspect-ratio:4/5;max-width:520px;width:100%;background:var(--coal);border-radius:8px;overflow:hidden;box-shadow:12px 12px 0 var(--red)}
+.stage .ph{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.12);opacity:0;transform:scale(1.04);transition:opacity .5s ease,transform .8s ease}
+.stage .ph.on{opacity:1;transform:none}
+.stage::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.55),transparent 35%);pointer-events:none}
+.stage .tag{position:absolute;left:18px;bottom:18px;z-index:2;background:var(--red);color:#fff;font-family:var(--f-display);font-size:clamp(18px,2vw,24px);text-transform:uppercase;letter-spacing:.03em;padding:6px 12px;border-radius:4px}
+.stage .bd{position:absolute;right:16px;bottom:16px;z-index:2;width:32%;aspect-ratio:1;border-radius:50%;overflow:hidden;border:4px solid #fff;opacity:0;transform:scale(.7) rotate(-8deg);transition:opacity .35s,transform .35s;background:var(--coal)}
+.stage .bd.on{opacity:1;transform:none}
+.stage .bd img{width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.1)}
 .style-list{display:grid;gap:8px;margin-top:28px}
 .style{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 16px;align-items:center;width:100%;text-align:left;border:2px solid var(--line);background:#fff;color:var(--coal);border-radius:6px;padding:14px 18px;cursor:pointer;transition:border-color .2s}
 .style:hover{border-color:var(--coal)}
@@ -118,7 +122,9 @@ header{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;background:va
 /* masters */
 .masters{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:2px;background:var(--dline);border:2px solid var(--dline)}
 .master{background:var(--coal);padding:30px;display:grid;gap:14px;align-content:start}
-.ava{width:120px;height:120px;border-radius:50%;background:var(--coal-2);border:2px solid var(--dline);overflow:hidden}
+.ava{width:100%;aspect-ratio:4/3;border-radius:4px;background:var(--coal-2);overflow:hidden}
+.ava img{width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.1);transition:filter .4s}
+.master:hover .ava img{filter:grayscale(.15)}
 .master .role{color:var(--red);font-weight:800;font-size:13px;letter-spacing:.1em;text-transform:uppercase}
 .master p{color:var(--dmuted);font-size:15px}
 .master .exp{font-family:var(--f-display);font-size:20px;text-transform:uppercase}
@@ -218,29 +224,17 @@ footer a{color:#fff}
   <section id="try">
     <div class="wrap try">
       <div class="stage" id="stage" role="img" aria-label="Примерочная стрижки">
-        <svg viewBox="0 0 400 400" aria-hidden="true">
-          <defs>
-            <linearGradient id="fadeG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1C1714" stop-opacity=".9"/><stop offset="1" stop-color="#1C1714" stop-opacity="0"/></linearGradient>
-            <clipPath id="headClip"><ellipse cx="200" cy="188" rx="90" ry="104"/></clipPath>
-          </defs>
-          <path d="M60 400 C70 330 130 312 200 312 C270 312 330 330 340 400Z" fill="#2453B3"/>
-          <path d="M150 312 L200 352 L250 312" fill="none" stroke="#fff" stroke-width="6"/>
-          <rect x="166" y="262" width="68" height="66" rx="12" fill="#D9A07A"/>
-          <ellipse cx="200" cy="188" rx="90" ry="104" fill="var(--skin)"/>
-          <path d="M286 176 L312 214 L284 222 Z" fill="#E0A884"/>
-          <ellipse cx="174" cy="200" rx="15" ry="24" fill="#D99C76"/>
-          <ellipse cx="174" cy="200" rx="7" ry="13" fill="#C9875F"/>
-          <ellipse cx="262" cy="182" rx="6" ry="7" fill="#1C1714"/>
-          <path d="M248 162 Q262 154 278 160" stroke="#1C1714" stroke-width="5" fill="none" stroke-linecap="round" id="brow"/>
-          <path d="M268 246 Q282 250 290 244" stroke="#A3593F" stroke-width="4" fill="none" stroke-linecap="round"/>
-          <g clip-path="url(#headClip)"><path id="fadeSide" d="M108 140 C130 128 176 126 206 130 C212 170 210 214 200 250 C170 262 132 250 112 222 Z" fill="url(#fadeG)" opacity="0"/></g>
-          <path id="hair" class="hairp" fill="var(--hair)" d=""/>
-          <path id="beard" fill="var(--hair)" d="" opacity="1"/>
-        </svg>
+        <img class="ph on" data-s="fade" src="https://images.unsplash.com/photo-1578390432942-d323db577792?auto=format&fit=crop&w=900&h=1125&q=70" style="object-position:center 30%" alt="" loading="lazy">
+        <img class="ph" data-s="crop" src="https://images.unsplash.com/photo-1592061631928-0837e75fab3b?auto=format&fit=crop&w=900&h=1125&q=70" style="object-position:center 25%" alt="" loading="lazy">
+        <img class="ph" data-s="undercut" src="https://images.unsplash.com/photo-1456327102063-fb5054efe647?auto=format&fit=crop&w=900&h=1125&q=70" style="object-position:center 30%" alt="" loading="lazy">
+        <img class="ph" data-s="classic" src="https://images.unsplash.com/photo-1588153909116-0769ecca086d?auto=format&fit=crop&w=900&h=1125&q=70" style="object-position:center 30%" alt="" loading="lazy">
+        <img class="ph" data-s="buzz" src="https://images.unsplash.com/photo-1644199161554-f9e84cd64b7b?auto=format&fit=crop&w=900&h=1125&q=70" style="object-position:center 30%" alt="" loading="lazy">
+        <span class="tag" id="stTag">Фейд</span>
+        <div class="bd" id="stBeard"><img id="stBeardImg" src="" alt=""></div>
       </div>
       <div>
         <h2>Примерочная</h2>
-        <p class="muted" style="margin-top:18px;max-width:30em">Выберите стрижку и бороду, посмотрите, как это выглядит, и запишитесь на неё в одно нажатие.</p>
+        <p class="muted" style="margin-top:18px;max-width:30em">Выберите стрижку и бороду, посмотрите на живом примере, как это выглядит, и запишитесь в одно нажатие.</p>
         <div class="style-list" id="styles"></div>
         <div class="beards" id="beards"><span>Борода:</span></div>
         <div class="cta"><a class="btn btn-red" href="#book" id="tryBook">Записаться на фейд</a></div>
@@ -313,25 +307,18 @@ footer a{color:#fff}
     <div><b>Бритва</b>ул. Баумана, 45, Казань, вход со двора</div>
     <div><b>Часы</b>Пн–Пт 10–20, Сб 9–17</div>
     <div><b>Связь</b>+7 900 555-01-01 · @britva.kzn</div>
-    <div><b>Демо-проект</b>Компания вымышлена · <a href="../index.html">дизайн: Артём</a><br>Фото: Unsplash (Redd Francisco, Hair Spies, František Čaník, Adam Sherez, Thom Holmes, Joshua Lawrence)</div>
+    <div><b>Демо-проект</b>Компания вымышлена · <a href="../index.html">дизайн: Артём</a><br>Фото: Unsplash</div>
   </div>
 </footer>
 
 <script>
 (function(){
-  var HAIR={
-    fade:'M122 162 C116 92 168 60 216 64 C264 68 294 100 291 150 C270 128 236 118 200 120 C164 122 138 138 122 162Z',
-    crop:'M120 172 C112 104 162 72 214 74 C262 76 294 104 292 154 L282 136 L274 156 L264 134 L256 152 L246 132 L238 146 C220 126 180 126 156 140 C138 150 126 162 120 172Z',
-    undercut:'M132 150 C120 66 206 36 272 64 C304 80 306 118 296 142 C266 118 224 108 184 114 C154 120 140 132 132 150Z',
-    classic:'M110 210 C98 112 158 70 214 72 C270 76 298 112 292 162 C276 138 248 124 216 122 L210 112 L204 122 C170 124 140 146 126 210Z',
-    buzz:'M114 186 C110 112 160 84 210 84 C258 86 292 112 290 158 C268 140 236 132 200 132 C160 134 132 152 114 186Z'
-  };
   var STYLES=[['fade','Фейд','Плавный переход от кожи к длине',1800,45],['crop','Кроп','Короткий текстурный с чёлкой',1700,40],['undercut','Андеркат','Длинный верх, выбритые виски',1900,50],['classic','Классика','Боковой пробор, ножницы',1500,40],['buzz','Под машинку','Одна длина по всей голове',900,20]];
-  var BEARDS=[['none','Без бороды',''],['stubble','Щетина','M178 236 C190 290 250 300 286 250 C290 262 282 296 240 304 C200 310 176 286 176 252Z'],['full','Борода','M170 222 C176 300 230 336 270 318 C300 302 298 262 290 240 C276 256 262 262 244 258 C220 254 196 244 178 222Z M246 238 C262 230 282 232 292 240 C284 248 262 250 246 244Z']];
+  var BEARDS=[['none','Без бороды',''],['stubble','Щетина','https://images.unsplash.com/photo-1704572636607-78b65b21b165?auto=format&fit=crop&w=400&h=400&q=70'],['full','Борода','https://images.unsplash.com/photo-1630827020718-3433092696e7?auto=format&fit=crop&w=400&h=400&q=70']];
   var st={style:'fade',beard:'none'};
-  var hair=document.getElementById('hair'),beard=document.getElementById('beard'),fade=document.getElementById('fadeSide');
-  function drawTry(){hair.setAttribute('d',HAIR[st.style]);hair.style.opacity=st.style==='buzz'?.55:1;fade.setAttribute('opacity',st.style==='fade'||st.style==='undercut'?.85:0);
-    var b=BEARDS.filter(function(x){return x[0]===st.beard})[0];beard.setAttribute('d',b[2]);beard.style.opacity=st.beard==='stubble'?.35:1;if(st.beard==='stubble')beard.setAttribute('clip-path','url(#headClip)');else beard.removeAttribute('clip-path');
+  function drawTry(){[].slice.call(document.querySelectorAll('#stage .ph')).forEach(function(i){i.classList.toggle('on',i.dataset.s===st.style)});
+    var b=BEARDS.filter(function(x){return x[0]===st.beard})[0],bd=document.getElementById('stBeard');if(b[2])document.getElementById('stBeardImg').src=b[2];bd.classList.toggle('on',!!b[2]);
+    document.getElementById('stTag').textContent=STYLES.filter(function(x){return x[0]===st.style})[0][1]+(b[2]?' + '+b[1].toLowerCase():'');
     var box=document.getElementById('styles');box.innerHTML='';STYLES.forEach(function(s){var el=document.createElement('button');el.type='button';el.className='style';el.setAttribute('aria-pressed',s[0]===st.style);el.innerHTML='<b></b><small></small><span class="p">'+rub(s[3])+'</span>';el.querySelector('b').textContent=s[1];el.querySelector('small').textContent=s[2]+' · '+s[4]+' мин';el.onclick=function(){st.style=s[0];drawTry()};box.appendChild(el)});
     var bb=document.getElementById('beards');[].slice.call(bb.querySelectorAll('button')).forEach(function(x){x.remove()});BEARDS.forEach(function(x){var c=document.createElement('button');c.type='button';c.className='chip';c.textContent=x[1];c.setAttribute('aria-pressed',x[0]===st.beard);c.onclick=function(){st.beard=x[0];drawTry()};bb.appendChild(c)});
     var s=STYLES.filter(function(x){return x[0]===st.style})[0];document.getElementById('tryBook').textContent='Записаться: '+s[1].toLowerCase()+(st.beard!=='none'?' и борода':'');
@@ -368,9 +355,9 @@ footer a{color:#fff}
   document.getElementById('tryBook').addEventListener('click',function(){bk.svc=[st.style];if(st.beard!=='none')bk.svc.push('beard');renderBook()});
 
   /* masters */
-  var ml=document.getElementById('masterList');[['Марат','Фейды и кропы','7 лет за креслом. Делает самые чистые переходы в городе.','fade','none'],['Никита','Классика и борода','5 лет. Опасная бритва, горячее полотенце и идеальный контур.','classic','full'],['Тимур','Длинные волосы','9 лет. Андеркаты, укладки и всё, что длиннее пяти сантиметров.','undercut','stubble']].forEach(function(m,i){
-    var el=document.createElement('div');el.className='master';var b=BEARDS.filter(function(x){return x[0]===m[4]})[0];
-    el.innerHTML='<div class="ava"><svg viewBox="60 40 280 280" aria-hidden="true"><ellipse cx="200" cy="188" rx="90" ry="104" fill="'+['#E8B48F','#C98D66','#F0C6A4'][i]+'"/><ellipse cx="174" cy="200" rx="15" ry="24" fill="#D99C76"/><ellipse cx="262" cy="182" rx="6" ry="7" fill="#1C1714"/><path d="'+HAIR[m[3]]+'" fill="#1C1714"/><path d="'+b[2]+'" fill="#1C1714" opacity="'+(m[4]==='stubble'?.35:1)+'"/></svg></div><span class="role"></span><h3></h3><p></p>';
+  var ml=document.getElementById('masterList');[['Марат','Фейды и кропы','7 лет за креслом. Делает самые чистые переходы в городе.','1553521041-d168abd31de3'],['Никита','Классика и борода','5 лет. Опасная бритва, горячее полотенце и идеальный контур.','1627100232173-acf3733f02bc'],['Тимур','Длинные волосы','9 лет. Андеркаты, укладки и всё, что длиннее пяти сантиметров.','1587776535733-b4c80a99ef82']].forEach(function(m,i){
+    var el=document.createElement('div');el.className='master';
+    el.innerHTML='<div class="ava"><img src="https://images.unsplash.com/photo-'+m[3]+'?auto=format&fit=crop&w=700&h=525&q=70" alt="" loading="lazy"></div><span class="role"></span><h3></h3><p></p>';
     el.querySelector('.role').textContent=m[1];el.querySelector('h3').textContent=m[0];el.querySelector('p').textContent=m[2];ml.appendChild(el)});
 
   /* loyalty */
