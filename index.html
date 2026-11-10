@@ -461,7 +461,7 @@ details p{color:var(--grey);padding-bottom:26px;max-width:40em}
   layout();
 
   /* intro: one orchestrated moment */
-  requestAnimationFrame(function(){requestAnimationFrame(function(){document.body.classList.remove('pre')})});
+  requestAnimationFrame(function(){requestAnimationFrame(function(){document.body.classList.remove('pre')})});setTimeout(function(){document.body.classList.remove('pre')},700);
 
   /* cursor + magnetic buttons (mouse only) */
   if(matchMedia('(pointer:fine)').matches&&!reduce){
