@@ -8,7 +8,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Липа">
 <title>Липа — домашняя кухня</title>
-<meta name="description" content="Демо-сайт: ресторан домашней кухни Липа. Накрытый стол, меню с корзиной и бронь стола на плане зала.">
+<meta name="description" content="Демо-сайт: ресторан домашней кухни Липа. Карусель блюд, меню с корзиной и бронь стола на плане зала.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,800;1,600&family=Golos+Text:wght@400;500;600;700&display=swap">
@@ -58,26 +58,70 @@ header{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;background:rg
 @keyframes bump{40%{transform:scale(1.12)}}
 @media (max-width:860px){.menu{display:none}.cart-btn{margin-left:auto}}
 
-/* hero */
-.hero{padding-block:clamp(30px,5vw,70px) clamp(60px,7vw,100px);overflow:hidden}
-.hero-grid{display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);gap:clamp(20px,4vw,60px);align-items:center}
-.hero h1{font-size:clamp(50px,7.6vw,108px);line-height:.95}
+/* hero + орбита блюд: секция закрепляется, прокрутка меняет тарелку */
+.hero{padding-block:clamp(30px,5vw,60px) clamp(30px,4vw,50px)}
+.hero-top{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,.9fr);gap:clamp(20px,4vw,60px);align-items:end}
+.hero h1{font-size:clamp(46px,7vw,100px);line-height:.95}
 .hero h1 i{font-weight:600;color:var(--leaf)}
-.hero .lead{font-size:clamp(18px,1.8vw,21px);color:var(--muted);margin-top:24px;max-width:30em}
-.cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
-.open{display:inline-flex;align-items:center;gap:10px;margin-top:28px;font-weight:600}
+.hero .lead{font-size:clamp(17px,1.6vw,20px);color:var(--muted);max-width:30em}
+.cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}
+.open{display:inline-flex;align-items:center;gap:10px;margin-top:20px;font-weight:600}
 .open::before{content:"";width:10px;height:10px;border-radius:50%;background:#2FA866;box-shadow:0 0 0 4px rgba(47,168,102,.2)}
-.table-wrap{position:relative;aspect-ratio:1;max-width:620px;width:100%;margin-left:auto}
-.table-wrap svg{width:100%;height:100%;overflow:visible}
-.dish{cursor:pointer;transition:transform .25s}
-.dish:hover,.dish:focus-visible{transform:scale(1.06)}
-.dish:focus{outline:none}
-.dish:focus-visible circle.plate{stroke:var(--leaf);stroke-width:6}
-.hint{position:absolute;left:50%;bottom:-6px;transform:translateX(-50%);background:var(--ink);color:#fff;border-radius:999px;padding:9px 18px;font-weight:600;font-size:14px;white-space:nowrap;pointer-events:none}
-.tip{position:absolute;z-index:3;background:#fff;border:2px solid var(--ink);border-radius:14px;padding:8px 12px;font-size:14px;font-weight:600;pointer-events:none;opacity:0;transition:opacity .15s;white-space:nowrap;transform:translate(-50%,-120%)}
-.tip.on{opacity:1}
-.tip b{color:var(--check)}
-@media (max-width:900px){.hero-grid{grid-template-columns:1fr}.table-wrap{margin:30px auto 20px;max-width:480px}}
+@media (max-width:900px){.hero-top{grid-template-columns:1fr}}
+.orbit{position:relative;height:calc(100vh + 5 * 62vh);height:calc(100svh + 5 * 62svh);padding:0}
+.orbit-stick{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:var(--cream-d);display:grid;grid-template-rows:minmax(0,1fr) auto}
+.arc{position:absolute;left:-34vmin;top:50%;width:118vmin;height:118vmin;margin-top:-59vmin;border-radius:50%;background:var(--acc,#F4A79C);transition:background-color 1s ease,rotate 1.1s cubic-bezier(.5,.1,.2,1);rotate:var(--rot,0deg)}
+.arc::before{content:"";position:absolute;inset:9vmin;border-radius:50%;border:2px dashed rgba(29,42,34,.28)}
+.arc::after{content:"";position:absolute;right:6vmin;top:22vmin;width:5vmin;height:5vmin;border-radius:50%;background:#fff;box-shadow:0 6px 16px rgba(29,42,34,.18)}
+.orbit-main{position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(20px,5vw,80px);align-items:center;padding-top:76px}
+.plates{position:relative;width:min(62vmin,560px);aspect-ratio:1;justify-self:center}
+.pl{position:absolute;inset:0;transform-origin:50% 240%;transition:transform 1.1s cubic-bezier(.5,.1,.2,1),opacity .7s;opacity:0;pointer-events:none}
+.pl.prev{transform:rotate(-64deg)}.pl.next{transform:rotate(64deg)}
+.pl.cur{transform:none;opacity:1}
+.pl img{width:100%;height:100%;object-fit:cover;border-radius:50%;border:clamp(8px,1.6vmin,16px) solid #fff;box-shadow:0 30px 60px -20px rgba(29,42,34,.45),0 0 0 1px rgba(29,42,34,.08);transition:rotate 1.2s cubic-bezier(.5,.1,.2,1);rotate:-50deg;background:#fff}
+.pl.cur img{rotate:0deg}.pl.next img{rotate:50deg}
+.infos{display:grid;max-width:520px}
+.info{grid-area:1/1;display:grid;gap:14px;align-content:center;opacity:0;visibility:hidden;transition:opacity .5s,visibility 0s .5s}
+.info.cur{opacity:1;visibility:visible;transition:opacity .6s .25s,visibility 0s}
+.eyebrow{font-weight:600;font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.ttl{font-family:var(--f-body);line-height:.98;letter-spacing:-.03em;font-size:clamp(40px,6.2vw,92px);margin:0;overflow:hidden;padding-bottom:.08em}
+.ttl span{display:block;transition:transform .8s cubic-bezier(.2,.8,.2,1)}
+.ttl .a{font-weight:400;transform:translateX(60%)}
+.ttl .b{font-weight:700;transform:translateX(-60%);font-size:.78em}
+.info.cur .ttl span{transform:none;transition-delay:.2s}
+.chef{display:grid;grid-template-columns:auto minmax(0,1fr);gap:6px 14px;align-items:center;background:rgba(255,255,255,.78);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-radius:22px;padding:18px 20px;box-shadow:0 20px 40px -28px rgba(29,42,34,.5)}
+.badge{width:54px;height:54px;border-radius:16px;display:grid;place-items:center;font-weight:700;font-size:18px;color:var(--ink)}
+.chef b{font-size:16px}.chef small{display:block;color:var(--muted);font-size:13px}
+.chef p{grid-column:1/-1;font-size:15.5px;line-height:1.45}
+.ing{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:6px;list-style:none;margin:0;padding:0}
+.ing li{font-size:13px;padding:4px 10px;border-radius:99px;background:rgba(29,42,34,.07)}
+.buy{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.buy .sum{font-family:var(--f-display);font-weight:800;font-size:34px}
+.orbit-foot{position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:14px 22px}
+.thumbs{display:flex;gap:6px;list-style:none;margin:0;padding:0}
+.thumbs button{appearance:none;border:0;background:none;font:inherit;color:inherit;cursor:pointer;width:86px;padding:9px 4px 8px;border-radius:14px;display:grid;justify-items:center;gap:6px;font-size:12.5px;font-weight:600;line-height:1.2;transition:background .25s}
+.thumbs img{width:52px;height:52px;border-radius:50%;object-fit:cover;border:3px solid #fff}
+.thumbs button[aria-current="true"]{background:rgba(255,255,255,.75);box-shadow:0 10px 24px -16px rgba(0,0,0,.3)}
+.arrows{display:flex;gap:8px}
+.arrows button{width:48px;height:48px;border-radius:50%;border:2px solid var(--ink);background:transparent;color:var(--ink);cursor:pointer;display:grid;place-items:center;transition:background .2s,color .2s}
+.arrows button:hover{background:var(--ink);color:#fff}
+.pager{position:absolute;z-index:2;right:max(14px,env(safe-area-inset-right,0px));top:50%;translate:0 -50%;display:grid;gap:4px}
+.pager button{appearance:none;border:0;background:none;width:24px;height:24px;display:grid;place-items:center;cursor:pointer;padding:0}
+.pager i{display:block;width:4px;height:4px;border-radius:4px;background:var(--ink);opacity:.4;transition:height .4s,opacity .3s}
+.pager button[aria-current="true"] i{height:20px;opacity:1}
+.scroll-hint{font-size:14px;font-weight:600;color:var(--muted)}
+@media (max-width:900px){
+  .orbit-main{grid-template-columns:1fr;gap:10px;align-content:center;padding-top:70px}
+  .plates{width:min(52vw,34svh)}
+  .arc{left:50%;margin-left:-70vw;top:-34vw;margin-top:0;width:140vw;height:140vw}
+  .ttl{font-size:clamp(34px,10vw,54px)}
+  .ing,.thumbs,.scroll-hint{display:none}
+  .chef{padding:14px 16px}.chef p{font-size:14.5px}
+  .info{gap:10px}.buy .sum{font-size:28px}
+  .orbit-foot{justify-content:center;padding-block:8px 14px}
+  .infos{max-width:none;padding-right:26px}
+}
+@media (prefers-reduced-motion:reduce){.pl,.pl img,.ttl span,.arc,.info{transition:none}}
 
 .strip{background:var(--leaf);color:#fff;overflow:hidden}
 .strip .run{display:flex;gap:48px;width:max-content;padding:16px 0;animation:run 36s linear infinite;font-family:var(--f-display);font-style:italic;font-size:clamp(20px,2.4vw,28px);white-space:nowrap}
@@ -93,7 +137,8 @@ header{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;background:rg
 .cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
 .card{display:grid;grid-template-columns:88px minmax(0,1fr);gap:16px;align-items:center;padding:16px;border:1px solid var(--line);border-radius:22px;background:#fff;transition:border-color .2s}
 .card:hover{border-color:var(--leaf)}
-.card .pic{width:88px;height:88px;border-radius:50%;background:var(--soft);display:grid;place-items:center}
+.card .pic{width:88px;height:88px;border-radius:50%;background:var(--soft);display:grid;place-items:center;overflow:hidden}
+.card .pic img{width:100%;height:100%;object-fit:cover}
 .card h3{font-family:var(--f-body);font-size:17px;font-weight:700}
 .card p{color:var(--muted);font-size:14px;line-height:1.4;margin-top:2px}
 .card .row{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:10px}
@@ -176,45 +221,60 @@ footer a{color:var(--blossom)}
 
 <main id="top">
   <section class="hero">
-    <div class="wrap hero-grid">
+    <div class="wrap hero-top">
+      <h1>Домашняя кухня, <i>как у бабушки</i></h1>
       <div>
-        <h1>Домашняя кухня, <i>как у бабушки</i></h1>
-        <p class="lead">Борщ на говяжьем бульоне, пельмени ручной лепки и пироги из нашей печи. Стол уже накрыт: нажмите на тарелку, и блюдо окажется в корзине.</p>
+        <p class="lead">Борщ на говяжьем бульоне, пельмени ручной лепки и пироги из нашей печи. Листайте вниз: блюда выйдут к вам по одному.</p>
         <div class="cta"><a class="btn btn-g" href="#book">Забронировать стол</a><a class="btn btn-o" href="#menu">Заказать доставку</a></div>
         <p class="open" id="openNow">Сегодня открыто до 23:00</p>
       </div>
-      <div class="table-wrap" id="table">
-        <svg viewBox="0 0 600 600" role="group" aria-label="Накрытый стол: нажмите на блюдо, чтобы добавить его в корзину">
-          <defs>
-            <pattern id="gingham" width="44" height="44" patternUnits="userSpaceOnUse"><rect width="44" height="44" fill="#FFFFFF"/><rect width="22" height="44" fill="#C8402E" opacity=".5"/><rect width="44" height="22" fill="#C8402E" opacity=".5"/></pattern>
-            <radialGradient id="soup" cx=".45" cy=".4"><stop offset="0" stop-color="#D9473A"/><stop offset="1" stop-color="#9C2620"/></radialGradient>
-            <filter id="sh" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#1D2A22" flood-opacity=".22"/></filter>
-          </defs>
-          <circle cx="300" cy="300" r="290" fill="url(#gingham)" stroke="#1D2A22" stroke-width="4"/>
-          <circle cx="300" cy="300" r="290" fill="none" stroke="#fff" stroke-width="10" stroke-dasharray="2 14" opacity=".9"/>
-          <!-- spoon & bread decor -->
-          <g aria-hidden="true"><ellipse cx="420" cy="455" rx="62" ry="40" fill="#D9A05B" stroke="#1D2A22" stroke-width="3" filter="url(#sh)"/><path d="M380 445 q40 -18 80 0 M384 462 q36 -14 74 0" stroke="#A86C2E" stroke-width="4" fill="none"/></g>
-          <g class="dish" data-id="borsch" tabindex="0" role="button" aria-label="Борщ с пампушками, 390 рублей. Добавить в корзину" style="transform-origin:200px 200px">
-            <circle class="plate" cx="200" cy="200" r="98" fill="#fff" stroke="#1D2A22" stroke-width="3" filter="url(#sh)"/><circle cx="200" cy="200" r="74" fill="#F1F5EF" stroke="#2F5D46" stroke-width="3"/><circle cx="200" cy="200" r="62" fill="url(#soup)"/><ellipse cx="214" cy="190" rx="22" ry="16" fill="#fff"/><path d="M178 214 l10 -6 M196 226 l12 -4 M168 196 l8 4" stroke="#3F7A5C" stroke-width="5" stroke-linecap="round"/>
-          </g>
-          <g class="dish" data-id="pelmeni" tabindex="0" role="button" aria-label="Пельмени ручной лепки, 490 рублей. Добавить в корзину" style="transform-origin:410px 200px">
-            <circle class="plate" cx="410" cy="200" r="92" fill="#fff" stroke="#1D2A22" stroke-width="3" filter="url(#sh)"/><circle cx="410" cy="200" r="68" fill="#F1F5EF" stroke="#2F5D46" stroke-width="3"/>
-            <g fill="#FFF6E2" stroke="#C9A066" stroke-width="2.5"><path d="M370 186 q14 -26 34 0 q-17 12 -34 0z"/><path d="M402 170 q14 -26 34 0 q-17 12 -34 0z"/><path d="M412 208 q14 -26 34 0 q-17 12 -34 0z"/><path d="M380 218 q14 -26 34 0 q-17 12 -34 0z"/><path d="M394 244 q12 -22 30 0 q-15 10 -30 0z"/></g><circle cx="432" cy="236" r="12" fill="#fff" stroke="#E4E9E3" stroke-width="2"/><path d="M398 196 l4 -4 M424 228 l5 -3" stroke="#3F7A5C" stroke-width="4" stroke-linecap="round"/>
-          </g>
-          <g class="dish" data-id="pie" tabindex="0" role="button" aria-label="Пирог с вишней, 290 рублей. Добавить в корзину" style="transform-origin:190px 410px">
-            <circle class="plate" cx="190" cy="410" r="84" fill="#fff" stroke="#1D2A22" stroke-width="3" filter="url(#sh)"/><path d="M190 410 L250 380 A68 68 0 0 1 238 456 Z" fill="#D9A05B" stroke="#1D2A22" stroke-width="3"/><path d="M200 412 L240 392 M206 424 L242 418 M204 436 L236 444" stroke="#A82A2A" stroke-width="5" stroke-linecap="round"/><circle cx="150" cy="400" r="20" fill="#F4D35E" opacity=".7"/>
-          </g>
-          <g class="dish" data-id="medovik" tabindex="0" role="button" aria-label="Медовик, 320 рублей. Добавить в корзину" style="transform-origin:330px 330px">
-            <circle class="plate" cx="330" cy="330" r="62" fill="#fff" stroke="#1D2A22" stroke-width="3" filter="url(#sh)"/><path d="M300 330 L360 312 L360 348 Z" fill="#E7B566" stroke="#1D2A22" stroke-width="3" stroke-linejoin="round"/><path d="M312 327 L358 320 M312 338 L358 336" stroke="#9C6A2C" stroke-width="3"/><circle cx="352" cy="312" r="6" fill="#C8402E"/>
-          </g>
-          <g class="dish" data-id="mors" tabindex="0" role="button" aria-label="Клюквенный морс, 220 рублей. Добавить в корзину" style="transform-origin:470px 360px">
-            <circle class="plate" cx="470" cy="360" r="42" fill="#fff" stroke="#1D2A22" stroke-width="3" filter="url(#sh)"/><circle cx="470" cy="360" r="32" fill="#B8243A" stroke="#1D2A22" stroke-width="2"/><circle cx="478" cy="350" r="8" fill="#fff" opacity=".45"/><circle cx="462" cy="368" r="5" fill="#E04A5E"/><circle cx="474" cy="372" r="5" fill="#E04A5E"/>
-          </g>
-          <g aria-hidden="true"><rect x="268" y="88" width="10" height="70" rx="5" fill="#BFC7C1" stroke="#1D2A22" stroke-width="2" transform="rotate(-30 273 123)"/><ellipse cx="296" cy="82" rx="12" ry="18" fill="#BFC7C1" stroke="#1D2A22" stroke-width="2" transform="rotate(-30 296 82)"/></g>
-        </svg>
-        <div class="tip" id="tip"></div>
-        <span class="hint">Нажмите на блюдо</span>
+    </div>
+  </section>
+
+  <section class="orbit" id="dishes" aria-label="Любимые блюда гостей">
+    <div class="orbit-stick" id="orbit">
+      <div class="arc" aria-hidden="true"></div>
+      <div class="wrap orbit-main">
+        <div class="plates" id="plates"><div class="pl cur"><img src="https://images.unsplash.com/photo-1677889173479-c8a0ab15ae18?auto=format&fit=crop&w=900&h=900&q=70" alt="Борщ с пампушками"></div><div class="pl next"><img src="https://images.unsplash.com/photo-1673646961561-0b85d74d079e?auto=format&fit=crop&w=900&h=900&q=70" alt="Пельмени ручной лепки" loading="lazy"></div><div class="pl next"><img src="https://images.unsplash.com/photo-1546024664-9226c2d3819b?auto=format&fit=crop&w=900&h=900&q=70" alt="Пирог с вишней" loading="lazy"></div><div class="pl next"><img src="https://images.unsplash.com/photo-1712725214797-38956dc3f091?auto=format&fit=crop&w=900&h=900&q=70" alt="Медовик по-семейному" loading="lazy"></div><div class="pl next"><img src="https://images.unsplash.com/photo-1548808928-20b406573d30?auto=format&fit=crop&w=900&h=900&q=70" alt="Морс клюквенный" loading="lazy"></div></div>
+        <div class="infos" id="infos">
+          <article class="info cur" aria-hidden="false">
+            <span class="eyebrow">Блюдо 1 из 5</span>
+            <h2 class="ttl"><span class="a">Борщ</span><span class="b">с пампушками</span></h2>
+            <div class="chef"><span class="badge" style="background:#F4A79C">4,9</span><span><b>Варит Нина Петровна</b><small>оценка гостей «Липы»</small></span><p>На говяжьем бульоне, со сметаной и чесночными пампушками. Варим каждое утро.</p><ul class="ing"><li>Говядина</li><li>Свёкла</li><li>Капуста</li><li>Сметана</li><li>Пампушки</li></ul></div>
+            <div class="buy"><span class="sum" data-price="borsch"></span><button class="btn btn-g" type="button" data-add="borsch">В корзину</button></div>
+          </article>
+          <article class="info" aria-hidden="true">
+            <span class="eyebrow">Блюдо 2 из 5</span>
+            <h2 class="ttl"><span class="a">Пельмени</span><span class="b">ручной лепки</span></h2>
+            <div class="chef"><span class="badge" style="background:#F2D7A0">4,8</span><span><b>Лепит вся кухня</b><small>оценка гостей «Липы»</small></span><p>Говядина и свинина в тонком тесте. Лепим с утра, подаём в бульоне.</p><ul class="ing"><li>Говядина</li><li>Свинина</li><li>Тонкое тесто</li><li>Бульон</li><li>Зелень</li></ul></div>
+            <div class="buy"><span class="sum" data-price="pelmeni"></span><button class="btn btn-g" type="button" data-add="pelmeni">В корзину</button></div>
+          </article>
+          <article class="info" aria-hidden="true">
+            <span class="eyebrow">Блюдо 3 из 5</span>
+            <h2 class="ttl"><span class="a">Пирог</span><span class="b">с вишней</span></h2>
+            <div class="chef"><span class="badge" style="background:#EBB9C7">4,9</span><span><b>Печёт Нина Петровна</b><small>оценка гостей «Липы»</small></span><p>Из нашей печи, с румяной корочкой. Порцию приносим ещё тёплой.</p><ul class="ing"><li>Вишня</li><li>Сдобное тесто</li><li>Сливочное масло</li></ul></div>
+            <div class="buy"><span class="sum" data-price="pie"></span><button class="btn btn-g" type="button" data-add="pie">В корзину</button></div>
+          </article>
+          <article class="info" aria-hidden="true">
+            <span class="eyebrow">Блюдо 4 из 5</span>
+            <h2 class="ttl"><span class="a">Медовик</span><span class="b">по-семейному</span></h2>
+            <div class="chef"><span class="badge" style="background:#F0C583">5,0</span><span><b>Собирает кондитер Аня</b><small>оценка гостей «Липы»</small></span><p>Тонкие медовые коржи и сметанный крем по семейному рецепту.</p><ul class="ing"><li>Мёд</li><li>Сметанный крем</li><li>Коржи</li></ul></div>
+            <div class="buy"><span class="sum" data-price="medovik"></span><button class="btn btn-g" type="button" data-add="medovik">В корзину</button></div>
+          </article>
+          <article class="info" aria-hidden="true">
+            <span class="eyebrow">Блюдо 5 из 5</span>
+            <h2 class="ttl"><span class="a">Морс</span><span class="b">клюквенный</span></h2>
+            <div class="chef"><span class="badge" style="background:#F3A9C9">4,7</span><span><b>Варим сами</b><small>оценка гостей «Липы»</small></span><p>Домашний, из клюквы, не слишком сладкий. Пол-литра в бутылке.</p><ul class="ing"><li>Клюква</li><li>Мёд</li><li>Вода</li></ul></div>
+            <div class="buy"><span class="sum" data-price="mors"></span><button class="btn btn-g" type="button" data-add="mors">В корзину</button></div>
+          </article>
+        </div>
       </div>
+      <div class="wrap orbit-foot">
+        <ul class="thumbs" id="thumbs"><li><button type="button" data-go="0" aria-current="true"><img src="https://images.unsplash.com/photo-1677889173479-c8a0ab15ae18?auto=format&fit=crop&w=120&h=120&q=60" alt="" loading="lazy">Борщ</button></li><li><button type="button" data-go="1" aria-current="false"><img src="https://images.unsplash.com/photo-1673646961561-0b85d74d079e?auto=format&fit=crop&w=120&h=120&q=60" alt="" loading="lazy">Пельмени</button></li><li><button type="button" data-go="2" aria-current="false"><img src="https://images.unsplash.com/photo-1546024664-9226c2d3819b?auto=format&fit=crop&w=120&h=120&q=60" alt="" loading="lazy">Пирог</button></li><li><button type="button" data-go="3" aria-current="false"><img src="https://images.unsplash.com/photo-1712725214797-38956dc3f091?auto=format&fit=crop&w=120&h=120&q=60" alt="" loading="lazy">Медовик</button></li><li><button type="button" data-go="4" aria-current="false"><img src="https://images.unsplash.com/photo-1548808928-20b406573d30?auto=format&fit=crop&w=120&h=120&q=60" alt="" loading="lazy">Морс</button></li></ul>
+        <span class="scroll-hint">Листайте вниз или нажимайте на блюда</span>
+        <div class="arrows"><button type="button" id="oPrev" aria-label="Предыдущее блюдо"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button><button type="button" id="oNext" aria-label="Следующее блюдо"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button></div>
+      </div>
+      <div class="pager" id="pager"><button type="button" data-go="0" aria-label="Борщ с пампушками" aria-current="true"><i></i></button><button type="button" data-go="1" aria-label="Пельмени ручной лепки" aria-current="false"><i></i></button><button type="button" data-go="2" aria-label="Пирог с вишней" aria-current="false"><i></i></button><button type="button" data-go="3" aria-label="Медовик по-семейному" aria-current="false"><i></i></button><button type="button" data-go="4" aria-label="Морс клюквенный" aria-current="false"><i></i></button></div>
     </div>
   </section>
 
@@ -280,7 +340,7 @@ footer a{color:var(--blossom)}
       <div><b>Часы</b>Пн–Чт 11–23<br>Пт–Сб 11–00, Вс 12–22</div>
       <div><b>Связь</b>+7 900 123-45-67<br>@lipa.ekb</div>
     </div>
-    <div class="demo"><span>Демо-проект, компания вымышлена</span><span>Дизайн и разработка: <a href="../index.html">Артём</a></span></div>
+    <div class="demo"><span>Демо-проект, компания вымышлена · фото: Unsplash</span><span>Дизайн и разработка: <a href="../index.html">Артём</a></span></div>
   </div>
 </footer>
 <div class="toast" id="toast" role="status"><span id="toastT"></span><a href="#menu">К корзине</a></div>
@@ -294,6 +354,7 @@ footer a{color:var(--blossom)}
     'Напитки':[['mors','Морс клюквенный','0,5 л, домашний',220,'glass'],['kvas','Квас','0,5 л, своего брожения',190,'glass'],['chai','Чай с травами','Чайник 0,8 л',290,'glass']]
   };
   var ICON={soup:'<circle cx="44" cy="44" r="34" fill="#fff" stroke="#1D2A22" stroke-width="2.5"/><circle cx="44" cy="44" r="24" fill="#B23028"/><ellipse cx="50" cy="40" rx="8" ry="6" fill="#fff"/>',pelmeni:'<circle cx="44" cy="44" r="34" fill="#fff" stroke="#1D2A22" stroke-width="2.5"/><g fill="#FFF6E2" stroke="#C9A066" stroke-width="2"><path d="M26 44 q9 -16 20 0 q-10 7 -20 0z"/><path d="M42 34 q9 -16 20 0 q-10 7 -20 0z"/><path d="M40 52 q9 -16 20 0 q-10 7 -20 0z"/></g>',plate:'<circle cx="44" cy="44" r="34" fill="#fff" stroke="#1D2A22" stroke-width="2.5"/><ellipse cx="44" cy="46" rx="18" ry="12" fill="#C58A4A"/><circle cx="34" cy="36" r="7" fill="#F4D35E"/><path d="M50 32 l6 -4" stroke="#3F7A5C" stroke-width="4" stroke-linecap="round"/>',pot:'<path d="M20 38 h48 c0 22 -10 32 -24 32 c-14 0 -24 -10 -24 -32z" fill="#8C4F2B" stroke="#1D2A22" stroke-width="2.5"/><rect x="16" y="30" width="56" height="10" rx="5" fill="#A8693F" stroke="#1D2A22" stroke-width="2.5"/><path d="M38 24 c-4 -6 4 -8 0 -14 M50 24 c-4 -6 4 -8 0 -14" stroke="#B9C2BC" stroke-width="3" fill="none" stroke-linecap="round"/>',pie:'<circle cx="44" cy="44" r="34" fill="#fff" stroke="#1D2A22" stroke-width="2.5"/><path d="M44 44 L72 32 A30 30 0 0 1 66 66 Z" fill="#D9A05B" stroke="#1D2A22" stroke-width="2"/><path d="M50 46 l14 -6 M52 54 l12 0" stroke="#A82A2A" stroke-width="3.5" stroke-linecap="round"/>',glass:'<path d="M30 20 h28 l-4 52 h-20z" fill="#B8243A" stroke="#1D2A22" stroke-width="2.5"/><path d="M33 30 h22" stroke="#fff" stroke-width="2" opacity=".5"/>'};
+  var PH={'borsch':'1677889173479-c8a0ab15ae18','pelmeni':'1673646961561-0b85d74d079e','pie':'1546024664-9226c2d3819b','medovik':'1712725214797-38956dc3f091','mors':'1548808928-20b406573d30','kotlety':'1633436375153-d7045cb93e38','zharkoe':'1773209928058-cfd3314acc7c','shuba':'1566583124362-d528115bccce','gruzdi':'1583329947086-fce348672081','vinegret':'1631311309788-9a37722d05f6','syrniki':'1675540212407-a67ab877c418','chai':'1615205597144-5c7c885291d2'},PU='https://images.unsplash.com/photo-';
   var ALL={};Object.keys(MENU).forEach(function(c){MENU[c].forEach(function(d){ALL[d[0]]=d})});
   var cur='Горячее',cart={};
   var rub=function(n){return n.toLocaleString('ru-RU')+' ₽'};
@@ -301,7 +362,7 @@ footer a{color:var(--blossom)}
 
   function tabs(){var t=document.getElementById('tabs');t.innerHTML='';Object.keys(MENU).forEach(function(k){var b=document.createElement('button');b.type='button';b.className='tab';b.setAttribute('role','tab');b.setAttribute('aria-selected',k===cur);b.textContent=k;b.onclick=function(){cur=k;tabs();cards()};t.appendChild(b)})}
   function cards(){var box=document.getElementById('cards');box.innerHTML='';MENU[cur].forEach(function(d){var q=cart[d[0]]||0,el=document.createElement('div');el.className='card';
-    el.innerHTML='<span class="pic"><svg width="88" height="88" viewBox="0 0 88 88" aria-hidden="true">'+ICON[d[4]]+'</svg></span><div><h3></h3><p></p><div class="row"><span class="price">'+rub(d[3])+'</span><button type="button" class="add'+(q?' on':'')+'">'+(q?q+' в заказе':'+')+'</button></div></div>';
+    el.innerHTML='<span class="pic">'+(PH[d[0]]?'<img src="'+PU+PH[d[0]]+'?auto=format&fit=crop&w=200&h=200&q=65" alt="" loading="lazy">':'<svg width="88" height="88" viewBox="0 0 88 88" aria-hidden="true">'+ICON[d[4]]+'</svg>')+'</span><div><h3></h3><p></p><div class="row"><span class="price">'+rub(d[3])+'</span><button type="button" class="add'+(q?' on':'')+'">'+(q?q+' в заказе':'+')+'</button></div></div>';
     el.querySelector('h3').textContent=d[1];el.querySelector('p').textContent=d[2];el.querySelector('.add').setAttribute('aria-label','Добавить: '+d[1]);el.querySelector('.add').onclick=function(){add(d[0])};box.appendChild(el)})}
   var tt;
   function add(id){cart[id]=(cart[id]||0)+1;render();var b=document.getElementById('cartBtn');b.classList.remove('bump');void b.offsetWidth;b.classList.add('bump');
@@ -317,12 +378,24 @@ footer a{color:var(--blossom)}
   document.getElementById('order').onclick=function(){var ok=document.getElementById('orderOk');ok.hidden=false;var n=Object.keys(cart).reduce(function(a,k){return a+cart[k]},0);
     ok.textContent=n?'Это демо-сайт: заказ из '+n+' '+pl(n,'блюда','блюд','блюд')+' никуда не отправлен. На настоящем сайте здесь будет оплата и время доставки.':'Добавьте хотя бы одно блюдо.'};
 
-  /* table interactions */
-  var tip=document.getElementById('tip'),tw=document.getElementById('table');
-  [].forEach.call(document.querySelectorAll('.dish'),function(g){var d=ALL[g.dataset.id];
-    function show(){var r=g.getBoundingClientRect(),w=tw.getBoundingClientRect();tip.innerHTML='';tip.appendChild(document.createTextNode(d[1]+' · '));var b=document.createElement('b');b.textContent=rub(d[3]);tip.appendChild(b);tip.style.left=(r.left-w.left+r.width/2)+'px';tip.style.top=(r.top-w.top+8)+'px';tip.classList.add('on')}
-    g.addEventListener('pointerenter',show);g.addEventListener('focus',show);g.addEventListener('pointerleave',function(){tip.classList.remove('on')});g.addEventListener('blur',function(){tip.classList.remove('on')});
-    g.addEventListener('click',function(){add(d[0])});g.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();add(d[0])}})});
+  /* орбита блюд: прокрутка секции выбирает тарелку */
+  (function(){
+    var sec=document.getElementById('dishes'),pls=[].slice.call(document.querySelectorAll('#plates .pl')),inf=[].slice.call(document.querySelectorAll('#infos .info')),N=pls.length,ACC=['#F4A79C', '#F2D7A0', '#EBB9C7', '#F0C583', '#F3A9C9'],cur=0,arc=sec.querySelector('.arc');
+    [].forEach.call(sec.querySelectorAll('[data-price]'),function(e){e.textContent=rub(ALL[e.dataset.price][3])});
+    [].forEach.call(sec.querySelectorAll('[data-add]'),function(b){b.onclick=function(){add(b.dataset.add)}});
+    function show(i){if(i===cur)return;cur=i;pls.forEach(function(p,k){p.className='pl '+(k===i?'cur':k<i?'prev':'next')});
+      inf.forEach(function(x,k){x.classList.toggle('cur',k===i);x.setAttribute('aria-hidden',k!==i)});
+      arc.style.setProperty('--acc',ACC[i]);arc.style.setProperty('--rot',(i*-48)+'deg');
+      [].forEach.call(sec.querySelectorAll('[data-go]'),function(b){b.setAttribute('aria-current',+b.dataset.go===i)})}
+    function span(){return sec.offsetHeight-innerHeight}
+    function onScroll(){var r=sec.getBoundingClientRect();if(r.bottom<0||r.top>innerHeight)return;var p=Math.min(1,Math.max(0,-r.top/Math.max(1,span())));show(Math.min(N-1,Math.floor(p*N)))}
+    function go(i){i=Math.max(0,Math.min(N-1,i));var top=sec.getBoundingClientRect().top+scrollY;scrollTo({top:top+span()*(i+.5)/N,behavior:'smooth'})}
+    [].forEach.call(sec.querySelectorAll('[data-go]'),function(b){b.onclick=function(){go(+b.dataset.go)}});
+    document.getElementById('oPrev').onclick=function(){if(cur===0)go(0);else go(cur-1)};document.getElementById('oNext').onclick=function(){if(cur===N-1)document.getElementById('menu').scrollIntoView();else go(cur+1)};
+    sec.addEventListener('keydown',function(e){if(e.key==='ArrowRight')go(cur+1);if(e.key==='ArrowLeft')go(cur-1)});
+    var sx=null;sec.addEventListener('touchstart',function(e){sx=e.touches[0].clientX},{passive:true});sec.addEventListener('touchend',function(e){if(sx===null)return;var dx=e.changedTouches[0].clientX-sx;if(Math.abs(dx)>60)go(cur+(dx<0?1:-1));sx=null},{passive:true});
+    addEventListener('scroll',onScroll,{passive:true});arc.style.setProperty('--acc',ACC[0]);onScroll();
+  })();
 
   /* open now */
   var h=new Date().getHours();document.getElementById('openNow').textContent=h>=11&&h<23?'Сейчас открыто, до 23:00':'Сейчас закрыто, откроемся в 11:00';

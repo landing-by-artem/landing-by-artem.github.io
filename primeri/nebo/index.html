@@ -13,6 +13,32 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Manrope:wght@400;600;700;800&display=swap">
 <link rel="stylesheet" href="nebo.css">
+<style>
+/* каталог: бенто-сетка с настоящими фото */
+.bento{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:repeat(3,200px) 240px;gap:16px}
+.bcard{position:relative;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;border-radius:22px;background:var(--night-2);border:1px solid var(--line);color:var(--cream);text-decoration:none;isolation:isolate;box-shadow:0 20px 50px -30px #000}
+.bcard img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2;transition:transform .7s cubic-bezier(.2,.8,.2,1)}
+.bcard::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(13,10,43,.05) 25%,rgba(13,10,43,.94) 82%);transition:background .3s}
+.bbody{display:grid;gap:6px;padding:22px 22px 20px;transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+.bbody svg{color:var(--gold);margin-bottom:6px;transform-origin:left bottom;transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+.brow{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:4px 12px}
+.brow b{color:var(--gold);white-space:nowrap}
+.bbody p{color:var(--muted);font-size:15px;margin:0}
+.bcta{position:absolute;left:22px;bottom:16px;font-weight:700;font-size:14px;color:var(--gold);opacity:0;transform:translateY(12px);transition:opacity .3s,transform .35s cubic-bezier(.2,.8,.2,1)}
+.b-two{grid-column:1;grid-row:1/3}.b-gloss{grid-column:1;grid-row:3}
+.b-lines{grid-column:2;grid-row:1/4}
+.b-matte{grid-column:3;grid-row:1}.b-stars{grid-column:3;grid-row:2/4}
+.b-print{grid-column:1/4;grid-row:4}
+@media (hover:hover){
+  .bcard:hover img,.bcard:focus-visible img{transform:scale(1.06)}
+  .bcard:hover .bbody,.bcard:focus-visible .bbody{transform:translateY(-34px)}
+  .bcard:hover .bbody svg,.bcard:focus-visible .bbody svg{transform:scale(.75)}
+  .bcard:hover .bcta,.bcard:focus-visible .bcta{opacity:1;transform:none}
+}
+@media (hover:none){.bbody{padding-bottom:46px}.bcta{opacity:1;transform:none}}
+@media (max-width:860px){.bento{grid-template-columns:1fr;grid-template-rows:none;grid-auto-rows:240px}.bcard{grid-column:auto!important;grid-row:auto!important}}
+@media (prefers-reduced-motion:reduce){.bcard img,.bbody,.bbody svg,.bcta{transition:none}}
+</style>
 </head>
 <body>
 <header>
@@ -65,14 +91,15 @@
         <h2>Выберите <span class="pink">своё</span> небо</h2>
         <p class="muted">Шесть самых популярных решений. Цены за квадратный метр с работой и материалом.</p>
       </div>
-      <div class="types">
-        <a class="type" href="vidy.html#gloss"><div class="ceil"><canvas data-ceil="gloss" data-wall="#E8DCCB" data-seed="3"></canvas></div><div class="type-meta"><h3>Глянцевый</h3><b>590 ₽/м²</b></div><p>Отражает свет и визуально поднимает комнату.</p></a>
-        <a class="type" href="vidy.html#stars"><div class="ceil"><canvas data-ceil="stars" data-wall="#8C7BD1" data-seed="5"></canvas></div><div class="type-meta"><h3>Звёздное небо</h3><b>2 900 ₽/м²</b></div><p>Сотни мерцающих точек над кроватью.</p></a>
-        <a class="type" href="vidy.html#lines"><div class="ceil"><canvas data-ceil="lines" data-wall="#9FA6B8" data-seed="8"></canvas></div><div class="type-meta"><h3>Световые линии</h3><b>1 400 ₽/м²</b></div><p>Свет встроен прямо в полотно.</p></a>
-        <a class="type" href="vidy.html#twolevel"><div class="ceil"><canvas data-ceil="twolevel" data-wall="#D7C9E8" data-color="#6C2BFF" data-seed="9"></canvas></div><div class="type-meta"><h3>Двухуровневый</h3><b>1 900 ₽/м²</b></div><p>Ниша с подсветкой и цветной вставкой.</p></a>
-        <a class="type" href="vidy.html#clouds"><div class="ceil"><canvas data-ceil="clouds" data-wall="#F2E7D8" data-seed="13"></canvas></div><div class="type-meta"><h3>Фотопечать</h3><b>1 500 ₽/м²</b></div><p>Облака, цветы, любое изображение.</p></a>
-        <a class="type" href="vidy.html#matte"><div class="ceil"><canvas data-ceil="matte" data-wall="#E7D5C0" data-seed="2"></canvas></div><div class="type-meta"><h3>Матовый</h3><b>490 ₽/м²</b></div><p>Классика, как идеально ровная побелка.</p></a>
+      <div class="bento">
+        <a class="bcard b-two" href="vidy.html#twolevel"><img src="https://images.unsplash.com/photo-1582203423341-64b918240e25?auto=format&fit=crop&w=900&q=70" alt="Белый потолок сложной формы со встроенными светильниками" loading="lazy"><div class="bbody"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.600" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><rect x="7" y="9" width="10" height="6" rx="1"/></svg><div class="brow"><h3>Двухуровневый</h3><b>1 900 ₽/м²</b></div><p>Ниша с подсветкой и цветной вставкой.</p></div><span class="bcta">Подробнее <span aria-hidden="true">→</span></span></a>
+        <a class="bcard b-lines" href="vidy.html#lines"><img src="https://images.unsplash.com/photo-1759038086966-545e83223be9?auto=format&fit=crop&w=900&q=70" alt="Современный белый потолок с чёрными полосами" loading="lazy"><div class="bbody"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.600" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M4 12h10M4 17h16"/></svg><div class="brow"><h3>Световые линии</h3><b>1 400 ₽/м²</b></div><p>Свет встроен прямо в полотно.</p></div><span class="bcta">Подробнее <span aria-hidden="true">→</span></span></a>
+        <a class="bcard b-gloss" href="vidy.html#gloss"><img src="https://images.unsplash.com/photo-1764961576606-ffb05ace4062?auto=format&fit=crop&w=900&q=70" alt="Белый потолок со светильником" loading="lazy"><div class="bbody"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.600" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M8.500 10a4 4 0 0 1 3-2.500"/></svg><div class="brow"><h3>Глянцевый</h3><b>590 ₽/м²</b></div><p>Отражает свет и визуально поднимает комнату.</p></div><span class="bcta">Подробнее <span aria-hidden="true">→</span></span></a>
+        <a class="bcard b-matte" href="vidy.html#matte"><img src="https://images.unsplash.com/photo-1587316205943-b15dc52a12e0?auto=format&fit=crop&w=900&q=70" alt="Светлая комната с ровным белым потолком" loading="lazy"><div class="bbody"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.600" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="3"/></svg><div class="brow"><h3>Матовый</h3><b>490 ₽/м²</b></div><p>Классика, как идеально ровная побелка.</p></div><span class="bcta">Подробнее <span aria-hidden="true">→</span></span></a>
+        <a class="bcard b-stars" href="vidy.html#stars"><img src="https://images.unsplash.com/photo-1718221621618-e477ce33485a?auto=format&fit=crop&w=900&q=70" alt="Тёмный потолок с россыпью огней" loading="lazy"><div class="bbody"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.600" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.800 5.200L19 10l-5.200 1.800L12 17l-1.800-5.200L5 10l5.200-1.800z"/><path d="M19 16v4M17 18h4"/></svg><div class="brow"><h3>Звёздное небо</h3><b>2 900 ₽/м²</b></div><p>Сотни мерцающих точек над кроватью.</p></div><span class="bcta">Подробнее <span aria-hidden="true">→</span></span></a>
+        <a class="bcard b-print" href="vidy.html#clouds"><img src="https://images.unsplash.com/photo-1665832966717-238c3a7e2bf7?auto=format&fit=crop&w=900&q=70" alt="Расписной потолок с люстрами" loading="lazy"><div class="bbody"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.600" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 16l5-5 4 4 3-3 6 6"/><circle cx="16" cy="9" r="1.500"/></svg><div class="brow"><h3>Фотопечать</h3><b>1 500 ₽/м²</b></div><p>Облака, цветы, любое изображение.</p></div><span class="bcta">Подробнее <span aria-hidden="true">→</span></span></a>
       </div>
+      <p class="muted" style="margin-top:18px;font-size:14px">Фото: Unsplash</p>
     </div>
   </section>
 
@@ -118,7 +145,7 @@
   </section>
 </main>
 
-<footer><div class="wrap"><span>НЕБО · натяжные потолки</span><span>Демо-проект · дизайн и разработка: <a href="../../index.html">Артём</a></span></div></footer>
+<footer><div class="wrap"><span>НЕБО · натяжные потолки</span><span>Демо-проект · компания вымышлена · дизайн и разработка: <a href="../../index.html">Артём</a></span></div></footer>
 <script src="nebo.js"></script>
 </body>
 </html>
