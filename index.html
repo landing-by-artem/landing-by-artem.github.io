@@ -58,6 +58,11 @@
   @media (min-width: 640px) { [data-moment="pinned-chapters"]:not(.is-live) .mo-pc__step .link { grid-column: 1; } }
   @media (max-width: 639px) { #work .mo-pc__steps { gap: var(--s-8); } }
   #work.is-live .mo-pc__step:not(.is-on) .link { display: none; }
+  /* the stage holds one screen while the section scrolls (a flex item would grow to the section) */
+  #work.is-live > .mo-pc__grid { flex: 0 0 auto; }
+  /* whole browser screenshots: the frame takes their 16:10 shape, nothing cut */
+  #work.is-live .mo-pc__visuals { aspect-ratio: 16 / 10; }
+  #work .mo-pc__visual > img { aspect-ratio: 16 / 10; }
   #price .grid > .stack-5 { align-self: stretch; }
 </style>
 <script>document.documentElement.classList.add('m-enter');setTimeout(()=>document.documentElement.classList.add('m-enter-done'),700)</script>
