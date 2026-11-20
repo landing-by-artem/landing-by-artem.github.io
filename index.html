@@ -96,6 +96,7 @@ header{transition:background .3s,padding .3s}
 .btn-sm{padding:10px 18px;font-size:15px}
 @media (max-width:860px){.nav{display:none}.bar .shiny{margin-left:auto}}
 
+header.sun{background:rgba(255,210,31,.94);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid rgba(10,10,11,.15);padding-bottom:12px;pointer-events:auto}
 header.sun .logo{color:var(--night)}header.sun .logo i{color:var(--night);text-shadow:none}
 
 /* hero */
@@ -240,6 +241,7 @@ details p{color:var(--grey);padding-bottom:26px;max-width:40em}
 .ch>span:first-child{min-width:0}
 .ch small{display:block;font-size:15px;opacity:.65}
 .ch b{display:block;font-family:var(--f-display);font-weight:800;font-size:clamp(18px,2.2vw,30px);letter-spacing:-.03em;overflow-wrap:anywhere}
+.ch b.long{font-size:clamp(15px,1.6vw,23px)}
 .ch .arrow{flex-shrink:0;width:56px;height:56px;border-radius:50%;border:2px solid currentColor;display:grid;place-items:center}
 .foot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;margin-top:clamp(60px,8vw,110px);padding-top:22px;border-top:2px solid var(--night);font-size:15px}
 .foot a{text-decoration:none;font-weight:600}
@@ -388,7 +390,7 @@ details p{color:var(--grey);padding-bottom:26px;max-width:40em}
       <p class="sub">Расскажите, чем занимаетесь, и я предложу, как может выглядеть ваш сайт. Отвечаю лично, обычно в тот же день.</p>
       <div class="channels">
         <a class="ch" href="https://t.me/artem_idea" target="_blank" rel="noopener"><span><small>Telegram</small><b>@artem_idea</b></span><span class="arrow" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 19L19 5M9 5h10v10"/></svg></span></a>
-        <a class="ch" href="https://www.instagram.com/artem_programmer_info/" target="_blank" rel="noopener"><span><small>Instagram</small><b>@artem_programmer_info</b></span><span class="arrow" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 19L19 5M9 5h10v10"/></svg></span></a>
+        <a class="ch" href="https://www.instagram.com/artem_programmer_info/" target="_blank" rel="noopener"><span><small>Instagram</small><b class="long">@artem_programmer_info</b></span><span class="arrow" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 19L19 5M9 5h10v10"/></svg></span></a>
       </div>
       <div class="foot"><span>artem* · сайты для бизнеса</span><a href="#top">Наверх</a></div>
     </div>

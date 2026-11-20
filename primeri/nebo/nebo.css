@@ -197,3 +197,5 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
 footer a{color:var(--gold)}
 
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.track,.logo b{animation:none}*{transition:none!important}}
+
+.menu{scrollbar-width:none}.menu::-webkit-scrollbar{display:none}
