@@ -58,7 +58,6 @@
   @media (min-width: 640px) { [data-moment="pinned-chapters"]:not(.is-live) .mo-pc__step .link { grid-column: 1; } }
   @media (max-width: 639px) { #work .mo-pc__steps { gap: var(--s-8); } }
   #work.is-live .mo-pc__step:not(.is-on) .link { display: none; }
-  .close__media img { object-position: 50% 42%; }
   #price .grid > .stack-5 { align-self: stretch; }
 </style>
 <script>document.documentElement.classList.add('m-enter');setTimeout(()=>document.documentElement.classList.add('m-enter-done'),700)</script>
@@ -70,7 +69,7 @@
 </head>
 <body>
 <!-- type: service (людей нанимают: Артём делает сайты)
-     deal: hero split, nav nav-mega, close close-photo, footer footer-columns, rhythm dark-band, buttons tonal, mark dots
+     deal: hero split, nav nav-mega, close close-type (no unrelated photo), footer footer-columns, rhythm dark-band, buttons tonal, mark dots
      palette card-pastels: off-white ground, black ink, one pink accent; the work screenshots carry strong colour of their own
        (pink Lipa, black and red Britva, navy Nebo, violet Zaryad), so the ground stays neutral (sky-sand's blue ground and
        magenta competed with them). type geist: the dealt Instrument Sans and Source Serif/Libre Franklin have no Cyrillic.
@@ -183,13 +182,14 @@
           <h2 id="steps-h">Сайт за 3 шага</h2>
           <p>Без потерянных сообщений и долгих согласований: вы всегда знаете, что происходит.</p>
         </div>
+      </div>
+      <div class="span-6 start-7">
         <ul class="rows">
           <li><span class="rows__name">Созвон<small>Рассказываете о бизнесе, вместе решаем, что должен сделать посетитель</small></span><span class="rows__value">15–20 минут</span></li>
           <li><span class="rows__name">Дизайн и тексты<small>Собираю структуру, пишу тексты, показываю, правим вместе</small></span><span class="rows__value">по плану</span></li>
-          <li><span class="rows__name">Запуск<small>Проверяю на телефонах и компьютерах, публикую и передаю вам</small></span><span class="rows__value">в оговорённую дату</span></li>
+          <li><span class="rows__name">Запуск<small>Проверяю на телефонах и компьютерах, публикую и передаю вам</small></span><span class="rows__value">в срок</span></li>
         </ul>
       </div>
-      <figure class="shot span-6 start-7"><img src="img/work/nebo-top.jpg" alt="Первый экран сайта «Небо»: заголовок «Потолок, на который хочется смотреть» и рисунок комнаты" width="1440" height="900" loading="lazy" data-source="client" data-subject="сайт-пример Небо"></figure>
     </div>
   </section>
 
@@ -251,11 +251,11 @@
 
   <section class="section" id="faq" aria-labelledby="faq-h">
     <div class="wrap grid grid--top">
-      <div class="span-5">
-        <div class="section-head">
-          <h2 id="faq-h">Вопросы</h2>
-          <p>Не нашли ответа? Спросите в Telegram, отвечаю лично.</p>
-        </div>
+      <div class="span-5 section-head">
+        <h2 id="faq-h">Вопросы</h2>
+        <p>Не нашли ответа? Спросите в Telegram, отвечаю лично.</p>
+      </div>
+      <div class="span-6 start-7">
         <div class="faq">
           <div class="faq__item"><h3>Сколько стоит сайт?</h3><p>Одностраничный стоит 7 200 ₽, многостраничный 9 400 ₽. Что войдёт в ваш сайт, обсудим на созвоне до начала работы.</p></div>
           <div class="faq__item"><h3>У меня нет готового задания. Можно?</h3><p>Да. Расскажите о бизнесе и о том, чего ждёте от сайта, структуру и тексты я соберу сам.</p></div>
@@ -263,19 +263,18 @@
           <div class="faq__item"><h3>Можно ли потом что-то поменять?</h3><p>Да. Небольшие правки в течение месяца после запуска делаю бесплатно, дальше договариваемся отдельно.</p></div>
         </div>
       </div>
-      <figure class="shot span-6 start-7"><img src="img/work/lipa-menu.jpg" alt="Меню на сайте «Липа»: блюда с фото и ценой и корзина с итогом заказа" width="1440" height="760" loading="lazy" data-source="client" data-subject="сайт-пример Липа"></figure>
     </div>
   </section>
 </main>
 
 <footer class="footer closing" id="contact" aria-labelledby="close-h">
   <div class="wrap">
-    <div class="closing__cta close--photo">
-      <div class="section-head--split">
-        <div><h2 id="close-h">Напишите «сайт» в Telegram</h2><p class="t-lead">Отвечаю лично, обычно в тот же день.</p></div>
-        <a class="btn btn--primary" href="https://t.me/artem_idea" target="_blank" rel="noopener">Написать в Telegram<svg class="m-arrow" viewBox="0 0 12 12" aria-hidden="true"><path class="m-arrow__stem" d="M1 6h8"/><path class="m-arrow__head" d="M4.5 2.5 8 6l-3.5 3.5"/></svg></a>
+    <div class="closing__cta close--type">
+      <div class="section-head">
+        <h2 id="close-h">Напишите «сайт» в Telegram</h2>
+        <p>Отвечаю лично, обычно в тот же день.</p>
       </div>
-      <div class="close__media"><img src="img/work/brica-gallery.jpg" alt="Галерея на сайте «Бритва»: барбер делает фейд, зал с креслом, контур бороды" width="1440" height="602" loading="lazy" data-source="client" data-subject="сайт-пример Бритва"></div>
+      <a class="btn btn--primary btn--xl" href="https://t.me/artem_idea" target="_blank" rel="noopener">Написать в Telegram<svg class="m-arrow" viewBox="0 0 12 12" aria-hidden="true"><path class="m-arrow__stem" d="M1 6h8"/><path class="m-arrow__head" d="M4.5 2.5 8 6l-3.5 3.5"/></svg></a>
     </div>
     <div class="closing__links">
       <div class="grid">
