@@ -54,7 +54,10 @@
   @media (max-width: 639px) { .phones { grid-template-columns: repeat(2, minmax(0, 1fr)); } .phones > div:nth-child(n+3) { display: none; } }
   @media (max-width: 639px) { .phones { gap: var(--s-4); } .phone { border-width: 4px; border-radius: 22px; } }
   .rows .rows__name small { display: block; font-weight: 400; color: var(--muted); font-size: var(--t-small); }
-  .mo-pc__step .link { display: inline-block; margin-top: var(--s-3); }
+  .mo-pc__step .link { justify-self: start; margin-top: var(--s-2); }
+  @media (min-width: 640px) { [data-moment="pinned-chapters"]:not(.is-live) .mo-pc__step .link { grid-column: 1; } }
+  @media (max-width: 639px) { #work .mo-pc__steps { gap: var(--s-8); } }
+  #work.is-live .mo-pc__step:not(.is-on) .link { display: none; }
   .close__media img { object-position: 50% 42%; }
   #price .grid > .stack-5 { align-self: stretch; }
 </style>
@@ -139,26 +142,26 @@
           <li class="mo-pc__step">
             <h3>Липа, ресторан</h3>
             <p>Меню с фото блюд, корзина и бронь стола.</p>
-            <a class="link" href="primeri/lipa.html">Открыть сайт «Липа»</a>
             <figure class="mo-pc__visual"><img src="img/work/lipa-top.jpg" alt="Первый экран сайта «Липа»: заголовок «Домашняя кухня, как у бабушки» и тарелка борща" width="1440" height="900" loading="lazy" data-source="client" data-subject="сайт-пример Липа"></figure>
+            <a class="link" href="primeri/lipa.html">Открыть сайт «Липа»</a>
           </li>
           <li class="mo-pc__step">
             <h3>Бритва, барбершоп</h3>
             <p>Примерочная стрижек и запись в три шага.</p>
-            <a class="link" href="primeri/brica.html">Открыть сайт «Бритва»</a>
             <figure class="mo-pc__visual"><img src="img/work/brica-try.jpg" alt="Примерочная на сайте «Бритва»: фото стрижки фейд и список стрижек с ценами" width="1440" height="900" loading="lazy" data-source="client" data-subject="сайт-пример Бритва"></figure>
+            <a class="link" href="primeri/brica.html">Открыть сайт «Бритва»</a>
           </li>
           <li class="mo-pc__step">
             <h3>Небо, потолки</h3>
             <p>Четыре страницы, каталог и калькулятор.</p>
-            <a class="link" href="primeri/nebo/index.html">Открыть сайт «Небо»</a>
             <figure class="mo-pc__visual"><img src="img/work/nebo-bento.jpg" alt="Каталог на сайте «Небо»: плитки с фото потолков и ценой за квадратный метр" width="1440" height="900" loading="lazy" data-source="client" data-subject="сайт-пример Небо"></figure>
+            <a class="link" href="primeri/nebo/index.html">Открыть сайт «Небо»</a>
           </li>
           <li class="mo-pc__step">
             <h3>Заряд, сообщество</h3>
             <p>Таймер до старта, тарифы и заявка.</p>
-            <a class="link" href="primeri/zaryad/index.html">Открыть сайт «Заряд»</a>
             <figure class="mo-pc__visual"><img src="img/work/zaryad-top.jpg" alt="Первый экран сайта «Заряд»: таймер до старта потока и кнопка «Вступить в сообщество»" width="1440" height="900" loading="lazy" data-source="client" data-subject="сайт-пример Заряд"></figure>
+            <a class="link" href="primeri/zaryad/index.html">Открыть сайт «Заряд»</a>
           </li>
         </ol>
       </div>
