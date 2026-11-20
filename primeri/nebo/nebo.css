@@ -199,3 +199,7 @@ footer a{color:var(--gold)}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.track,.logo b{animation:none}*{transition:none!important}}
 
 .menu{scrollbar-width:none}.menu::-webkit-scrollbar{display:none}
+
+/* phone: all four menu items visible (two rows), no hidden sideways scroll */
+@media (max-width:900px){.menu{flex-wrap:wrap;overflow:visible}.menu a{flex:1 1 calc(50% - 6px);text-align:center}}
+.logo{padding-right:6px}
