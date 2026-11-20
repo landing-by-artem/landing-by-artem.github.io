@@ -64,6 +64,9 @@
   #work.is-live .mo-pc__visuals { aspect-ratio: 16 / 10; }
   #work .mo-pc__visual > img { aspect-ratio: 16 / 10; }
   #price .grid > .stack-5 { align-self: stretch; }
+  /* no forced screen heights: each section is as tall as its content (the pinned #work keeps its scroll on desktop) */
+  main > :is(section, .section):not(.hero):not(.is-live) { height: auto !important; min-height: 0 !important; padding: clamp(64px, 8vw, 112px) 0 !important; }
+  footer.closing { height: auto !important; min-height: 0 !important; padding: clamp(64px, 8vw, 112px) 0 calc(32px + var(--bar)) !important; }
 </style>
 <script>document.documentElement.classList.add('m-enter');setTimeout(()=>document.documentElement.classList.add('m-enter-done'),700)</script>
 <script>document.documentElement.classList.add('mo-js');setTimeout(()=>document.documentElement.classList.add('mo-safe'),2500)</script>
