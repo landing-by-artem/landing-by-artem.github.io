@@ -52,7 +52,7 @@ var FS=[
 function ZCharge(cv,o){
   o=o||{};this.cv=cv;var gl=null;if(!glBad())try{gl=cv.getContext('webgl',{antialias:false,alpha:false,preserveDrawingBuffer:!!o.keep,powerPreference:'low-power'})}catch(e){}
   if(!gl){(cv.style.visibility='hidden',cv.parentNode.classList.add('nogl'));this.ok=false;return}
-  var me=this;cv.addEventListener('webglcontextlost',function(e){e.preventDefault();glMark();me.ok=false;(cv.style.visibility='hidden',cv.parentNode.classList.add('nogl'))});
+  var me=this;cv.addEventListener('webglcontextlost',function(e){e.preventDefault();me.ok=false;(cv.style.visibility='hidden',cv.parentNode.classList.add('nogl'))});
   this.ok=true;this.gl=gl;
   function sh(t,s){var x=gl.createShader(t);gl.shaderSource(x,s);gl.compileShader(x);if(!gl.getShaderParameter(x,gl.COMPILE_STATUS))console.error(gl.getShaderInfoLog(x));return x}
   var pr=gl.createProgram();gl.attachShader(pr,sh(gl.VERTEX_SHADER,VS));gl.attachShader(pr,sh(gl.FRAGMENT_SHADER,FS));gl.linkProgram(pr);

@@ -125,7 +125,7 @@ function NeboRoom(cv,o){
   var gl=null;if(!glBad())try{gl=cv.getContext('webgl',{antialias:false,alpha:false,preserveDrawingBuffer:!!o.keep,powerPreference:'low-power'})}catch(e){}
   if(!gl){this.fail();return}
   this.gl=gl;this.ok=true;this.progs={};
-  cv.addEventListener('webglcontextlost',function(e){e.preventDefault();glMark();self.fail()});
+  cv.addEventListener('webglcontextlost',function(e){e.preventDefault();self.fail()});
   var b=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,b);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,3,-1,-1,3]),gl.STATIC_DRAW);
   this.m=[0,0];this.mt=[0,0];this.vis=true;this.start=performance.now();this.last=0;this.dirty=true;
   this.q=(o.quality||1)*(window.NEBO_Q||1);
