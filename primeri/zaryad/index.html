@@ -187,8 +187,9 @@ details p{color:var(--muted);padding:0 0 26px;max-width:36em}
 .join{display:grid;grid-template-columns:repeat(12,1fr);gap:24px;align-items:start}
 .join .sec-head{grid-column:1/span 6;min-width:0}
 .join h2{font-size:clamp(30px,3.6vw,56px)}
-form{grid-column:8/span 5;display:grid;grid-template-columns:1fr 1fr;gap:16px;background:var(--s1);border:1px solid var(--line);border-radius:var(--r);padding:clamp(22px,3vw,36px)}
-.fld{display:flex;flex-direction:column;gap:8px}.fld.full{grid-column:1/-1}
+form{grid-column:8/span 5;min-width:0;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;background:var(--s1);border:1px solid var(--line);border-radius:var(--r);padding:clamp(22px,3vw,36px)}
+.fld{display:flex;flex-direction:column;gap:8px;min-width:0}
+.fld input,.fld select{width:100%;min-width:0}.fld.full{grid-column:1/-1}
 .fld label{font-size:14px;color:var(--muted)}
 .fld input,.fld select{height:56px;border-radius:14px;border:1px solid var(--line);background:var(--bg);padding:0 16px;font-size:16px;outline:none;transition:border-color .2s}
 .fld input:focus,.fld select:focus{border-color:var(--volt)}
@@ -332,7 +333,7 @@ footer a{color:var(--ink);border-bottom:1px solid var(--line)}
 
 <footer><div class="wrap"><span>ЗАРЯД · сообщество целеустремлённых</span><span>Демо-проект · дизайн и разработка: <a href="../../index.html">Артём</a></span></div></footer>
 
-<script src="charge.js?v=12"></script>
+<script src="charge.js?v=13"></script>
 <script>
 (function(){
   /* fields */
@@ -350,7 +351,7 @@ footer a{color:var(--ink);border-bottom:1px solid var(--line)}
   function mani(){var r=m.getBoundingClientRect(),p=(innerHeight*.85-r.top)/(r.height+innerHeight*.35);p=Math.max(0,Math.min(1,p));var k=Math.round(p*words.length);words.forEach(function(w,i){w.classList.toggle('on',i<k)})}
   sc();
   /* fit the big word to the row width */
-  var mg=document.querySelector('.mega');function fit(){mg.style.fontSize='';var cs=parseFloat(getComputedStyle(mg).fontSize),w=mg.parentNode.clientWidth;mg.style.fontSize=Math.min(cs*w/mg.scrollWidth*.995,cs*1.6)+'px'}
+  var mg=document.querySelector('.mega');function fit(){mg.style.fontSize='';var cs=parseFloat(getComputedStyle(mg).fontSize),w=mg.clientWidth,rg=document.createRange();rg.selectNodeContents(mg);var tw=rg.getBoundingClientRect().width;if(tw)mg.style.fontSize=Math.min(cs*w/tw*.97,cs*1.6)+'px'}
   fit();addEventListener('resize',fit);if(document.fonts)document.fonts.ready.then(fit);
 
   /* reveal */
