@@ -260,3 +260,5 @@ input[type=range]{width:100%;accent-color:var(--ink);height:28px}
 .rv.in{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){.rv{opacity:1;transform:none}.chap{transition:none}}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+
+@media (max-width:360px){.btn{white-space:normal;height:auto;min-height:54px;padding:12px 20px;text-align:center}}
