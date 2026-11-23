@@ -168,7 +168,8 @@ p{margin:0}
 .plan.hot li::before{background:var(--volt-ink)}
 .plan.hot .btn{background:var(--volt-ink);color:var(--volt)}
 .plan .tag{position:absolute;top:-13px;left:32px;background:var(--bg);color:var(--volt);font-family:var(--fm);font-size:12px;text-transform:uppercase;padding:5px 12px;border-radius:999px;border:1px solid var(--volt)}
-@media (max-width:900px){.plans{grid-template-columns:1fr}}
+@media (max-width:900px){.plans{grid-template-columns:minmax(0,1fr)}.plan{min-width:0}}
+@media (max-width:360px){.plan{padding:24px 20px}.price{font-size:30px}}
 
 /* faq */
 .faq{display:grid;grid-template-columns:repeat(12,1fr);gap:24px}
