@@ -21,7 +21,7 @@ var COMMON=[
 'float hitBox(vec3 ro,vec3 rd,vec3 bmin,vec3 bmax){vec3 i=1./rd;vec3 t0=(bmin-ro)*i,t1=(bmax-ro)*i;vec3 tn=min(t0,t1),tf=max(t0,t1);',
 ' float a=max(max(tn.x,tn.y),tn.z),b=min(min(tf.x,tf.y),tf.z);return (a>0.&&a<b)?a:1e9;}',
 /* returns (t,id). id: 0 ceil,1 floor,2 wallL,3 wallR,4 back,5 front,6 seat,7 backrest */
-'vec2 trace(vec3 ro,vec3 rd){rd=sign(rd)*max(abs(rd),vec3(1e-4));',
+'vec2 trace(vec3 ro,vec3 rd){rd=rd+(vec3(2e-4)-rd)*step(abs(rd),vec3(1e-4));',
 ' float tx=((rd.x>0.?W:-W)-ro.x)/rd.x;float ty=((rd.y>0.?H:0.)-ro.y)/rd.y;float tz=((rd.z>0.?ZF:ZB)-ro.z)/rd.z;',
 ' float t=tx;float id=rd.x>0.?3.:2.;',
 ' if(ty<t){t=ty;id=rd.y>0.?0.:1.;}',
