@@ -138,7 +138,7 @@ function NeboRoom(cv,o){
 }
 NeboRoom.TYPES=TYPES;
 NeboRoom.prototype.poster=function(){var b=this.box;b.style.backgroundImage='url('+BASE+'img/room-'+(this.split?'split':this.s.type)+'.jpg)';b.style.backgroundSize='cover';b.style.backgroundPosition='center'};
-NeboRoom.prototype.fail=function(){this.ok=false;this.cv.style.visibility='hidden';this.cv.classList.add('nogl');this.poster()};
+NeboRoom.prototype.fail=function(){this.ok=false;this.ov.style.opacity='0';this.cv.style.visibility='hidden';this.cv.classList.add('nogl');this.poster()};
 NeboRoom.prototype.prog=function(type){
   var key=type+(this.split?'+split':'');if(this.progs[key])return this.progs[key];
   var gl=this.gl;function sh(t,s){var x=gl.createShader(t);gl.shaderSource(x,s);gl.compileShader(x);if(!gl.getShaderParameter(x,gl.COMPILE_STATUS)&&!gl.isContextLost()){console.warn(gl.getShaderInfoLog(x));return null}return x}
@@ -172,7 +172,7 @@ NeboRoom.prototype.draw=function(){
   gl.uniform2f(U.uRes,W,H);gl.uniform1f(U.uTime,t);gl.uniform2f(U.uMouse,this.m[0],this.m[1]);
   gl.uniform3fv(U.uWall,s.wall);gl.uniform3fv(U.uColor,s.color);gl.uniform1f(U.uSpots,s.spots);gl.uniform1f(U.uLines,s.lines);gl.uniform1f(U.uSplit,s.split);
   gl.drawArrays(gl.TRIANGLES,0,3);
-  if(!this.shown){this.shown=true;var b=this.box;setTimeout(function(){b.style.backgroundImage='none'},400)}
+  if(!this.shown){this.shown=true;var b=this.box,me=this;setTimeout(function(){if(me.ok&&!me.gl.isContextLost())b.style.backgroundImage='none'},1200)}
   return true;
 };
 NeboRoom.prototype.frame=function(){

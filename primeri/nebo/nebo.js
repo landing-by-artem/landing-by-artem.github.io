@@ -13,7 +13,7 @@ function onScroll(){
   var r=dark.getBoundingClientRect();
   hdr.classList.toggle('over',r.bottom>72&&!hdr.classList.contains('open'));
 }
-if(dark){addEventListener('scroll',onScroll,{passive:true});onScroll()}
+if(dark){addEventListener('scroll',onScroll,{passive:true});addEventListener('resize',onScroll);addEventListener('load',onScroll);onScroll()}
 var bg=document.querySelector('.burger');
 if(bg)bg.addEventListener('click',function(){var o=hdr.classList.toggle('open');bg.setAttribute('aria-expanded',o);onScroll()});
 
