@@ -49,12 +49,12 @@ var FS=[
 
 function ZCharge(cv,o){
   o=o||{};this.cv=cv;var gl=null;try{gl=cv.getContext('webgl',{antialias:false,alpha:false,preserveDrawingBuffer:!!o.keep,powerPreference:'low-power'})}catch(e){}
-  if(!gl){cv.classList.add('nogl');this.ok=false;return}
-  var me=this;cv.addEventListener('webglcontextlost',function(e){e.preventDefault();me.ok=false;cv.classList.add('nogl')});
+  if(!gl){(cv.style.visibility='hidden',cv.parentNode.classList.add('nogl'));this.ok=false;return}
+  var me=this;cv.addEventListener('webglcontextlost',function(e){e.preventDefault();me.ok=false;(cv.style.visibility='hidden',cv.parentNode.classList.add('nogl'))});
   this.ok=true;this.gl=gl;
   function sh(t,s){var x=gl.createShader(t);gl.shaderSource(x,s);gl.compileShader(x);if(!gl.getShaderParameter(x,gl.COMPILE_STATUS))console.error(gl.getShaderInfoLog(x));return x}
   var pr=gl.createProgram();gl.attachShader(pr,sh(gl.VERTEX_SHADER,VS));gl.attachShader(pr,sh(gl.FRAGMENT_SHADER,FS));gl.linkProgram(pr);
-  if(!gl.getProgramParameter(pr,gl.LINK_STATUS)){cv.classList.add('nogl');this.ok=false;return}gl.useProgram(pr);
+  if(!gl.getProgramParameter(pr,gl.LINK_STATUS)){(cv.style.visibility='hidden',cv.parentNode.classList.add('nogl'));this.ok=false;return}gl.useProgram(pr);
   var b=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,b);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,3,-1,-1,3]),gl.STATIC_DRAW);
   var loc=gl.getAttribLocation(pr,'p');gl.enableVertexAttribArray(loc);gl.vertexAttribPointer(loc,2,gl.FLOAT,false,0,0);
   var U=this.U={};['uRes','uTime','uMouse','uCharge','uMode','uScroll'].forEach(function(k){U[k]=gl.getUniformLocation(pr,k)});
