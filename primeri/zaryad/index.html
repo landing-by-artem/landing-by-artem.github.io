@@ -172,7 +172,8 @@ p{margin:0}
 
 /* faq */
 .faq{display:grid;grid-template-columns:repeat(12,1fr);gap:24px}
-.faq .sec-head{grid-column:1/span 4}
+.faq .sec-head{grid-column:1/span 4;min-width:0}
+.faq .sec-head h2{font-size:clamp(30px,3.2vw,50px)}
 .faq__list{grid-column:6/span 7;border-top:1px solid var(--line)}
 details{border-bottom:1px solid var(--line)}
 summary{cursor:pointer;list-style:none;padding:26px 44px 26px 0;font-size:clamp(18px,1.6vw,22px);font-weight:500;position:relative}
@@ -184,9 +185,9 @@ details p{color:var(--muted);padding:0 0 26px;max-width:36em}
 
 /* join */
 .join{display:grid;grid-template-columns:repeat(12,1fr);gap:24px;align-items:start}
-.join .sec-head{grid-column:1/span 5}
-.join h2{font-size:clamp(40px,6vw,92px)}
-form{grid-column:7/span 6;display:grid;grid-template-columns:1fr 1fr;gap:16px;background:var(--s1);border:1px solid var(--line);border-radius:var(--r);padding:clamp(22px,3vw,36px)}
+.join .sec-head{grid-column:1/span 6;min-width:0}
+.join h2{font-size:clamp(30px,3.6vw,56px)}
+form{grid-column:8/span 5;display:grid;grid-template-columns:1fr 1fr;gap:16px;background:var(--s1);border:1px solid var(--line);border-radius:var(--r);padding:clamp(22px,3vw,36px)}
 .fld{display:flex;flex-direction:column;gap:8px}.fld.full{grid-column:1/-1}
 .fld label{font-size:14px;color:var(--muted)}
 .fld input,.fld select{height:56px;border-radius:14px;border:1px solid var(--line);background:var(--bg);padding:0 16px;font-size:16px;outline:none;transition:border-color .2s}
@@ -331,7 +332,7 @@ footer a{color:var(--ink);border-bottom:1px solid var(--line)}
 
 <footer><div class="wrap"><span>ЗАРЯД · сообщество целеустремлённых</span><span>Демо-проект · дизайн и разработка: <a href="../../index.html">Артём</a></span></div></footer>
 
-<script src="charge.js?v=9"></script>
+<script src="charge.js?v=12"></script>
 <script>
 (function(){
   /* fields */
