@@ -48,11 +48,13 @@ var FS=[
 ].join('\n');
 
 function ZCharge(cv,o){
-  o=o||{};this.cv=cv;var gl=cv.getContext('webgl',{antialias:false,alpha:false,preserveDrawingBuffer:!!o.keep});
+  o=o||{};this.cv=cv;var gl=null;try{gl=cv.getContext('webgl',{antialias:false,alpha:false,preserveDrawingBuffer:!!o.keep,powerPreference:'low-power'})}catch(e){}
   if(!gl){cv.classList.add('nogl');this.ok=false;return}
+  var me=this;cv.addEventListener('webglcontextlost',function(e){e.preventDefault();me.ok=false;cv.classList.add('nogl')});
   this.ok=true;this.gl=gl;
   function sh(t,s){var x=gl.createShader(t);gl.shaderSource(x,s);gl.compileShader(x);if(!gl.getShaderParameter(x,gl.COMPILE_STATUS))console.error(gl.getShaderInfoLog(x));return x}
-  var pr=gl.createProgram();gl.attachShader(pr,sh(gl.VERTEX_SHADER,VS));gl.attachShader(pr,sh(gl.FRAGMENT_SHADER,FS));gl.linkProgram(pr);gl.useProgram(pr);
+  var pr=gl.createProgram();gl.attachShader(pr,sh(gl.VERTEX_SHADER,VS));gl.attachShader(pr,sh(gl.FRAGMENT_SHADER,FS));gl.linkProgram(pr);
+  if(!gl.getProgramParameter(pr,gl.LINK_STATUS)){cv.classList.add('nogl');this.ok=false;return}gl.useProgram(pr);
   var b=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,b);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,3,-1,-1,3]),gl.STATIC_DRAW);
   var loc=gl.getAttribLocation(pr,'p');gl.enableVertexAttribArray(loc);gl.vertexAttribPointer(loc,2,gl.FLOAT,false,0,0);
   var U=this.U={};['uRes','uTime','uMouse','uCharge','uMode','uScroll'].forEach(function(k){U[k]=gl.getUniformLocation(pr,k)});
@@ -68,8 +70,9 @@ function ZCharge(cv,o){
 ZCharge.prototype.set=function(o){if(o.charge!=null)this.ct=o.charge;if(o.scroll!=null)this.scroll=o.scroll;this.loop()};
 ZCharge.prototype.loop=function(){if(this.raf||!this.ok)return;var s=this;this.raf=requestAnimationFrame(function(){s.raf=0;s.frame()})};
 ZCharge.prototype.frame=function(){
+  if(!this.ok||!this.vis||document.hidden)return;var now=performance.now();if(now-(this.lt||0)<30){this.loop();return}this.lt=now;
   var gl=this.gl,cv=this.cv,U=this.U,w=cv.clientWidth,h=cv.clientHeight;if(!w||!h)return;
-  var dpr=Math.min(devicePixelRatio||1,1.5)*this.q*(this.mode===0&&w<700?.7:1)*(this.mode===0?.85:1);
+  var dpr=Math.min(devicePixelRatio||1,1.25)*this.q*(this.mode===0?(w>1100?.55:w>700?.65:.75):.8);
   var W=Math.round(w*dpr),H=Math.round(h*dpr);if(cv.width!==W||cv.height!==H){cv.width=W;cv.height=H}
   gl.viewport(0,0,W,H);
   this.m[0]+=(this.mt[0]-this.m[0])*.04;this.m[1]+=(this.mt[1]-this.m[1])*.04;
