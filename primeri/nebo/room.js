@@ -9,7 +9,7 @@ var BASE=(function(){var s=document.currentScript&&document.currentScript.src;re
 
 var VS='attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}';
 var COMMON=[
-'precision mediump float;',
+'precision highp float;',
 'uniform vec2 uRes;uniform float uTime;uniform vec2 uMouse;',
 'uniform vec3 uWall;uniform vec3 uColor;uniform float uSpots;uniform float uLines;uniform float uSplit;',
 'const float W=2.6;const float H=2.7;const float ZB=-3.6;const float ZF=3.2;',
@@ -53,8 +53,8 @@ var COMMON=[
 
 /* per type: NIGHT, ceiling function and extra lights */
 var T={};
-var SPOTS_L='for(int i=0;i<8;i++){float fi=float(i);if(fi>=uSpots)break;vec2 s=spotPos(fi);L+=pt(p,n,vec3(s.x,H-.12,s.y),SPOTC,.9);}';
-var SPOTS_E='for(int i=0;i<8;i++){float fi=float(i);if(fi>=uSpots)break;float d=length(p.xz-spotPos(fi));em+=vec3(1.,.93,.8)*(smoothstep(.075,.06,d)*3.+exp(-d*9.)*SPOTG);}';
+var SPOTS_L='for(int i=0;i<8;i++){float fi=float(i);vec2 s=spotPos(fi);L+=step(fi+.5,uSpots)*pt(p,n,vec3(s.x,H-.12,s.y),SPOTC,.9);}';
+var SPOTS_E='for(int i=0;i<8;i++){float fi=float(i);float d=length(p.xz-spotPos(fi));em+=step(fi+.5,uSpots)*vec3(1.,.93,.8)*(smoothstep(.075,.06,d)*3.+exp(-d*9.)*SPOTG);}';
 function day(ceil,refl){return {night:false,spots:true,ceil:ceil,refl:refl,extra:''}}
 T.matte=day('a=vec3(.92,.915,.9);','0.');
 T.satin=day('a=vec3(.96,.95,.93);','.10');
@@ -71,8 +71,8 @@ T.stars={night:true,spots:false,refl:'0.',extra:'L+=pt(p,n,vec3(1.95,1.35,-3.1),
 T.twolevel={night:true,spots:true,refl:'refl',extra:'vec3 c=uColor*1.4;float y=H-.2;L+=seg(p,n,vec3(-1.7,y,-2.9),vec3(1.7,y,-2.9),c,1.6)+seg(p,n,vec3(-1.7,y,1.),vec3(1.7,y,1.),c,1.6)+seg(p,n,vec3(-1.7,y,-2.9),vec3(-1.7,y,1.),c,1.6)+seg(p,n,vec3(1.7,y,-2.9),vec3(1.7,y,1.),c,1.6);',
  ceil:'vec2 dd=abs(p.xz-vec2(0.,-.95))-vec2(1.62,1.88);float inner=max(dd.x,dd.y);'+
  'if(inner<0.){a=mix(vec3(.95),uColor,.45);refl=.3;em+=uColor*exp(inner*9.)*1.1;}else{a=vec3(.95);em+=uColor*exp(-inner*14.)*.35;}em+=uColor*smoothstep(.025,0.,abs(inner))*2.;'};
-T.lines={night:true,spots:false,refl:'0.',extra:'float nl=max(uLines,1.);for(int i=0;i<5;i++){float fi=float(i);if(fi>=nl)break;float x=(fi-(nl-1.)*.5)*1.05;L+=seg(p,n,vec3(x,H-.03,-3.4),vec3(x,H-.03,2.6),vec3(.95,.97,1.)*1.15,1.3);}',
- ceil:'a=vec3(.9);float nl=max(uLines,1.);for(int i=0;i<5;i++){float fi=float(i);if(fi>=nl)break;float d=abs(p.x-(fi-(nl-1.)*.5)*1.05);em+=vec3(1.)*smoothstep(.035,.02,d)*2.4+vec3(.8,.85,1.)*exp(-d*30.)*.5;}'};
+T.lines={night:true,spots:false,refl:'0.',extra:'float nl=max(uLines,1.);for(int i=0;i<5;i++){float fi=float(i);float x=(fi-(nl-1.)*.5)*1.05;L+=step(fi+.5,nl)*seg(p,n,vec3(x,H-.03,-3.4),vec3(x,H-.03,2.6),vec3(.95,.97,1.)*1.15,1.3);}',
+ ceil:'a=vec3(.9);float nl=max(uLines,1.);for(int i=0;i<5;i++){float fi=float(i);float d=abs(p.x-(fi-(nl-1.)*.5)*1.05);em+=step(fi+.5,nl)*(vec3(1.)*smoothstep(.035,.02,d)*2.4+vec3(.8,.85,1.)*exp(-d*30.)*.5);}'};
 T.soaring={night:true,spots:false,refl:'0.',extra:'vec3 c=vec3(1.,.83,.6)*1.5;float y=H-.04;L+=seg(p,n,vec3(-W+.02,y,ZB+.02),vec3(W-.02,y,ZB+.02),c,1.4)+seg(p,n,vec3(-W+.02,y,ZB),vec3(-W+.02,y,ZF),c,1.4)+seg(p,n,vec3(W-.02,y,ZB),vec3(W-.02,y,ZF),c,1.4);',
  ceil:'a=vec3(.93);float d=min(W-abs(p.x),p.z-ZB);em+=vec3(1.,.85,.62)*(smoothstep(.03,.0,d)*2.+exp(-d*14.)*.25);',wallglow:true};
 T.old={night:false,spots:false,refl:'0.',extra:'L+=pt(p,n,vec3(0.,H-.35,-.9),vec3(1.,.82,.55)*1.1,.8)-vec3(.05);',
@@ -108,6 +108,7 @@ function build(type,split){
   return s;
 }
 
+function glBad(){try{var v=+localStorage.getItem('gl-fail');return v&&Date.now()-v<864e5}catch(e){return false}}function glMark(){try{localStorage.setItem('gl-fail',Date.now())}catch(e){}}
 function hex(h){h=(h||'#e8dccb').replace('#','');var n=parseInt(h,16);return[(n>>16&255)/255,(n>>8&255)/255,(n&255)/255].map(function(v){return Math.pow(v,2.2)})}
 
 function NeboRoom(cv,o){
@@ -121,10 +122,10 @@ function NeboRoom(cv,o){
   if(getComputedStyle(this.box).position==='static')this.box.style.position='relative';
   cv.insertAdjacentElement('afterend',ov);
   this.poster();
-  var gl=null;try{gl=cv.getContext('webgl',{antialias:false,alpha:false,preserveDrawingBuffer:!!o.keep,powerPreference:'low-power'})}catch(e){}
+  var gl=null;if(!glBad())try{gl=cv.getContext('webgl',{antialias:false,alpha:false,preserveDrawingBuffer:!!o.keep,powerPreference:'low-power'})}catch(e){}
   if(!gl){this.fail();return}
   this.gl=gl;this.ok=true;this.progs={};
-  cv.addEventListener('webglcontextlost',function(e){e.preventDefault();self.fail()});
+  cv.addEventListener('webglcontextlost',function(e){e.preventDefault();glMark();self.fail()});
   var b=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,b);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,3,-1,-1,3]),gl.STATIC_DRAW);
   this.m=[0,0];this.mt=[0,0];this.vis=true;this.start=performance.now();this.last=0;this.dirty=true;
   this.q=(o.quality||1)*(window.NEBO_Q||1);

@@ -1,6 +1,8 @@
 /* ЗАРЯД: WebGL-эффекты. new ZCharge(canvas,{mode:'field'|'orb',charge:0..1}); .set({charge}) */
 (function(){
 'use strict';
+function glBad(){try{var v=+localStorage.getItem('gl-fail');return v&&Date.now()-v<864e5}catch(e){return false}}function glMark(){try{localStorage.setItem('gl-fail',Date.now())}catch(e){}}
+
 var VS='attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}';
 var FS=[
 'precision highp float;',
@@ -48,9 +50,9 @@ var FS=[
 ].join('\n');
 
 function ZCharge(cv,o){
-  o=o||{};this.cv=cv;var gl=null;try{gl=cv.getContext('webgl',{antialias:false,alpha:false,preserveDrawingBuffer:!!o.keep,powerPreference:'low-power'})}catch(e){}
+  o=o||{};this.cv=cv;var gl=null;if(!glBad())try{gl=cv.getContext('webgl',{antialias:false,alpha:false,preserveDrawingBuffer:!!o.keep,powerPreference:'low-power'})}catch(e){}
   if(!gl){(cv.style.visibility='hidden',cv.parentNode.classList.add('nogl'));this.ok=false;return}
-  var me=this;cv.addEventListener('webglcontextlost',function(e){e.preventDefault();me.ok=false;(cv.style.visibility='hidden',cv.parentNode.classList.add('nogl'))});
+  var me=this;cv.addEventListener('webglcontextlost',function(e){e.preventDefault();glMark();me.ok=false;(cv.style.visibility='hidden',cv.parentNode.classList.add('nogl'))});
   this.ok=true;this.gl=gl;
   function sh(t,s){var x=gl.createShader(t);gl.shaderSource(x,s);gl.compileShader(x);if(!gl.getShaderParameter(x,gl.COMPILE_STATUS))console.error(gl.getShaderInfoLog(x));return x}
   var pr=gl.createProgram();gl.attachShader(pr,sh(gl.VERTEX_SHADER,VS));gl.attachShader(pr,sh(gl.FRAGMENT_SHADER,FS));gl.linkProgram(pr);

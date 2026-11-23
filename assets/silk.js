@@ -1,6 +1,8 @@
 /* Лента из светящихся нитей на первом экране. new Silk(canvas) ; .set({scroll}) */
 (function(){
 'use strict';
+function glBad(){try{var v=+localStorage.getItem('gl-fail');return v&&Date.now()-v<864e5}catch(e){return false}}function glMark(){try{localStorage.setItem('gl-fail',Date.now())}catch(e){}}
+
 var VS='attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}';
 var FS=[
 'precision highp float;',
@@ -39,9 +41,9 @@ var FS=[
 ' gl_FragColor=vec4(o,1.);}'
 ].join('\n');
 function Silk(cv){
-  var gl=null;try{gl=cv.getContext('webgl',{antialias:false,alpha:false,powerPreference:'low-power'})}catch(e){}this.cv=cv;
+  var gl=null;if(!glBad())try{gl=cv.getContext('webgl',{antialias:false,alpha:false,powerPreference:'low-power'})}catch(e){}this.cv=cv;
   if(!gl){(cv.style.visibility='hidden',cv.parentNode.classList.add('nogl'));this.ok=false;return}this.ok=true;this.gl=gl;
-  var me=this;cv.addEventListener('webglcontextlost',function(e){e.preventDefault();me.ok=false;(cv.style.visibility='hidden',cv.parentNode.classList.add('nogl'))});
+  var me=this;cv.addEventListener('webglcontextlost',function(e){e.preventDefault();glMark();me.ok=false;(cv.style.visibility='hidden',cv.parentNode.classList.add('nogl'))});
   function sh(t,s){var x=gl.createShader(t);gl.shaderSource(x,s);gl.compileShader(x);if(!gl.getShaderParameter(x,gl.COMPILE_STATUS))console.error(gl.getShaderInfoLog(x));return x}
   var pr=gl.createProgram();gl.attachShader(pr,sh(gl.VERTEX_SHADER,VS));gl.attachShader(pr,sh(gl.FRAGMENT_SHADER,FS));gl.linkProgram(pr);if(!gl.getProgramParameter(pr,gl.LINK_STATUS)){(cv.style.visibility='hidden',cv.parentNode.classList.add('nogl'));this.ok=false;return}gl.useProgram(pr);
   var b=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,b);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,3,-1,-1,3]),gl.STATIC_DRAW);
