@@ -17,17 +17,22 @@ var COMMON=[
 'float noise(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);',
 ' return mix(mix(hash(i),hash(i+vec2(1,0)),f.x),mix(hash(i+vec2(0,1)),hash(i+vec2(1,1)),f.x),f.y);}',
 'float fbm(vec2 p){float v=0.,a=.5;for(int i=0;i<4;i++){v+=a*noise(p);p=p*2.03+vec2(1.7,9.2);a*=.5;}return v;}',
-'float sofa(vec3 ro,vec3 rd,vec3 bmin,vec3 bmax,inout float t,inout vec3 n){vec3 i=1./rd;vec3 t0=(bmin-ro)*i,t1=(bmax-ro)*i;vec3 tn=min(t0,t1),tf=max(t0,t1);',
-' float a=max(max(tn.x,tn.y),tn.z),b=min(min(tf.x,tf.y),tf.z);if(a>0.&&a<b&&a<t){t=a;n=tn.x>tn.y&&tn.x>tn.z?vec3(-sign(rd.x),0,0):tn.y>tn.z?vec3(0,-sign(rd.y),0):vec3(0,0,-sign(rd.z));return 1.;}return 0.;}',
-/* id: 0 ceil,1 floor,2 wallL,3 wallR,4 back,5 front,6 sofa */
-'float trace(vec3 ro,vec3 rd,out vec3 n,out float id){rd=sign(rd)*max(abs(rd),vec3(1e-4));',
+'vec3 gEm;float gRefl;',
+'float hitBox(vec3 ro,vec3 rd,vec3 bmin,vec3 bmax){vec3 i=1./rd;vec3 t0=(bmin-ro)*i,t1=(bmax-ro)*i;vec3 tn=min(t0,t1),tf=max(t0,t1);',
+' float a=max(max(tn.x,tn.y),tn.z),b=min(min(tf.x,tf.y),tf.z);return (a>0.&&a<b)?a:1e9;}',
+/* returns (t,id). id: 0 ceil,1 floor,2 wallL,3 wallR,4 back,5 front,6 seat,7 backrest */
+'vec2 trace(vec3 ro,vec3 rd){rd=sign(rd)*max(abs(rd),vec3(1e-4));',
 ' float tx=((rd.x>0.?W:-W)-ro.x)/rd.x;float ty=((rd.y>0.?H:0.)-ro.y)/rd.y;float tz=((rd.z>0.?ZF:ZB)-ro.z)/rd.z;',
-' float t=tx;n=vec3(rd.x>0.?-1.:1.,0,0);id=rd.x>0.?3.:2.;',
-' if(ty<t){t=ty;n=vec3(0,rd.y>0.?-1.:1.,0);id=rd.y>0.?0.:1.;}',
-' if(tz<t){t=tz;n=vec3(0,0,rd.z>0.?-1.:1.);id=rd.z>0.?5.:4.;}',
-' if(sofa(ro,rd,vec3(-1.5,0.,-3.6),vec3(1.5,.46,-2.62),t,n)>0.)id=6.;',
-' if(sofa(ro,rd,vec3(-1.5,0.,-3.6),vec3(1.5,.92,-3.28),t,n)>0.)id=6.;',
-' return t;}',
+' float t=tx;float id=rd.x>0.?3.:2.;',
+' if(ty<t){t=ty;id=rd.y>0.?0.:1.;}',
+' if(tz<t){t=tz;id=rd.z>0.?5.:4.;}',
+' float s1=hitBox(ro,rd,vec3(-1.5,0.,-3.6),vec3(1.5,.46,-2.62));if(s1<t){t=s1;id=6.;}',
+' float s2=hitBox(ro,rd,vec3(-1.5,0.,-3.6),vec3(1.5,.92,-3.28));if(s2<t){t=s2;id=7.;}',
+' return vec2(t,id);}',
+'vec3 nrm(vec3 p,float id){',
+' if(id<.5)return vec3(0.,-1.,0.);if(id<1.5)return vec3(0.,1.,0.);if(id<2.5)return vec3(1.,0.,0.);if(id<3.5)return vec3(-1.,0.,0.);if(id<4.5)return vec3(0.,0.,1.);if(id<5.5)return vec3(0.,0.,-1.);',
+' vec3 c=id<6.5?vec3(0.,.23,-3.11):vec3(0.,.46,-3.44);vec3 e=id<6.5?vec3(1.5,.23,.49):vec3(1.5,.46,.16);vec3 d=(p-c)/e;vec3 a=abs(d);',
+' if(a.x>a.y&&a.x>a.z)return vec3(sign(d.x),0.,0.);if(a.y>a.z)return vec3(0.,sign(d.y),0.);return vec3(0.,0.,sign(d.z));}',
 'vec3 seg(vec3 p,vec3 n,vec3 a,vec3 b,vec3 col,float k){vec3 ab=b-a;float h=clamp(dot(p-a,ab)/dot(ab,ab),0.,1.);vec3 l=a+ab*h-p;float d=length(l);',
 ' return col*max(dot(n,l/d),0.)/(1.+d*d*k);}',
 'vec3 pt(vec3 p,vec3 n,vec3 lp,vec3 col,float k){vec3 l=lp-p;float d=length(l);return col*max(dot(n,l/d),0.)/(1.+d*d*k);}',
@@ -36,14 +41,14 @@ var COMMON=[
 ' if(abs(n.x)<.5)d=min(d,W-abs(p.x));if(abs(n.y)<.5)d=min(d,min(p.y,H-p.y));if(abs(n.z)<.5)d=min(d,p.z-ZB);',
 ' return 1.-.55*exp(-d*3.2);}',
 /* albedo + emissive of walls/floor/sofa */
-'vec3 room(vec3 p,vec3 n,float id,out vec3 em){em=vec3(0.);vec3 a;',
+'vec3 room(vec3 p,vec3 n,float id){gEm=vec3(0.);vec3 a;',
 ' if(id<1.5){float pl=floor(p.x*3.2);float h=hash(vec2(pl,floor(p.z*.7+hash(vec2(pl))*3.)));',
 '  a=vec3(.42,.28,.18)*(.78+.32*h)*(.9+.1*noise(p.xz*vec2(2.,30.)));',
 '  vec2 r=abs(p.xz-vec2(0.,-1.55))-vec2(1.9,1.15);if(max(r.x,r.y)<0.)a=vec3(.70,.67,.62);',
 '  vec2 sb=abs(p.xz-vec2(0.,-3.1))-vec2(1.5,.5);float sd=length(max(sb,0.));a*=1.-.55*exp(-sd*7.);}',
 ' else if(id<5.5){a=uWall;',
 '  if(id<2.5&&p.z>-2.85&&p.z<-.95&&p.y>.85&&p.y<2.25){bool f=abs(p.z+1.9)<.03||abs(p.y-1.55)<.03||p.z<-2.8||p.z>-1.0||p.y<.9||p.y>2.2;',
-'   if(f)a=vec3(.9);else{em=NIGHT?mix(vec3(.02,.03,.09),vec3(.06,.07,.2),(p.y-.85)/1.4):mix(vec3(1.4,1.35,1.25),vec3(.9,1.15,1.6),(p.y-.85)/1.4)*1.3;a=vec3(0.);}}',
+'   if(f)a=vec3(.9);else{gEm=NIGHT?mix(vec3(.02,.03,.09),vec3(.06,.07,.2),(p.y-.85)/1.4):mix(vec3(1.4,1.35,1.25),vec3(.9,1.15,1.6),(p.y-.85)/1.4)*1.3;a=vec3(0.);}}',
 '  if(id>3.5&&id<4.5&&abs(p.x)<.62&&p.y>1.22&&p.y<1.95){a=abs(p.x)>.58||p.y<1.26||p.y>1.91?vec3(.08):mix(vec3(.85,.42,.24),vec3(.95,.86,.72),step(1.65+.15*sin(p.x*5.),p.y));}}',
 ' else{a=vec3(.16,.17,.2);}',
 ' return a;}',
@@ -81,22 +86,22 @@ T.old={night:false,spots:false,refl:'0.',extra:'L+=pt(p,n,vec3(0.,H-.35,-.9),vec
 
 function build(type,split){
   var t=T[type],o=T.old;var night=t.night?'true':'false';
-  var s=COMMON.replace(/NIGHT/g,'NIGHTV')+'\n';
-  s='#define NIGHTV '+night+'\n'+s;
+  var s='#define NIGHTV '+night+'\n'+COMMON.replace(/NIGHT/g,'NIGHTV')+'\n#define em gEm\n#define refl gRefl\n';
   s+='vec3 lightT(vec3 p,vec3 n){vec3 L=base(p,n);'+(t.spots?SPOTS_L.replace('SPOTC',t.night?'vec3(.95,.82,.65)':'vec3(.55,.47,.37)'):'')+t.extra+'return L;}\n';
-  s+='vec3 ceilT(vec3 p,out vec3 em,out float refl){em=vec3(0.);refl='+t.refl.replace('refl','0.')+';vec3 a=vec3(.93);'+t.ceil+(t.spots?SPOTS_E.replace('SPOTG',t.night?'.35':'.08'):'')+'return a;}\n';
+  s+='vec3 ceilT(vec3 p){gEm=vec3(0.);gRefl='+t.refl.replace('refl','0.')+';vec3 a=vec3(.93);'+t.ceil+(t.spots?SPOTS_E.replace('SPOTG',t.night?'.35':'.08'):'')+'return a;}\n';
   if(split){
     s+='vec3 lightO(vec3 p,vec3 n){vec3 L=base(p,n);'+o.extra+'return L;}\n';
-    s+='vec3 ceilO(vec3 p,out vec3 em){em=vec3(0.);vec3 a=vec3(.93);'+o.ceil+'return a;}\n';
+    s+='vec3 ceilO(vec3 p){gEm=vec3(0.);gRefl=0.;vec3 a=vec3(.93);'+o.ceil+'return a;}\n';
   }
-  s+='vec3 scene(vec3 ro,vec3 rd,bool useOld){vec3 n;float id;float t=trace(ro,rd,n,id);vec3 p=ro+rd*t;vec3 em;vec3 a;float refl=0.;vec3 L;\n';
-  s+=' if(id<.5){'+(split?'if(useOld){a=ceilO(p,em);}else{a=ceilT(p,em,refl);}':'a=ceilT(p,em,refl);')+'}else{a=room(p,n,id,em);}\n';
+  s+='vec3 scene(vec3 ro,vec3 rd,bool useOld){vec2 h=trace(ro,rd);float id=h.y;vec3 p=ro+rd*h.x;vec3 n=nrm(p,id);vec3 a;vec3 L;gRefl=0.;\n';
+  s+=' if(id<.5){'+(split?'if(useOld){a=ceilO(p);}else{a=ceilT(p);}':'a=ceilT(p);')+'}else{a=room(p,n,id);}\n';
+  s+=' vec3 E=gEm;float R=gRefl;\n';
   s+=(split?' if(useOld)L=lightO(p,n);else L=lightT(p,n);\n':' L=lightT(p,n);\n');
-  if(t.wallglow)s+=' if(id>1.5&&id<5.5)em+=vec3(1.,.83,.6)*exp(-(H-p.y)*4.)*.5*a;\n';
-  s+=' vec3 c=a*L*ao(p,n)+em;\n';
+  if(t.wallglow)s+=' if(id>1.5&&id<5.5)E+=vec3(1.,.83,.6)*exp(-(H-p.y)*4.)*.5*a;\n';
+  s+=' vec3 c=a*L*ao(p,n)+E;\n';
   if(t.refl!=='0.'){
-    s+=' if(refl>0.){vec3 rr=reflect(rd,n);vec3 n2;float id2;float t2=trace(p+n*.002,rr,n2,id2);vec3 p2=p+rr*t2;vec3 em2;vec3 a2=room(p2,n2,id2,em2);\n';
-    s+='  vec3 c2=a2*base(p2,n2)*ao(p2,n2)+em2;float fr=refl+(1.-refl)*pow(1.-max(dot(-rd,n),0.),5.)*.6;c=mix(c,c2,clamp(fr,0.,.85))*(1.+refl*.15);}\n';
+    s+=' if(R>0.){vec3 rr=reflect(rd,n);vec2 h2=trace(p+n*.002,rr);vec3 p2=p+rr*h2.x;vec3 n2=nrm(p2,h2.y);vec3 a2=room(p2,n2,h2.y);\n';
+    s+='  vec3 c2=a2*base(p2,n2)*ao(p2,n2)+gEm;float fr=R+(1.-R)*pow(1.-max(dot(-rd,n),0.),5.)*.6;c=mix(c,c2,clamp(fr,0.,.85))*(1.+R*.15);}\n';
   }
   s+=' return c;}\n';
   s+='void main(){vec2 uv=(gl_FragCoord.xy-.5*uRes)/uRes.y;vec3 ro=vec3(uMouse.x*.25,1.32,2.55);float yaw=uMouse.x*.12,pit=.27+uMouse.y*.05;\n';
@@ -108,7 +113,7 @@ function build(type,split){
   return s;
 }
 
-function glBad(){try{var v=+localStorage.getItem('gl-fail');return v&&Date.now()-v<864e5}catch(e){return false}}function glMark(){try{localStorage.setItem('gl-fail',Date.now())}catch(e){}}
+function glBad(){try{var v=+localStorage.getItem('gl-fail');return v&&Date.now()-v<864e5}catch(e){return false}}
 function hex(h){h=(h||'#e8dccb').replace('#','');var n=parseInt(h,16);return[(n>>16&255)/255,(n>>8&255)/255,(n&255)/255].map(function(v){return Math.pow(v,2.2)})}
 
 function NeboRoom(cv,o){
