@@ -3,74 +3,72 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="Небо">
+<meta name="theme-color" content="#efebe4">
 <title>Контакты — НЕБО</title>
-<meta name="description" content="Демо-сайт: вызов замерщика натяжных потолков, адрес и часы работы.">
+<meta name="description" content="Демо-сайт: запись на бесплатный замер натяжного потолка.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Manrope:wght@400;600;700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@300;400;500;600&display=swap">
 <link rel="stylesheet" href="nebo.css">
 <script>if(self!==top)document.documentElement.classList.add("embed")</script><style>html.embed,html.embed *{scrollbar-width:none}html.embed ::-webkit-scrollbar{display:none}</style>
+<style>.sm{display:none}@media(max-width:520px){.lg{display:none}.sm{display:inline}}</style>
 </head>
 <body>
-<header>
-  <div class="wrap nav">
-    <a class="logo" href="index.html">НЕБО<b>✦</b></a>
-    <nav class="menu" aria-label="Разделы">
+<header class="hdr">
+  <div class="wrap hdr__bar">
+    <a class="logo" href="index.html"><i></i>НЕБО</a>
+    <nav class="nav" aria-label="Разделы">
       <a href="index.html">Главная</a>
       <a href="vidy.html">Виды и цены</a>
       <a href="kalkulator.html">Калькулятор</a>
       <a href="kontakty.html" aria-current="page">Контакты</a>
     </nav>
-    <a class="tel" href="kontakty.html">+7 900 777-00-11</a>
-    <a class="btn btn-gold btn-sm" href="#zamer">Вызвать замерщика</a>
+    <div class="hdr__end">
+      <a class="tel" href="kontakty.html">+7 900 777-00-11</a>
+      <a class="btn btn-ink btn-sm" href="kontakty.html#zamer"><span class="lg">Вызвать замерщика</span><span class="sm">Замер</span></a>
+      <button class="burger" type="button" aria-label="Меню" aria-expanded="false"><span></span></button>
+    </div>
   </div>
 </header>
 
 <main>
-  <section class="page-hero">
+  <section class="phead" style="padding-bottom:clamp(28px,3vw,48px)">
     <div class="wrap">
       <p class="kicker">Контакты</p>
-      <h1 style="margin-top:16px">Приедем <span class="pink">сегодня</span><span class="gold">.</span></h1>
-      <p>Замерщик привезёт образцы полотен, измерит комнату лазером и сразу назовёт точную цену. Это бесплатно и ни к чему не обязывает.</p>
+      <h1>Приедем сегодня</h1>
+      <p class="lead">Замерщик привезёт образцы полотен, измерит комнату лазером и сразу назовёт точную цену. Это бесплатно и ни к чему не обязывает.</p>
     </div>
   </section>
-
-  <section style="padding-top:0" id="zamer">
-    <div class="wrap contact-grid">
-      <form class="card" data-demo novalidate>
-        <h2 style="font-size:clamp(28px,4vw,42px)">Вызвать замерщика</h2>
-        <p id="calcNote" style="font-weight:700" hidden></p>
-        <div class="two">
-          <label class="f" for="cName">Имя<input id="cName" name="name" type="text" autocomplete="name" placeholder="Ольга"></label>
-          <label class="f" for="cPhone">Телефон<input id="cPhone" name="phone" type="tel" autocomplete="tel" placeholder="+7 900 000-00-00"></label>
+  <section class="sec" style="padding-top:0">
+    <div class="wrap">
+      <div class="night-band rv"><canvas id="room" aria-hidden="true"></canvas></div>
+      <div class="ct">
+        <form class="form" id="zamer" data-demo novalidate>
+          <h2>Вызвать замерщика</h2>
+          <p class="muted" id="calcNote" style="grid-column:1/-1" hidden></p>
+          <div class="fld"><label for="f1">Имя</label><input id="f1" name="name" autocomplete="name"></div>
+          <div class="fld"><label for="f2">Телефон</label><input id="f2" name="phone" type="tel" autocomplete="tel" placeholder="+7"></div>
+          <div class="fld full"><label for="f3">Адрес</label><input id="f3" name="addr" autocomplete="street-address"></div>
+          <div class="fld"><label for="f4">Когда удобно</label><select id="f4"><option>Сегодня</option><option>Завтра</option><option>На выходных</option></select></div>
+          <div class="fld"><label for="f5">Время</label><select id="f5"><option>10:00–13:00</option><option>13:00–16:00</option><option>16:00–20:00</option></select></div>
+          <p class="err" hidden></p><p class="ok" hidden></p>
+          <button class="btn btn-ink" type="submit">Жду замерщика <span class="arrow">→</span></button>
+        </form>
+        <div class="info">
+          <div><small>Телефон</small><b>+7 900 777-00-11</b><p>Ежедневно с 8 до 22</p></div>
+          <div><small>Шоурум</small><b>Самара, ул. Мичурина, 52</b><p>Потолки в натуральную величину, можно потрогать</p></div>
+          <div><small>Соцсети</small><b>@nebo.samara</b><p>Telegram и ВКонтакте: фото объектов каждый день</p></div>
         </div>
-        <label class="f" for="cAddr">Адрес<input id="cAddr" name="addr" type="text" autocomplete="street-address" placeholder="ул. Ленинградская, 10, кв. 5"></label>
-        <div class="two">
-          <label class="f" for="cDay">Когда удобно<select id="cDay"><option>Сегодня</option><option>Завтра</option><option>На выходных</option></select></label>
-          <label class="f" for="cTime">Время<select id="cTime"><option>10:00–13:00</option><option>13:00–16:00</option><option>16:00–20:00</option></select></label>
-        </div>
-        <p class="err" hidden></p>
-        <button class="btn btn-pink" type="submit">Жду замерщика</button>
-        <div class="ok" hidden></div>
-      </form>
-      <div class="info">
-        <div class="info-card"><span class="kicker">Телефон</span><span class="big">+7 900 777-00-11</span><span class="muted">Ежедневно с 8 до 22</span></div>
-        <div class="info-card"><span class="kicker" style="color:var(--pink)">Шоурум</span><span class="big">Самара, ул. Мичурина, 52</span><span class="muted">Потолки в натуральную величину, можно потрогать</span></div>
-        <div class="info-card"><span class="kicker">Соцсети</span><span class="big">@nebo.samara</span><span class="muted">Telegram и ВКонтакте: фото объектов каждый день</span></div>
-        <div class="frame"><div class="ceil" style="aspect-ratio:16/9"><canvas data-ceil="soaring" data-wall="#C9B8E8" data-seed="44" role="img" aria-label="Шоурум с парящим потолком"></canvas></div></div>
       </div>
     </div>
   </section>
 </main>
-
-<footer><div class="wrap"><span>НЕБО · натяжные потолки</span><span>Демо-проект · дизайн и разработка: <a href="../../index.html">Артём</a></span></div></footer>
+<footer class="ftr"><div class="wrap"><span>НЕБО · натяжные потолки</span><span>Демо-проект · компания вымышлена · дизайн и разработка: <a href="../../index.html">Артём</a></span></div></footer>
+<script src="room.js"></script>
 <script src="nebo.js"></script>
 <script>
-try{var n=sessionStorage.getItem('nebo_calc');if(n){var el=document.getElementById('calcNote');el.textContent='Ваш расчёт: '+n;el.hidden=false}}catch(e){}
+new NeboRoom(document.getElementById('room'),{type:'stars',wall:'#e6ddd0',spots:0});
+try{var c=sessionStorage.getItem('nebo_calc');if(c){var n=document.getElementById('calcNote');n.hidden=false;n.textContent='Из калькулятора: '+c+'.'}}catch(e){}
 </script>
 </body>
 </html>
